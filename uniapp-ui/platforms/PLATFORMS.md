@@ -6,6 +6,7 @@
 ## nvue
 * 暂不支持全局样式
 * 不支持 v-show
+* 不支持全局注册组件
 
 ## h5
 * < 4kb 转化 base64
@@ -22,3 +23,5 @@
 ## 非H5
 * v-for="(value, name, index) in object" 中，index 参数是不支持的
 * 事件修饰符不支持 prevent、capture、self、once、passive
+* 只能用于获取自定义组件，不支持通过this.$refs.content来获取内置组件实例（如：view、text）
+* 不支持 作用域插槽\动态组件\异步组件\keep-alive\transition

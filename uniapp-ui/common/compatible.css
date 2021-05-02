@@ -1,0 +1,26 @@
+/* 各平台兼容性css */
+
+/* H5 兼容 pc 所需 */
+/* #ifdef H5 */
+@media screen and (min-width: 768px) {
+	body {
+		overflow-y: scroll;
+	}
+}
+/* 顶栏通栏样式 */
+/* .uni-top-window {
+	    left: 0;
+	    right: 0;
+	} */
+/* uni-page-body {
+	background-color: #F5F5F5 !important;
+	min-height: 100% !important;
+	height: auto !important;
+} */
+/* .uni-top-window uni-tabbar .uni-tabbar {
+	background-color: #fff !important;
+} */
+.uni-app--showleftwindow .hideOnPc {
+	display: none !important;
+}
+/* #endif */

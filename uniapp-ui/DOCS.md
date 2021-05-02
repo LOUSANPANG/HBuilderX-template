@@ -6,13 +6,31 @@
 	* 微信小程序不支持相对路径
 * 不能使用 * 选择器
 
+
 ## css
 [css变量](https://uniapp.dcloud.io/frame?id=css%e5%8f%98%e9%87%8f)
+
 
 ## 框架
 * v-show 不支持 template 元素
 * 事件中访问原始的 DOM 事件，使用 $event 参数变量
 * 禁止蒙版下的页面滚动使用 @touchmove.stop.prevent="moveHandle"，moveHandle 可以用来处理 touchmove 的事件，也可以是一个空函数
+* 全局注册
+```
+import Vue from 'vue'
+import pageHead from './components/page-head.vue'
+Vue.component('page-head',pageHead)
+```
+
+## 组件
+* 组件传递对象时，v-bind="object" => :key1="value1" :key2="value2"
+* v-slot 只能添加在 <template> 上 v-slot === #
+
+## api
+* 
+
+## 
+
 
 ## 工具
 * 默认不需要开启es6转换，但如果使用 wxcomponents wxml 自定义组件，HBuilderX 会自动开启es6转换

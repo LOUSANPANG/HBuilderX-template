@@ -9,10 +9,14 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+
+		// 捕获 app error
+		onError(err) {
 		}
 	}
 </script>
 
 <style>
-	/*每个页面公共css */
+	@import './common/compatible.css';
 </style>
