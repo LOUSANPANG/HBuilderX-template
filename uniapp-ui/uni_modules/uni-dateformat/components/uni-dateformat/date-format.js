@@ -59,13 +59,7 @@ function getDate(time) {
 	}
 	switch (typeof time) {
 		case 'string':
-			{
-				// 2020-12-12T12:12:12.000Z、2020-12-12T12:12:12.000
-				if (time.indexOf('T') > -1) {
-					return new Date(time)
-				}
-				return new Date(time.replace(/-/g, '/'))
-			}
+			return new Date(time.replace(/-/g, '/'))
 		default:
 			return new Date(time)
 	}

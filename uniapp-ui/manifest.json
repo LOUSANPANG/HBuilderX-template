@@ -55,5 +55,11 @@
             "minified" : false
         },
         "usingComponents" : true
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "history"
+        },
+        "template" : "template.h5.html"
     }
 }

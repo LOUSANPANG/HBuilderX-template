@@ -103,11 +103,11 @@ selection-change	| 开启多选时，当选择项发生变化时会触发该事�
 
 ### Th Props
 
-|属性名		|类型		|默认值	 	|可选值				|说明|
-|:-:			|:-:		|:-:			|	:-:				|:-:|
-|width		|String	| -				|-					| 单元格宽度|
-|align		|String	| left		|left/center/right	| 表头对齐方式|
-|sortable |Boolean| false		|- 	| 是否启用排序|
+|属性名	|类型	|默认值	 	|可选值				|说明|
+|:-:		|:-:		|:-:		|:-:				|:-:|
+|width	|String	| -			|-					| 单元格宽度|
+|align	|String| left		|left/center/right	| 表头对齐方式|
+|sortable 	|Boolean| false		|| 是否启用排序|
 
 ### Th Events
 

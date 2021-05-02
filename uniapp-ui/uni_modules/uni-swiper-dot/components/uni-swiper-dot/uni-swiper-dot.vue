@@ -149,9 +149,7 @@
 		border-radius: 100px;
 		margin-left: 6px;
 		background-color: $uni-bg-color-mask;
-		/* #ifndef APP-NVUE */
 		cursor: pointer;
-		/* #endif */
 		/* #ifdef H5 */
 		// border-width: 5px 0;
 		// border-style: solid;
