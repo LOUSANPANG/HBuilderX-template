@@ -60,6 +60,11 @@
         "router" : {
             "mode" : "history"
         },
-        "template" : "template.h5.html"
+        "template" : "template.h5.html",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
     }
 }
