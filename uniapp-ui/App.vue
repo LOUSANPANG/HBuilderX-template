@@ -1,5 +1,8 @@
 <script>
 	export default {
+		globalData: {
+		},
+
 		onLaunch: function() {
 			console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！')
 			console.log('App Launch')
@@ -17,6 +20,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
+	/* #ifndef APP-PLUS-NVUE */
 	@import './common/compatible.css';
+	/* #endif*/
 </style>
