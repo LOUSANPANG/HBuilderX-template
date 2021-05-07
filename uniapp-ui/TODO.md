@@ -15,7 +15,3 @@
 
 - 组件
 	- 404
-	- loading
-	- 骨架屏
-	- error
-	- success
