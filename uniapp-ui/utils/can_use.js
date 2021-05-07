@@ -1,5 +1,5 @@
 /**
- * 判断小程序的API，回调，参数，组件，是否在当前版本可用
+ * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
  * @example uni.canIUse('getSystemInfoSync.return.safeArea.left')
  * @Description 使用 ${API}.${method}.${param}.${option} 或者 ${component}.${attribute}.${option} 方式来调用
  * @param {string} ${API}代表 API 名字
