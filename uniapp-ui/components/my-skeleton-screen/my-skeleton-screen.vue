@@ -2,8 +2,10 @@
 	<view class="my-skeleton-screen">
 		<view class="post" v-for="item in num" :key="item">
 			<view v-if="showThumbnail" class="thumbnail"></view>
-			<view class="line line-title"></view>
-			<view class="line line-desc"></view>
+			<view class="info">
+				<view class="line line-title"></view>
+				<view class="line line-desc"></view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -64,14 +66,15 @@
 		width: 100%;
 		height: 100vh;
 	}
+	
 	.post {
+		display: flex;
 		width: 95%;
 		height: 168rpx;
 		margin: 0 auto 24rpx;
 	}
 	.thumbnail {
 		margin-right: 14rpx;
-		float: left;
 		width: 280rpx;
 		height: 100%;
 		border-radius: 14rpx;
@@ -79,9 +82,12 @@
 		@include background-gradient;
 		animation: shine-thumbnail $animation-duration infinite linear;
 	}
+	
+	.info {
+		width: 100%;
+	}
 	.line {
 		margin-top: 14rpx;
-		float: left;
 		height: 28rpx;
 		border-radius: 7rpx;
 		background-color: #ddd;
