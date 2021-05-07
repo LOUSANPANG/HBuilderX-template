@@ -90,8 +90,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{};exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _can_version = __webpack_require__(/*! @/utils/can_version.js */ 18);var _default =
+{
+  onShow: function onShow() {
+
+    // 检查版本更新
+    (0, _can_version.DetectVersionUpdate)();
+
+  } };exports.default = _default;
 
 /***/ }),
 /* 8 */

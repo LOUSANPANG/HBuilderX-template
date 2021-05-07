@@ -8088,6 +8088,91 @@ function normalizeComponent (
 }
 
 
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
+/*!*****************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/can_version.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.DetectVersionUpdate = void 0;
+
+
+
+
+
+
+var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                                        * 基础库
+                                                                                                                                                                        * 在新版本客户端发布后，再通过后台灰度新版本基础库，灰度时长一般为 12 ～ 24 小时，在灰度结束后，用户设备上才会有新版本的基础库。
+                                                                                                                                                                        * 第 1（major）、2（minor）位版本号更新通常需要依赖新版本的客户端，如：基础库 v2.1.3 运行在 v6.6.7 客户端，基础库 v2.2.0 需要 v6.7.0 客户端。
+                                                                                                                                                                        * 第 3（patch） 位版本号的更新一般不需要依赖客户端更新，如：基础库v2.1.0 ~ v2.1.3 都运行在 v6.6.7 客户端，新版本发布会覆盖旧版本。
+                                                                                                                                                                        */ /**
+                                                                                                                                                                            * 检测版本更新(检测版本中会有大概5s的延迟检测)
+                                                                                                                                                                            * @function uni.getUpdateManager() 检测更新
+                                                                                                                                                                            * @function _:onUpdateReady() 监听小程序有版本更新事件。客户端主动触发下载（无需开发者触发），下载成功后回调
+                                                                                                                                                                            * @function _:applyUpdate() 强制小程序重启并使用新版本。在小程序新版本下载完成后（即收到 onUpdateReady 回调）调用
+                                                                                                                                                                            * @function _:onUpdateFailed() 监听小程序更新失败事件
+                                                                                                                                                                            */var DetectVersionUpdate = function DetectVersionUpdate() {var _UpdateManager = uni.getUpdateManager();
+
+  _UpdateManager.onUpdateReady(function () {
+    uni.showModal({
+      title: '更新提示',
+      content: '新版本已经准备好，是否重启应用?',
+      success: function success(res) {
+        if (res.confirm) {
+          _UpdateManager.applyUpdate();
+        }
+      } });
+
+  });
+
+  _UpdateManager.onUpdateFailed(function () {
+    (0, _custom_toast.default)('新版本下载失败，请尝试清空缓存重新启动', 5000);
+  });
+};exports.DetectVersionUpdate = DetectVersionUpdate;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 19 */
+/*!******************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_toast.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 封装uni.showToast()
+                                                                                                      * @param {string} title 标题
+                                                                                                      * @param {number} duration 时间
+                                                                                                      * @param {string} icon 图标
+                                                                                                      */
+var CustomShowToast = function CustomShowToast(title) {var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;var icon = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'none';
+  return new Promise(function (resolve, reject) {
+    uni.showToast({
+      title: title,
+      duration: duration,
+      icon: icon,
+      mask: true,
+      success: resolve,
+      fail: reject });
+
+  });
+};var _default =
+
+CustomShowToast;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
