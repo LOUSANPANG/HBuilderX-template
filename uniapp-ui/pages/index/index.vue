@@ -9,6 +9,9 @@
 
 		data() {
 			return {}
+		},
+
+		onLoad() {
 		}
 	}
 </script>

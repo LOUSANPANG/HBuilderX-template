@@ -144,6 +144,9 @@ var _default =
 
   data: function data() {
     return {};
+  },
+
+  onLoad: function onLoad() {
   } };exports.default = _default;
 
 /***/ })
