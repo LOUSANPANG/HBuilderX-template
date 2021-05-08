@@ -5,7 +5,7 @@
  */
 import md5 from 'md5'
 
-function md5WithSalt(data = {}, salt) {
+function Md5WithSalt(data = {}, salt) {
 	let md5Val;
 	// if (!salt) throw new Error("salt is required");
 	if (typeof data !== "object") throw new Error("data's type should be Object");
@@ -33,4 +33,4 @@ function md5WithSalt(data = {}, salt) {
 	return md5Val;
 }
 
-export default md5WithSalt;
+export default Md5WithSalt;

@@ -149,7 +149,6 @@ var _default =
   },
 
   onLoad: function onLoad() {
-    console.log();
   } };exports.default = _default;
 
 /***/ })

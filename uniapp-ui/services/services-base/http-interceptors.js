@@ -3,14 +3,16 @@ import {
 	v1 as uuidv1
 } from 'uuid'
 import Request from '../luch-request/index.js'
+
+import GetBaseUrl from './base-url.js'
+import Md5WithSalt from './md5Signature.js'
+import SilentLogin from './silent-login.js'
+// import { NavToLogin } from './tologin'
 import CustomCustomShowToast from '@/utils/custom_toast.js'
 import {
 	GetStorageSync,
 	ClearStorageSync
 } from '@/utils/custom_storage.js'
-import GetBaseUrl from './base-url.js'
-import md5WithSalt from './md5Signature.js'
-// import { NavToLogin } from './tologin'
 
 
 const $API = new Request()
@@ -27,7 +29,7 @@ $API.setConfig((config) => {
 	const _config = {
 		baseURL: GetBaseUrl(config.data, GetStorageSync('key')),
 		header: {
-			sign: md5WithSalt(),
+			sign: Md5WithSalt(),
 			uuid: uuidv1(),
 			timestamp: Date.parse(new Date()) / 1000
 		},
@@ -67,13 +69,16 @@ $API.interceptors.request.use((config) => {
  * status code 状态判断
  * code 数据判断
  */
-$API.interceptors.response.use((response) => {
+$API.interceptors.response.use(async (response) => {
 	console.info('=====请求拦截后[成功]: ', response)
 	const code = response.data.code
 
 	if (response.statusCode === 200) {
 		if (code === '11111') {
 			// token 失效 -> 静默登录
+			await SilentLogin()
+			// TODO 那种请求自己掉自己
+			await $API.post(response.config.url, response.config.data)
 		} else if (code === 10000) {
 			return Promise.resolve(res.data)
 		} else {
