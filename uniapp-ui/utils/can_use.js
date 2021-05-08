@@ -1,3 +1,5 @@
+import CustomShowToast from './custom_toast.js'
+
 /**
  * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
  * @example uni.canIUse('getSystemInfoSync.return.safeArea.left')
@@ -10,12 +12,21 @@
  * @param {string} ${attribute}代表组件属性
  * @param {string} ${option}代表组件属性的可选值
  */
-
-
-const CanIUse = ( param ) => {
+export const CanIUse = ( param ) => {
   const _CANIUSE =  uni.canIUse(param)
   return _CANIUSE
 }
 
+/**
+ * 同步获取系统信息
+ */
+export const CanSystemInfoSync = () => {
+	try {
+	    const res = uni.getSystemInfoSync()
+			return res
+	} catch (e) {
+		console.error(e)
+	    CustomShowToast('获取系统信息失败')
+	}
+}
 
-export default CanIUse
