@@ -12,6 +12,7 @@
 		},
 
 		onLoad() {
+			console.log()
 		}
 	}
 </script>

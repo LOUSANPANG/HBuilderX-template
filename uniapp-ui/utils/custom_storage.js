@@ -41,7 +41,7 @@ export const GetStorageSync = ( key ) => {
     const _GETDATA = uni.getStorageSync(key)
     if (_GETDATA) return _GETDATA
   } catch (e) {
-    CustomShowToast('读取缓存失败')
+    CustomShowToast(`读取${key}缓存失败`)
   }
 }
 
