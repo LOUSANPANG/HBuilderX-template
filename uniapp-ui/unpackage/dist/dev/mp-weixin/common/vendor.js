@@ -8166,6 +8166,30 @@ function normalizeComponent (
 }
 
 
+/***/ }),
+/* 13 */
+/*!******************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/config.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 导出全局变量 静态配置文件
+                                                                                                      * @return {object} CONFIG 全局变量
+                                                                                                      * @return {object} CONFIG.SERVERAPI 服务地址列表
+                                                                                                      * @return {string} CONFIG.SERVERAPI.test 测试服务地址
+                                                                                                      */
+
+var rootHost = 'http://xxx.com/api/v1';
+
+var CONFIG = {
+  test: rootHost + '/test' };var _default =
+
+
+CONFIG;exports.default = _default;
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

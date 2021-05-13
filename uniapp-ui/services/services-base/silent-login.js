@@ -1,10 +1,6 @@
 import CustomCustomShowToast from '@/utils/custom_toast.js'
-import GetBaseUrl from './base-url.js'
-import {
-	GetStorageSync,
-	ClearStorageSync,
-	SetStorageSync
-} from '@/utils/custom_storage.js'
+import CONFIG from '@/config.js'
+import { GetStorageSync, ClearStorageSync, SetStorageSync } from '@/utils/custom_storage.js'
 // import { NavToLogin } from './tologin'
 
 /**
@@ -27,21 +23,21 @@ const SilentLogin = async () => {
 	const [ loginErr, loginRes ] = await uni.login({
 		provider: 'weixin'
 	})
-	
+
 	if(loginErr) {
 		// TODO
 		CustomCustomShowToast('静默登录失败')
 		return Promise.reject(loginErr)
 	} else {
 		const [ requestErr, requestRes ] = await uni.request({
-			url: GetBaseUrl(),
+			url: CONFIG.test,
 			method: 'POST',
 			data: {
 				code: loginRes.code,
 				phone: GetStorageSync('phone')
 			}
 		})
-		
+
 		if(requestErr) {
 			// TODO
 			CustomCustomShowToast('静默登录请求失败')
@@ -55,9 +51,6 @@ const SilentLogin = async () => {
 					pwdFlag
 				} = requestRes.data.data
 				SetStorageSync('token', token)
-				SetStorageSync('phone', phone)
-				SetStorageSync('key', key)
-				SetStorageSync('pwdFlag', pwdFlag)
 			} else {
 				ClearStorageSync()
 				uni.showModal({
