@@ -5,10 +5,11 @@
  * @return {string} CONFIG.SERVERAPI.test 测试服务地址
  */
 
-const rootHost = 'http://xxx.com/api/v1'
+const rootHost = 'https://vipcard.sdykt.com.cn'
 
 const CONFIG = {
-	test: rootHost + '/test'
+	login: rootHost + '/jeecg-boot/userManage/userLoginByCode',
+	test: rootHost + '/jeecg-boot'
 }
 
 export default CONFIG

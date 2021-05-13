@@ -1,8 +1,3 @@
-import CustomCustomShowToast from '@/utils/custom_toast.js'
-import CONFIG from '@/config.js'
-import { GetStorageSync, ClearStorageSync, SetStorageSync } from '@/utils/custom_storage.js'
-// import { NavToLogin } from './tologin'
-
 /**
  * 静默登录
  * 1. 获取临时登录凭证code
@@ -18,48 +13,63 @@ import { GetStorageSync, ClearStorageSync, SetStorageSync } from '@/utils/custom
  * b 无法通过wx.getUserInfo接口获取用户个人信息 将直接获取匿名数据
  * c 新增getUserProfile接口可获取用户信息 均需用户确认
  */
+import CustomShowToast from '@/utils/custom_toast.js'
+import {
+	GetStorageSync,
+	ClearStorageSync,
+	SetStorageSync
+} from '@/utils/custom_storage.js'
+import CONFIG from '@/config.js'
+import { ToLogin } from './tologin'
+
 
 const SilentLogin = async () => {
-	const [ loginErr, loginRes ] = await uni.login({
+	const [loginErr, loginRes] = await uni.login({
 		provider: 'weixin'
 	})
 
-	if(loginErr) {
+	if (loginErr) {
 		// TODO
-		CustomCustomShowToast('静默登录失败')
+		console.log('[===uni.login失败]: ', loginErr)
+		CustomShowToast('uni.login error')
 		return Promise.reject(loginErr)
 	} else {
-		const [ requestErr, requestRes ] = await uni.request({
-			url: CONFIG.test,
+		console.log('[===uni.login成功]: ', loginRes)
+		const [requestErr, requestRes] = await uni.request({
+			url: CONFIG.login,
 			method: 'POST',
 			data: {
 				code: loginRes.code,
-				phone: GetStorageSync('phone')
+				phone: '15336390730'
 			}
 		})
 
-		if(requestErr) {
+		if (requestErr) {
 			// TODO
-			CustomCustomShowToast('静默登录请求失败')
+			console.log('[===登录接口失败]: ', requestErr)
+			CustomShowToast('静默登录请求失败')
 			return Promise.reject(requestErr)
 		} else {
-			if(requestRes.statusCode === 200 && requestRes.data.code === '1000' ) {
+			console.log('[===登录接口成功]: ', requestRes)
+			if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
 				const {
 					token,
-					phone,
 					key,
-					pwdFlag
+					userId
 				} = requestRes.data.data
 				SetStorageSync('token', token)
+				SetStorageSync('key', key)
+				SetStorageSync('userId', userId)
 			} else {
+				// TODO
 				ClearStorageSync()
 				uni.showModal({
 					title: "提示",
-					content: "您的登录信息已过期，请重新登录",
+					content: "登录信息已过期，请重新登录",
 					confirmText: "前往登录",
 					showCancel: false,
 					success(res) {
-						// NavToLogin()
+						ToLogin()
 					}
 				})
 			}

@@ -4,6 +4,7 @@
 </template>
 
 <script>
+	import { PostTest } from '@/services/services-collection/test.js'
 	export default {
 		name: 'Index',
 
@@ -11,7 +12,13 @@
 			return {}
 		},
 
-		onLoad() {
+		async onLoad() {
+			try{
+				const res = await PostTest({})
+				console.log(res)
+			}catch(e){
+				console.log(e)
+			}
 		}
 	}
 </script>

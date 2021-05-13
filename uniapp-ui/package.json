@@ -13,7 +13,7 @@
   "author": "LOUSANPANG",
   "license": "ISC",
   "dependencies": {
-    "md5": "^2.3.0",
+    "js-md5": "^0.7.3",
     "uuid": "^8.3.2"
   }
 }
