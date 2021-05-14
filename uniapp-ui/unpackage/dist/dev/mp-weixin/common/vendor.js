@@ -8185,8 +8185,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var rootHost = 'https://vipcard.sdykt.com.cn';
 
 var CONFIG = {
-  login: rootHost + '/jeecg-boot/userManage/userLoginByCode',
-  test: rootHost + '/jeecg-boot' };var _default =
+  rootHost: rootHost,
+  login: '/jeecg-boot/userManage' };var _default =
 
 
 CONFIG;exports.default = _default;

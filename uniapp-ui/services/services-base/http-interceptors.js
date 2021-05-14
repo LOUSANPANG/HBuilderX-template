@@ -19,7 +19,7 @@ const $API = new Request()
 
 $API.setConfig((config) => {
 	const _config = {
-		baseURL: CONFIG.test,
+		baseURL: CONFIG.rootHost,
 		header: {
 			uuid: uuidv1(),
 			timestamp: Date.parse(new Date()) / 1000
@@ -42,8 +42,8 @@ $API.interceptors.request.use((config) => {
 	console.info('[===请求拦截前]: ', config)
 	config.header = {
 		...config.header,
-		sign: Md5WithSalt(config.data, GetStorageSync('key')),
-		Authorization: GetStorageSync('token')
+		sign: Md5WithSalt(config.data, GetStorageSync('user') && JSON.parse(GetStorageSync('user')).key),
+		Authorization: GetStorageSync('user') && JSON.parse(GetStorageSync('user')).token
 	}
 	// if (config.custom.auth) {
 	//   config.header.token = 'token'
@@ -74,7 +74,6 @@ $API.interceptors.response.use(async (response) => {
 		} else if (code === '10000') {
 			return Promise.resolve(response.data)
 		} else {
-			CustomShowToast(response.data.msg || '调用服务失败')
 			return Promise.reject(response.data)
 		}
 	}
@@ -85,18 +84,18 @@ $API.interceptors.response.use(async (response) => {
 
 	if (statusCode === 404) {
 		CustomShowToast(`${statusCode}请求资源不存在`)
-		return Promise.reject(`${statusCode}请求资源不存在`)
+		// return Promise.reject(`${statusCode}请求资源不存在`)
 
 	} else if (statusCode === 500 || statusCode === 502 || statusCode === 503) {
 		CustomShowToast(`${statusCode}系统繁忙稍后重试`)
-		return Promise.reject(`${statusCode}系统繁忙稍后重试`)
+		// return Promise.reject(`${statusCode}系统繁忙稍后重试`)
 
 	} else if (statusCode === 403) {
 		CustomShowToast(`${statusCode}没有权限访问`)
 		setTimeout(() => {
 			ClearStorageSync()
 			ToLogin()
-			return Promise.reject(`${statusCode}没有权限访问`)
+			// return Promise.reject(`${statusCode}没有权限访问`)
 		}, 2000)
 
 	} else if (statusCode === 401) {
@@ -105,7 +104,7 @@ $API.interceptors.response.use(async (response) => {
 		setTimeout(() => {
 			ClearStorageSync()
 			ToLogin()
-			return Promise.reject(`${statusCode}需要鉴权`)
+			// return Promise.reject(`${statusCode}需要鉴权`)
 		}, 2000)
 	}
 })

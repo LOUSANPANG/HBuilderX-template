@@ -8,8 +8,8 @@
 const rootHost = 'https://vipcard.sdykt.com.cn'
 
 const CONFIG = {
-	login: rootHost + '/jeecg-boot/userManage/userLoginByCode',
-	test: rootHost + '/jeecg-boot'
+	rootHost,
+	login: '/jeecg-boot/userManage'
 }
 
 export default CONFIG

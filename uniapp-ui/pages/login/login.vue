@@ -1,6 +1,5 @@
 <template>
 	<view class="login">
-
 	</view>
 </template>
 
@@ -12,7 +11,8 @@
 			return {}
 		},
 
-		onLoad() {}
+		methods: {}
+
 	}
 </script>
 

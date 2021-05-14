@@ -15,7 +15,6 @@
  */
 import CustomShowToast from '@/utils/custom_toast.js'
 import {
-	GetStorageSync,
 	ClearStorageSync,
 	SetStorageSync
 } from '@/utils/custom_storage.js'
@@ -35,7 +34,7 @@ const SilentLogin = async () => {
 	} else {
 		console.info('[===uni.login成功]: ', loginRes)
 		const [requestErr, requestRes] = await uni.request({
-			url: CONFIG.login,
+			url: CONFIG.rootHost + CONFIG.login + '/userLoginByCode',
 			method: 'POST',
 			data: {
 				code: loginRes.code,
@@ -50,14 +49,7 @@ const SilentLogin = async () => {
 		} else {
 			console.info('[===登录接口成功]: ', requestRes)
 			if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
-				const {
-					token,
-					key,
-					userId
-				} = requestRes.data.data
-				SetStorageSync('token', token)
-				SetStorageSync('key', key)
-				SetStorageSync('userId', userId)
+				SetStorageSync('user', JSON.stringify(requestRes.data.data))
 			} else {
 				ClearStorageSync()
 				uni.showModal({
