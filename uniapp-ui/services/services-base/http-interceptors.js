@@ -39,7 +39,7 @@ $API.setConfig((config) => {
  * 通过 custom 做一系列其他操作
  */
 $API.interceptors.request.use((config) => {
-	console.log('[===请求拦截前]: ', config)
+	console.info('[===请求拦截前]: ', config)
 	config.header = {
 		...config.header,
 		sign: Md5WithSalt(config.data, GetStorageSync('key')),
@@ -62,14 +62,14 @@ $API.interceptors.request.use((config) => {
  * code 数据判断
  */
 $API.interceptors.response.use(async (response) => {
-	console.log('[===请求拦截后成功码]: ', response)
+	console.info('[===请求拦截后成功码]: ', response)
 	const code = response.data.code
 
 	if (response.statusCode === 200) {
 		if (code === '11111') {
 			// token 失效 静默登录
 			await SilentLogin()
-			// 请求自己掉自己
+			// 递归
 			return await $API.post(response.config.url, response.config.data)
 		} else if (code === '10000') {
 			return Promise.resolve(response.data)
@@ -80,7 +80,7 @@ $API.interceptors.response.use(async (response) => {
 	}
 
 }, (response) => {
-	console.log('[===请求拦截后错误码]: ', response)
+	console.info('[===请求拦截后错误码]: ', response)
 	const statusCode = response.statusCode
 
 	if (statusCode === 404) {

@@ -10,5 +10,6 @@
     "backgroundColor": "#F8F8F8",
     "navigationStyle": "default"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }
