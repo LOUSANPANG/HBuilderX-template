@@ -1,10 +1,9 @@
 <template>
-	<view class="index">
-		<navigator url="/pages/login/login"><button type="default">login</button></navigator>
-	</view>
+	<view class="index"></view>
 </template>
 
 <script>
+	import { PostLogin } from '@/services/services-collection/login.js'
 	export default {
 		name: 'Index',
 
@@ -12,7 +11,16 @@
 			return {}
 		},
 
-		methods: {}
+		async onLoad() {
+			try {
+				const loginRes = await PostLogin({ code: '' })
+				// TODO success
+				console.log(loginRes)
+			} catch(e) {
+				//TODO fail code !== '1000' & return Promise.reject()
+				console.log(e)
+			}
+		}
 	}
 </script>
 

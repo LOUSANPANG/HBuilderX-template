@@ -1,1 +1,1 @@
-<view class="index"><navigator url="/pages/login/login"><button type="default">login</button></navigator></view>
+<view class="index"></view>

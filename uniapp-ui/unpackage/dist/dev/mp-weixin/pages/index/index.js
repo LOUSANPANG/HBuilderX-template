@@ -138,13 +138,12 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 30));
+
+
+
+
+var _login = __webpack_require__(/*! @/services/services-collection/login.js */ 33);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 {
   name: 'Index',
 
@@ -152,7 +151,16 @@ var _default =
     return {};
   },
 
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad() {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var loginRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
+
+                (0, _login.PostLogin)({ code: '' }));case 3:loginRes = _context.sent;
+              // TODO success
+              console.log(loginRes);_context.next = 10;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);
+
+              //TODO fail code !== '1000' & return Promise.reject()
+              console.log(_context.t0);case 10:case "end":return _context.stop();}}}, _callee, null, [[0, 7]]);}))();
+
+  } };exports.default = _default;
 
 /***/ }),
 /* 20 */

@@ -8191,6 +8191,3418 @@ var CONFIG = {
 
 CONFIG;exports.default = _default;
 
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 31);
+
+/***/ }),
+/* 31 */
+/*!************************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This method of obtaining a reference to the global object needs to be
+// kept identical to the way it is obtained in runtime.js
+var g = (function() {
+  return this || (typeof self === "object" && self);
+})() || Function("return this")();
+
+// Use `getOwnPropertyNames` because not all browsers support calling
+// `hasOwnProperty` on the global `self` object in a worker. See #183.
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+
+// Save the old regeneratorRuntime in case it needs to be restored later.
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+
+// Force reevalutation of runtime.js.
+g.regeneratorRuntime = undefined;
+
+module.exports = __webpack_require__(/*! ./runtime */ 32);
+
+if (hadRuntime) {
+  // Restore the original runtime.
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  // Remove the global property added by runtime.js.
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+
+
+/***/ }),
+/* 32 */
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+!(function(global) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      // If regeneratorRuntime is defined globally and we're in a module,
+      // make the exports object identical to regeneratorRuntime.
+      module.exports = runtime;
+    }
+    // Don't bother evaluating the rest of this file if the runtime was
+    // already defined globally.
+    return;
+  }
+
+  // Define the runtime globally (as expected by generated code) as either
+  // module.exports (if we're in a module) or a new, empty object.
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  runtime.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  runtime.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  runtime.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+})(
+  // In sloppy mode, unbound `this` refers to the global object, fallback to
+  // Function constructor if we're in global strict mode. That is sadly a form
+  // of indirect eval which violates Content Security Policy.
+  (function() {
+    return this || (typeof self === "object" && self);
+  })() || Function("return this")()
+);
+
+
+/***/ }),
+/* 33 */
+/*!**********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-collection/login.js ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.PostLogin = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));
+var _httpInterceptors = _interopRequireDefault(__webpack_require__(/*! ../services-base/http-interceptors.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var PostLogin = function PostLogin(data) {
+  return _httpInterceptors.default.post(_config.default.login + '/userLogin', data);
+};exports.PostLogin = PostLogin;
+
+/***/ }),
+/* 34 */
+/*!****************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/http-interceptors.js ***!
+  \****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 30));
+
+
+
+
+
+var _uuid = __webpack_require__(/*! uuid */ 35);
+var _index = _interopRequireDefault(__webpack_require__(/*! ../luch-request/index.js */ 40));
+var _md5Signature = _interopRequireDefault(__webpack_require__(/*! ./md5Signature.js */ 53));
+var _silentLogin = _interopRequireDefault(__webpack_require__(/*! ./silent-login.js */ 58));
+var _tologin = __webpack_require__(/*! ./tologin */ 60);
+var _custom_toast = _interopRequireDefault(__webpack_require__(/*! @/utils/custom_toast.js */ 9));
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 59);
+var _config2 = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+
+var $API = new _index.default();
+
+
+$API.setConfig(function (config) {
+  var _config = {
+    baseURL: _config2.default.rootHost,
+    header: {
+      uuid: (0, _uuid.v1)(),
+      timestamp: Date.parse(new Date()) / 1000 },
+
+    custom: {} };
+
+  return _objectSpread(_objectSpread({},
+  config),
+  _config);
+
+});
+
+
+/**
+     * 请求前拦截
+     * header 添加 token
+     * 通过 custom 做一系列其他操作
+     */
+$API.interceptors.request.use(function (config) {
+  console.info('[===请求拦截前]: ', config);
+  config.header = _objectSpread(_objectSpread({},
+  config.header), {}, {
+    sign: (0, _md5Signature.default)(config.data, (0, _custom_storage.GetStorageSync)('user') && JSON.parse((0, _custom_storage.GetStorageSync)('user')).key),
+    Authorization: (0, _custom_storage.GetStorageSync)('user') && JSON.parse((0, _custom_storage.GetStorageSync)('user')).token });
+
+  // if (config.custom.auth) {
+  //   config.header.token = 'token'
+  // }
+
+  return Promise.resolve(config);
+
+}, function (config) {
+  return Promise.reject(config);
+});
+
+
+/**
+     * 请求后拦截
+     * status code 状态判断
+     * code 数据判断
+     */
+$API.interceptors.response.use( /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(response) {var code;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+            console.info('[===请求拦截后成功码]: ', response);
+            code = response.data.code;if (!(
+
+            response.statusCode === 200)) {_context.next = 16;break;}if (!(
+            code === '11111')) {_context.next = 11;break;}_context.next = 6;return (
+
+              (0, _silentLogin.default)());case 6:_context.next = 8;return (
+
+              $API.post(response.config.url, response.config.data));case 8:return _context.abrupt("return", _context.sent);case 11:if (!(
+            code === '10000')) {_context.next = 15;break;}return _context.abrupt("return",
+            Promise.resolve(response.data));case 15:return _context.abrupt("return",
+
+            Promise.reject(response.data));case 16:case "end":return _context.stop();}}}, _callee);}));return function (_x) {return _ref.apply(this, arguments);};}(),
+
+
+
+function (response) {
+  console.info('[===请求拦截后错误码]: ', response);
+  var statusCode = response.statusCode;
+
+  if (statusCode === 404) {
+    (0, _custom_toast.default)("".concat(statusCode, "\u8BF7\u6C42\u8D44\u6E90\u4E0D\u5B58\u5728"));
+    // return Promise.reject(`${statusCode}请求资源不存在`)
+
+  } else if (statusCode === 500 || statusCode === 502 || statusCode === 503) {
+    (0, _custom_toast.default)("".concat(statusCode, "\u7CFB\u7EDF\u7E41\u5FD9\u7A0D\u540E\u91CD\u8BD5"));
+    // return Promise.reject(`${statusCode}系统繁忙稍后重试`)
+
+  } else if (statusCode === 403) {
+    (0, _custom_toast.default)("".concat(statusCode, "\u6CA1\u6709\u6743\u9650\u8BBF\u95EE"));
+    setTimeout(function () {
+      (0, _custom_storage.ClearStorageSync)();
+      (0, _tologin.ToLogin)();
+      // return Promise.reject(`${statusCode}没有权限访问`)
+    }, 2000);
+
+  } else if (statusCode === 401) {
+    // 401
+    (0, _custom_toast.default)("".concat(statusCode, "\u9700\u8981\u9274\u6743"));
+    setTimeout(function () {
+      (0, _custom_storage.ClearStorageSync)();
+      (0, _tologin.ToLogin)();
+      // return Promise.reject(`${statusCode}需要鉴权`)
+    }, 2000);
+  }
+});var _default =
+
+$API;exports.default = _default;
+
+/***/ }),
+/* 35 */
+/*!************************************!*\
+  !*** ./node_modules/uuid/index.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var v1 = __webpack_require__(/*! ./v1 */ 36);
+var v4 = __webpack_require__(/*! ./v4 */ 39);
+
+var uuid = v4;
+uuid.v1 = v1;
+uuid.v4 = v4;
+
+module.exports = uuid;
+
+
+/***/ }),
+/* 36 */
+/*!*********************************!*\
+  !*** ./node_modules/uuid/v1.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var rng = __webpack_require__(/*! ./lib/rng */ 37);
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 38);
+
+// **`v1()` - Generate time-based UUID**
+//
+// Inspired by https://github.com/LiosK/UUID.js
+// and http://docs.python.org/library/uuid.html
+
+var _nodeId;
+var _clockseq;
+
+// Previous uuid creation time
+var _lastMSecs = 0;
+var _lastNSecs = 0;
+
+// See https://github.com/uuidjs/uuid for API details
+function v1(options, buf, offset) {
+  var i = buf && offset || 0;
+  var b = buf || [];
+
+  options = options || {};
+  var node = options.node || _nodeId;
+  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+  // node and clockseq need to be initialized to random values if they're not
+  // specified.  We do this lazily to minimize issues related to insufficient
+  // system entropy.  See #189
+  if (node == null || clockseq == null) {
+    var seedBytes = rng();
+    if (node == null) {
+      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+      node = _nodeId = [
+        seedBytes[0] | 0x01,
+        seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]
+      ];
+    }
+    if (clockseq == null) {
+      // Per 4.2.2, randomize (14 bit) clockseq
+      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;
+    }
+  }
+
+  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+  // Per 4.2.1.2, use count of uuid's generated during the current clock
+  // cycle to simulate higher resolution clock
+  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+  // Time since last uuid creation (in msecs)
+  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+  // Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt < 0 && options.clockseq === undefined) {
+    clockseq = clockseq + 1 & 0x3fff;
+  }
+
+  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+  // time interval
+  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+    nsecs = 0;
+  }
+
+  // Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nsecs >= 10000) {
+    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+  }
+
+  _lastMSecs = msecs;
+  _lastNSecs = nsecs;
+  _clockseq = clockseq;
+
+  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  msecs += 12219292800000;
+
+  // `time_low`
+  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+  b[i++] = tl >>> 24 & 0xff;
+  b[i++] = tl >>> 16 & 0xff;
+  b[i++] = tl >>> 8 & 0xff;
+  b[i++] = tl & 0xff;
+
+  // `time_mid`
+  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+  b[i++] = tmh >>> 8 & 0xff;
+  b[i++] = tmh & 0xff;
+
+  // `time_high_and_version`
+  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+  b[i++] = tmh >>> 16 & 0xff;
+
+  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+  b[i++] = clockseq >>> 8 | 0x80;
+
+  // `clock_seq_low`
+  b[i++] = clockseq & 0xff;
+
+  // `node`
+  for (var n = 0; n < 6; ++n) {
+    b[i + n] = node[n];
+  }
+
+  return buf ? buf : bytesToUuid(b);
+}
+
+module.exports = v1;
+
+
+/***/ }),
+/* 37 */
+/*!**********************************************!*\
+  !*** ./node_modules/uuid/lib/rng-browser.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// Unique ID creation requires a high quality random # generator.  In the
+// browser this is a little complicated due to unknown quality of Math.random()
+// and inconsistent support for the `crypto` API.  We do the best we can via
+// feature-detection
+
+// getRandomValues needs to be invoked in a context where "this" is a Crypto
+// implementation. Also, find the complete implementation of crypto on IE11.
+var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
+                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
+
+if (getRandomValues) {
+  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+
+  module.exports = function whatwgRNG() {
+    getRandomValues(rnds8);
+    return rnds8;
+  };
+} else {
+  // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().  It's fast, but is of unspecified
+  // quality.
+  var rnds = new Array(16);
+
+  module.exports = function mathRNG() {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return rnds;
+  };
+}
+
+
+/***/ }),
+/* 38 */
+/*!**********************************************!*\
+  !*** ./node_modules/uuid/lib/bytesToUuid.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+var byteToHex = [];
+for (var i = 0; i < 256; ++i) {
+  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+}
+
+function bytesToUuid(buf, offset) {
+  var i = offset || 0;
+  var bth = byteToHex;
+  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
+  return ([
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]], '-',
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]],
+    bth[buf[i++]], bth[buf[i++]]
+  ]).join('');
+}
+
+module.exports = bytesToUuid;
+
+
+/***/ }),
+/* 39 */
+/*!*********************************!*\
+  !*** ./node_modules/uuid/v4.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var rng = __webpack_require__(/*! ./lib/rng */ 37);
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 38);
+
+function v4(options, buf, offset) {
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options === 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ++ii) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || bytesToUuid(rnds);
+}
+
+module.exports = v4;
+
+
+/***/ }),
+/* 40 */
+/*!***************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/index.js ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 41));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+_Request.default;exports.default = _default;
+
+/***/ }),
+/* 41 */
+/*!**********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/Request.js ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 42));
+var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 50));
+var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 51));
+var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 52));
+var _utils = __webpack_require__(/*! ../utils */ 45);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+
+Request = /*#__PURE__*/function () {
+  /**
+                                     * @param {Object} arg - 全局配置
+                                     * @param {String} arg.baseURL - 全局根路径
+                                     * @param {Object} arg.header - 全局header
+                                     * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
+                                     * @param {String} arg.dataType = [json] - 全局默认的dataType
+                                     * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。App和支付宝小程序不支持
+                                     * @param {Object} arg.custom - 全局默认的自定义参数
+                                     * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+                                     * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
+                                     * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
+                                     * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
+                                     * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
+                                     */
+  function Request() {var arg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};_classCallCheck(this, Request);
+    if (!(0, _utils.isPlainObject)(arg)) {
+      arg = {};
+      console.warn('设置全局参数必须接收一个Object');
+    }
+    this.config = _objectSpread(_objectSpread({}, _defaults.default), arg);
+    this.interceptors = {
+      request: new _InterceptorManager.default(),
+      response: new _InterceptorManager.default() };
+
+  }
+
+  /**
+     * @Function
+     * @param {Request~setConfigCallback} f - 设置全局默认配置
+     */_createClass(Request, [{ key: "setConfig", value: function setConfig(
+    f) {
+      this.config = f(this.config);
+    } }, { key: "middleware", value: function middleware(
+
+    config) {
+      config = (0, _mergeConfig.default)(this.config, config);
+      var chain = [_dispatchRequest.default, undefined];
+      var promise = Promise.resolve(config);
+
+      this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+        chain.unshift(interceptor.fulfilled, interceptor.rejected);
+      });
+
+      this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+        chain.push(interceptor.fulfilled, interceptor.rejected);
+      });
+
+      while (chain.length) {
+        promise = promise.then(chain.shift(), chain.shift());
+      }
+
+      return promise;
+    }
+
+    /**
+       * @Function
+       * @param {Object} config - 请求配置项
+       * @prop {String} options.url - 请求路径
+       * @prop {Object} options.data - 请求参数
+       * @prop {Object} [options.responseType = config.responseType] [text|arraybuffer] - 响应的数据类型
+       * @prop {Object} [options.dataType = config.dataType] - 如果设为 json，会尝试对返回的数据做一次 JSON.parse
+       * @prop {Object} [options.header = config.header] - 请求header
+       * @prop {Object} [options.method = config.method] - 请求方法
+       * @returns {Promise<unknown>}
+       */ }, { key: "request", value: function request()
+    {var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      return this.middleware(config);
+    } }, { key: "get", value: function get(
+
+    url) {var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        method: 'GET' },
+      options));
+
+    } }, { key: "post", value: function post(
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'POST' },
+      options));
+
+    } }, { key: "put", value: function put(
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'PUT' },
+      options));
+
+    } }, { key: "delete", value: function _delete(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'DELETE' },
+      options));
+
+    } }, { key: "connect", value: function connect(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'CONNECT' },
+      options));
+
+    } }, { key: "head", value: function head(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'HEAD' },
+      options));
+
+    } }, { key: "options", value: function options(
+
+
+
+
+    url, data) {var _options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'OPTIONS' },
+      _options));
+
+    } }, { key: "trace", value: function trace(
+
+
+
+
+    url, data) {var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this.middleware(_objectSpread({
+        url: url,
+        data: data,
+        method: 'TRACE' },
+      options));
+
+    } }, { key: "upload", value: function upload(
+
+
+
+    url) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      config.url = url;
+      config.method = 'UPLOAD';
+      return this.middleware(config);
+    } }, { key: "download", value: function download(
+
+    url) {var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      config.url = url;
+      config.method = 'DOWNLOAD';
+      return this.middleware(config);
+    } }]);return Request;}();
+
+
+
+/**
+                               * setConfig回调
+                               * @return {Object} - 返回操作后的config
+                               * @callback Request~setConfigCallback
+                               * @param {Object} config - 全局默认config
+                               */exports.default = Request;
+
+/***/ }),
+/* 42 */
+/*!******************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/dispatchRequest.js ***!
+  \******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+
+
+function _default(config) {
+  return (0, _index.default)(config);
+};exports.default = _default;
+
+/***/ }),
+/* 43 */
+/*!************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/adapters/index.js ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 44));
+var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 46));
+var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 49));
+var _utils = __webpack_require__(/*! ../utils */ 45);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * 返回可选值存在的配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {Array} keys - 可选值数组
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {Object} config2 - 配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * @return {{}} - 存在的配置项
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
+var mergeKeys = function mergeKeys(keys, config2) {
+  var config = {};
+  keys.forEach(function (prop) {
+    if (!(0, _utils.isUndefined)(config2[prop])) {
+      config[prop] = config2[prop];
+    }
+  });
+  return config;
+};var _default =
+function _default(config) {
+  return new Promise(function (resolve, reject) {
+    var fullPath = (0, _buildURL.default)((0, _buildFullPath.default)(config.baseURL, config.url), config.params);
+    var _config = {
+      url: fullPath,
+      header: config.header,
+      complete: function complete(response) {
+        config.fullPath = fullPath;
+        response.config = config;
+        try {
+          // 对可能字符串不是json 的情况容错
+          if (typeof response.data === 'string') {
+            response.data = JSON.parse(response.data);
+          }
+          // eslint-disable-next-line no-empty
+        } catch (e) {
+        }
+        (0, _settle.default)(resolve, reject, response);
+      } };
+
+    var requestTask;
+    if (config.method === 'UPLOAD') {
+      delete _config.header['content-type'];
+      delete _config.header['Content-Type'];
+      var otherConfig = {
+
+
+
+        filePath: config.filePath,
+        name: config.name };
+
+      var optionalKeys = [
+
+
+
+
+
+
+
+
+
+      'formData'];
+
+      requestTask = uni.uploadFile(_objectSpread(_objectSpread(_objectSpread({}, _config), otherConfig), mergeKeys(optionalKeys, config)));
+    } else if (config.method === 'DOWNLOAD') {
+
+
+
+
+
+      requestTask = uni.downloadFile(_config);
+    } else {
+      var _optionalKeys = [
+      'data',
+      'method',
+
+      'timeout',
+
+      'dataType',
+
+      'responseType'];
+
+
+
+
+
+
+
+
+
+
+
+      requestTask = uni.request(_objectSpread(_objectSpread({}, _config), mergeKeys(_optionalKeys, config)));
+    }
+    if (config.getTask) {
+      config.getTask(requestTask, config);
+    }
+  });
+};exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 44 */
+/*!**************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/buildURL.js ***!
+  \**************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildURL;
+
+var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 45));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
+
+function encode(val) {
+  return encodeURIComponent(val).
+  replace(/%40/gi, '@').
+  replace(/%3A/gi, ':').
+  replace(/%24/g, '$').
+  replace(/%2C/gi, ',').
+  replace(/%20/g, '+').
+  replace(/%5B/gi, '[').
+  replace(/%5D/gi, ']');
+}
+
+/**
+   * Build a URL by appending params to the end
+   *
+   * @param {string} url The base of the url (e.g., http://www.google.com)
+   * @param {object} [params] The params to be appended
+   * @returns {string} The formatted url
+   */
+function buildURL(url, params) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+}
+
+/***/ }),
+/* 45 */
+/*!***************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/utils.js ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// utils is a library of generic helper functions non-specific to axios
+Object.defineProperty(exports, "__esModule", { value: true });exports.isArray = isArray;exports.isObject = isObject;exports.isDate = isDate;exports.isURLSearchParams = isURLSearchParams;exports.forEach = forEach;exports.isBoolean = isBoolean;exports.isPlainObject = isPlainObject;exports.deepMerge = deepMerge;exports.isUndefined = isUndefined;
+var toString = Object.prototype.toString;
+
+/**
+                                           * Determine if a value is an Array
+                                           *
+                                           * @param {Object} val The value to test
+                                           * @returns {boolean} True if value is an Array, otherwise false
+                                           */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+
+/**
+   * Determine if a value is an Object
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is an Object, otherwise false
+   */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+   * Determine if a value is a Date
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is a Date, otherwise false
+   */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+   * Determine if a value is a URLSearchParams object
+   *
+   * @param {Object} val The value to test
+   * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+   */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+
+/**
+   * Iterate over an Array or an Object invoking a function for each item.
+   *
+   * If `obj` is an Array callback will be called passing
+   * the value, index, and complete array for each item.
+   *
+   * If 'obj' is an Object callback will be called passing
+   * the value, key, and complete object for each property.
+   *
+   * @param {Object|Array} obj The object to iterate
+   * @param {Function} fn The callback to invoke for each item
+   */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+   * 是否为boolean 值
+   * @param val
+   * @returns {boolean}
+   */
+function isBoolean(val) {
+  return typeof val === 'boolean';
+}
+
+/**
+   * 是否为真正的对象{} new Object
+   * @param {any} obj - 检测的对象
+   * @returns {boolean}
+   */
+function isPlainObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+
+
+/**
+   * Function equal to merge with the difference being that no reference
+   * to original objects is kept.
+   *
+   * @see merge
+   * @param {Object} obj1 Object to merge
+   * @returns {Object} Result of all merge properties
+   */
+function deepMerge() /* obj1, obj2, obj3, ... */{
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val);
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val);
+    } else {
+      result[key] = val;
+    }
+  }
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/***/ }),
+/* 46 */
+/*!****************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/buildFullPath.js ***!
+  \****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildFullPath;
+
+var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 47));
+var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 48));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/**
+                                                                                                                                                                            * Creates a new URL by combining the baseURL with the requestedURL,
+                                                                                                                                                                            * only when the requestedURL is not already an absolute URL.
+                                                                                                                                                                            * If the requestURL is absolute, this function returns the requestedURL untouched.
+                                                                                                                                                                            *
+                                                                                                                                                                            * @param {string} baseURL The base URL
+                                                                                                                                                                            * @param {string} requestedURL Absolute or relative URL to combine
+                                                                                                                                                                            * @returns {string} The combined full path
+                                                                                                                                                                            */
+function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !(0, _isAbsoluteURL.default)(requestedURL)) {
+    return (0, _combineURLs.default)(baseURL, requestedURL);
+  }
+  return requestedURL;
+}
+
+/***/ }),
+/* 47 */
+/*!*******************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/isAbsoluteURL.js ***!
+  \*******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+               * Determines whether the specified URL is absolute
+               *
+               * @param {string} url The URL to test
+               * @returns {boolean} True if the specified URL is absolute, otherwise false
+               */Object.defineProperty(exports, "__esModule", { value: true });exports.default = isAbsoluteURL;
+function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+}
+
+/***/ }),
+/* 48 */
+/*!*****************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/combineURLs.js ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+               * Creates a new URL by combining the specified URLs
+               *
+               * @param {string} baseURL The base URL
+               * @param {string} relativeURL The relative URL
+               * @returns {string} The combined URL
+               */Object.defineProperty(exports, "__esModule", { value: true });exports.default = combineURLs;
+function combineURLs(baseURL, relativeURL) {
+  return relativeURL ?
+  baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') :
+  baseURL;
+}
+
+/***/ }),
+/* 49 */
+/*!*********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/settle.js ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = settle; /**
+                                                                                                      * Resolve or reject a Promise based on response status.
+                                                                                                      *
+                                                                                                      * @param {Function} resolve A function that resolves the promise.
+                                                                                                      * @param {Function} reject A function that rejects the promise.
+                                                                                                      * @param {object} response The response.
+                                                                                                      */
+function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  var status = response.statusCode;
+  if (status && (!validateStatus || validateStatus(status))) {
+    resolve(response);
+  } else {
+    reject(response);
+  }
+}
+
+/***/ }),
+/* 50 */
+/*!*********************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/InterceptorManager.js ***!
+  \*********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+   * Add a new interceptor to the stack
+   *
+   * @param {Function} fulfilled The function to handle `then` for a `Promise`
+   * @param {Function} rejected The function to handle `reject` for a `Promise`
+   *
+   * @return {Number} An ID used to remove interceptor later
+   */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected });
+
+  return this.handlers.length - 1;
+};
+
+/**
+    * Remove an interceptor from the stack
+    *
+    * @param {Number} id The ID that was returned by `use`
+    */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+    * Iterate over all the registered interceptors
+    *
+    * This method is particularly useful for skipping over any
+    * interceptors that may have become `null` calling `eject`.
+    *
+    * @param {Function} fn The function to call for each interceptor
+    */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  this.handlers.forEach(function (h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};var _default =
+
+InterceptorManager;exports.default = _default;
+
+/***/ }),
+/* 51 */
+/*!**************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/mergeConfig.js ***!
+  \**************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 45);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Array} keys - 配置项
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Object} globalsConfig - 当前的全局配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @param {Object} config2 - 局部配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  * @return {{}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */
+var mergeKeys = function mergeKeys(keys, globalsConfig, config2) {
+  var config = {};
+  keys.forEach(function (prop) {
+    if (!(0, _utils.isUndefined)(config2[prop])) {
+      config[prop] = config2[prop];
+    } else if (!(0, _utils.isUndefined)(globalsConfig[prop])) {
+      config[prop] = globalsConfig[prop];
+    }
+  });
+  return config;
+};
+/**
+    *
+    * @param globalsConfig - 当前实例的全局配置
+    * @param config2 - 当前的局部配置
+    * @return - 合并后的配置
+    */var _default =
+function _default(globalsConfig) {var config2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var method = config2.method || globalsConfig.method || 'GET';
+  var config = {
+    baseURL: globalsConfig.baseURL || '',
+    method: method,
+    url: config2.url || '',
+    params: config2.params || {},
+    custom: _objectSpread(_objectSpread({}, globalsConfig.custom || {}), config2.custom || {}),
+    header: (0, _utils.deepMerge)(globalsConfig.header || {}, config2.header || {}) };
+
+  var defaultToConfig2Keys = ['getTask', 'validateStatus'];
+  config = _objectSpread(_objectSpread({}, config), mergeKeys(defaultToConfig2Keys, globalsConfig, config2));
+
+  // eslint-disable-next-line no-empty
+  if (method === 'DOWNLOAD') {
+
+
+
+
+
+
+
+  } else if (method === 'UPLOAD') {
+    delete config.header['content-type'];
+    delete config.header['Content-Type'];
+    var uploadKeys = [
+
+
+
+
+
+
+
+
+
+    'filePath',
+    'name',
+
+
+
+    'formData'];
+
+    uploadKeys.forEach(function (prop) {
+      if (!(0, _utils.isUndefined)(config2[prop])) {
+        config[prop] = config2[prop];
+      }
+    });
+
+
+
+
+
+  } else {
+    var defaultsKeys = [
+    'data',
+
+    'timeout',
+
+    'dataType',
+
+    'responseType'];
+
+
+
+
+
+
+
+
+
+
+
+    config = _objectSpread(_objectSpread({}, config), mergeKeys(defaultsKeys, globalsConfig, config2));
+  }
+
+  return config;
+};exports.default = _default;
+
+/***/ }),
+/* 52 */
+/*!***********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/defaults.js ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 默认的全局配置
+                                                                                                      */var _default =
+
+
+{
+  baseURL: '',
+  header: {},
+  method: 'GET',
+  dataType: 'json',
+
+  responseType: 'text',
+
+  custom: {},
+
+  timeout: 60000,
+
+
+
+
+
+
+
+
+
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  } };exports.default = _default;
+
+/***/ }),
+/* 53 */
+/*!***********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/md5Signature.js ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+var _jsMd = _interopRequireDefault(__webpack_require__(/*! js-md5 */ 54));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+                                                                                                                                                     * 接口签名工具
+                                                                                                                                                     * @param {Object} data 待签名数据（需进行md5处理的数据）
+                                                                                                                                                     * @param {String} salt 盐值
+                                                                                                                                                     */function Md5WithSalt() {var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var salt = arguments.length > 1 ? arguments[1] : undefined;var md5Val; // if (!salt) throw new Error("salt is required");
+  if (typeof data !== "object") throw new Error("data's type should be Object");
+  if (typeof data === "object" && !Object.keys(data).length) {
+    md5Val = "";
+  } else {
+    // 数据字段按ascii码升序排列
+    var keysArr = Object.keys(data);
+    var sortedKeysArr = keysArr.sort();
+    // 生成待md5字符串
+    var strArr = [];
+    for (var i = 0, arrLength = sortedKeysArr.length; i < arrLength; i++) {
+      if (typeof data[sortedKeysArr[i]] === "object" || data[sortedKeysArr[i]] instanceof Array) {
+        strArr.push(sortedKeysArr[i] + "=" + JSON.stringify(data[sortedKeysArr[i]]));
+      } else if (data[sortedKeysArr[i]]) {
+        strArr.push(sortedKeysArr[i] + "=" + data[sortedKeysArr[i]]);
+      }
+    }
+    // 生成md5值
+    var str = salt + strArr.join("&");
+    var hash = _jsMd.default.create().update(str);
+    md5Val = hash.hex();
+  }
+  return md5Val;
+}var _default =
+
+Md5WithSalt;exports.default = _default;
+
+/***/ }),
+/* 54 */
+/*!***************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/node_modules/js-md5/src/md5.js ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * [js-md5]{@link https://github.com/emn178/js-md5}
+ *
+ * @namespace md5
+ * @version 0.7.3
+ * @author Chen, Yi-Cyuan [emn178@gmail.com]
+ * @copyright Chen, Yi-Cyuan 2014-2017
+ * @license MIT
+ */
+(function () {
+  'use strict';
+
+  var ERROR = 'input is invalid type';
+  var WINDOW = typeof window === 'object';
+  var root = WINDOW ? window : {};
+  if (root.JS_MD5_NO_WINDOW) {
+    WINDOW = false;
+  }
+  var WEB_WORKER = !WINDOW && typeof self === 'object';
+  var NODE_JS = !root.JS_MD5_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
+  if (NODE_JS) {
+    root = global;
+  } else if (WEB_WORKER) {
+    root = self;
+  }
+  var COMMON_JS = !root.JS_MD5_NO_COMMON_JS && typeof module === 'object' && module.exports;
+  var AMD =  true && __webpack_require__(/*! !webpack amd options */ 57);
+  var ARRAY_BUFFER = !root.JS_MD5_NO_ARRAY_BUFFER && typeof ArrayBuffer !== 'undefined';
+  var HEX_CHARS = '0123456789abcdef'.split('');
+  var EXTRA = [128, 32768, 8388608, -2147483648];
+  var SHIFT = [0, 8, 16, 24];
+  var OUTPUT_TYPES = ['hex', 'array', 'digest', 'buffer', 'arrayBuffer', 'base64'];
+  var BASE64_ENCODE_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+
+  var blocks = [],buffer8;
+  if (ARRAY_BUFFER) {
+    var buffer = new ArrayBuffer(68);
+    buffer8 = new Uint8Array(buffer);
+    blocks = new Uint32Array(buffer);
+  }
+
+  if (root.JS_MD5_NO_NODE_JS || !Array.isArray) {
+    Array.isArray = function (obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    };
+  }
+
+  if (ARRAY_BUFFER && (root.JS_MD5_NO_ARRAY_BUFFER_IS_VIEW || !ArrayBuffer.isView)) {
+    ArrayBuffer.isView = function (obj) {
+      return typeof obj === 'object' && obj.buffer && obj.buffer.constructor === ArrayBuffer;
+    };
+  }
+
+  /**
+     * @method hex
+     * @memberof md5
+     * @description Output hash as hex string
+     * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+     * @returns {String} Hex string
+     * @example
+     * md5.hex('The quick brown fox jumps over the lazy dog');
+     * // equal to
+     * md5('The quick brown fox jumps over the lazy dog');
+     */
+  /**
+         * @method digest
+         * @memberof md5
+         * @description Output hash as bytes array
+         * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+         * @returns {Array} Bytes array
+         * @example
+         * md5.digest('The quick brown fox jumps over the lazy dog');
+         */
+  /**
+             * @method array
+             * @memberof md5
+             * @description Output hash as bytes array
+             * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+             * @returns {Array} Bytes array
+             * @example
+             * md5.array('The quick brown fox jumps over the lazy dog');
+             */
+  /**
+                 * @method arrayBuffer
+                 * @memberof md5
+                 * @description Output hash as ArrayBuffer
+                 * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+                 * @returns {ArrayBuffer} ArrayBuffer
+                 * @example
+                 * md5.arrayBuffer('The quick brown fox jumps over the lazy dog');
+                 */
+  /**
+                     * @method buffer
+                     * @deprecated This maybe confuse with Buffer in node.js. Please use arrayBuffer instead.
+                     * @memberof md5
+                     * @description Output hash as ArrayBuffer
+                     * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+                     * @returns {ArrayBuffer} ArrayBuffer
+                     * @example
+                     * md5.buffer('The quick brown fox jumps over the lazy dog');
+                     */
+  /**
+                         * @method base64
+                         * @memberof md5
+                         * @description Output hash as base64 string
+                         * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+                         * @returns {String} base64 string
+                         * @example
+                         * md5.base64('The quick brown fox jumps over the lazy dog');
+                         */
+  var createOutputMethod = function createOutputMethod(outputType) {
+    return function (message) {
+      return new Md5(true).update(message)[outputType]();
+    };
+  };
+
+  /**
+      * @method create
+      * @memberof md5
+      * @description Create Md5 object
+      * @returns {Md5} Md5 object.
+      * @example
+      * var hash = md5.create();
+      */
+  /**
+          * @method update
+          * @memberof md5
+          * @description Create and update Md5 object
+          * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+          * @returns {Md5} Md5 object.
+          * @example
+          * var hash = md5.update('The quick brown fox jumps over the lazy dog');
+          * // equal to
+          * var hash = md5.create();
+          * hash.update('The quick brown fox jumps over the lazy dog');
+          */
+  var createMethod = function createMethod() {
+    var method = createOutputMethod('hex');
+    if (NODE_JS) {
+      method = nodeWrap(method);
+    }
+    method.create = function () {
+      return new Md5();
+    };
+    method.update = function (message) {
+      return method.create().update(message);
+    };
+    for (var i = 0; i < OUTPUT_TYPES.length; ++i) {
+      var type = OUTPUT_TYPES[i];
+      method[type] = createOutputMethod(type);
+    }
+    return method;
+  };
+
+  var nodeWrap = function nodeWrap(method) {
+    var crypto = eval("require('crypto')");
+    var Buffer = eval("require('buffer').Buffer");
+    var nodeMethod = function nodeMethod(message) {
+      if (typeof message === 'string') {
+        return crypto.createHash('md5').update(message, 'utf8').digest('hex');
+      } else {
+        if (message === null || message === undefined) {
+          throw ERROR;
+        } else if (message.constructor === ArrayBuffer) {
+          message = new Uint8Array(message);
+        }
+      }
+      if (Array.isArray(message) || ArrayBuffer.isView(message) ||
+      message.constructor === Buffer) {
+        return crypto.createHash('md5').update(new Buffer(message)).digest('hex');
+      } else {
+        return method(message);
+      }
+    };
+    return nodeMethod;
+  };
+
+  /**
+      * Md5 class
+      * @class Md5
+      * @description This is internal class.
+      * @see {@link md5.create}
+      */
+  function Md5(sharedMemory) {
+    if (sharedMemory) {
+      blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      this.blocks = blocks;
+      this.buffer8 = buffer8;
+    } else {
+      if (ARRAY_BUFFER) {
+        var buffer = new ArrayBuffer(68);
+        this.buffer8 = new Uint8Array(buffer);
+        this.blocks = new Uint32Array(buffer);
+      } else {
+        this.blocks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      }
+    }
+    this.h0 = this.h1 = this.h2 = this.h3 = this.start = this.bytes = this.hBytes = 0;
+    this.finalized = this.hashed = false;
+    this.first = true;
+  }
+
+  /**
+     * @method update
+     * @memberof Md5
+     * @instance
+     * @description Update hash
+     * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+     * @returns {Md5} Md5 object.
+     * @see {@link md5.update}
+     */
+  Md5.prototype.update = function (message) {
+    if (this.finalized) {
+      return;
+    }
+
+    var notString,type = typeof message;
+    if (type !== 'string') {
+      if (type === 'object') {
+        if (message === null) {
+          throw ERROR;
+        } else if (ARRAY_BUFFER && message.constructor === ArrayBuffer) {
+          message = new Uint8Array(message);
+        } else if (!Array.isArray(message)) {
+          if (!ARRAY_BUFFER || !ArrayBuffer.isView(message)) {
+            throw ERROR;
+          }
+        }
+      } else {
+        throw ERROR;
+      }
+      notString = true;
+    }
+    var code,index = 0,i,length = message.length,blocks = this.blocks;
+    var buffer8 = this.buffer8;
+
+    while (index < length) {
+      if (this.hashed) {
+        this.hashed = false;
+        blocks[0] = blocks[16];
+        blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      }
+
+      if (notString) {
+        if (ARRAY_BUFFER) {
+          for (i = this.start; index < length && i < 64; ++index) {
+            buffer8[i++] = message[index];
+          }
+        } else {
+          for (i = this.start; index < length && i < 64; ++index) {
+            blocks[i >> 2] |= message[index] << SHIFT[i++ & 3];
+          }
+        }
+      } else {
+        if (ARRAY_BUFFER) {
+          for (i = this.start; index < length && i < 64; ++index) {
+            code = message.charCodeAt(index);
+            if (code < 0x80) {
+              buffer8[i++] = code;
+            } else if (code < 0x800) {
+              buffer8[i++] = 0xc0 | code >> 6;
+              buffer8[i++] = 0x80 | code & 0x3f;
+            } else if (code < 0xd800 || code >= 0xe000) {
+              buffer8[i++] = 0xe0 | code >> 12;
+              buffer8[i++] = 0x80 | code >> 6 & 0x3f;
+              buffer8[i++] = 0x80 | code & 0x3f;
+            } else {
+              code = 0x10000 + ((code & 0x3ff) << 10 | message.charCodeAt(++index) & 0x3ff);
+              buffer8[i++] = 0xf0 | code >> 18;
+              buffer8[i++] = 0x80 | code >> 12 & 0x3f;
+              buffer8[i++] = 0x80 | code >> 6 & 0x3f;
+              buffer8[i++] = 0x80 | code & 0x3f;
+            }
+          }
+        } else {
+          for (i = this.start; index < length && i < 64; ++index) {
+            code = message.charCodeAt(index);
+            if (code < 0x80) {
+              blocks[i >> 2] |= code << SHIFT[i++ & 3];
+            } else if (code < 0x800) {
+              blocks[i >> 2] |= (0xc0 | code >> 6) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+            } else if (code < 0xd800 || code >= 0xe000) {
+              blocks[i >> 2] |= (0xe0 | code >> 12) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code >> 6 & 0x3f) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+            } else {
+              code = 0x10000 + ((code & 0x3ff) << 10 | message.charCodeAt(++index) & 0x3ff);
+              blocks[i >> 2] |= (0xf0 | code >> 18) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code >> 12 & 0x3f) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code >> 6 & 0x3f) << SHIFT[i++ & 3];
+              blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+            }
+          }
+        }
+      }
+      this.lastByteIndex = i;
+      this.bytes += i - this.start;
+      if (i >= 64) {
+        this.start = i - 64;
+        this.hash();
+        this.hashed = true;
+      } else {
+        this.start = i;
+      }
+    }
+    if (this.bytes > 4294967295) {
+      this.hBytes += this.bytes / 4294967296 << 0;
+      this.bytes = this.bytes % 4294967296;
+    }
+    return this;
+  };
+
+  Md5.prototype.finalize = function () {
+    if (this.finalized) {
+      return;
+    }
+    this.finalized = true;
+    var blocks = this.blocks,i = this.lastByteIndex;
+    blocks[i >> 2] |= EXTRA[i & 3];
+    if (i >= 56) {
+      if (!this.hashed) {
+        this.hash();
+      }
+      blocks[0] = blocks[16];
+      blocks[16] = blocks[1] = blocks[2] = blocks[3] =
+      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+    }
+    blocks[14] = this.bytes << 3;
+    blocks[15] = this.hBytes << 3 | this.bytes >>> 29;
+    this.hash();
+  };
+
+  Md5.prototype.hash = function () {
+    var a,b,c,d,bc,da,blocks = this.blocks;
+
+    if (this.first) {
+      a = blocks[0] - 680876937;
+      a = (a << 7 | a >>> 25) - 271733879 << 0;
+      d = (-1732584194 ^ a & 2004318071) + blocks[1] - 117830708;
+      d = (d << 12 | d >>> 20) + a << 0;
+      c = (-271733879 ^ d & (a ^ -271733879)) + blocks[2] - 1126478375;
+      c = (c << 17 | c >>> 15) + d << 0;
+      b = (a ^ c & (d ^ a)) + blocks[3] - 1316259209;
+      b = (b << 22 | b >>> 10) + c << 0;
+    } else {
+      a = this.h0;
+      b = this.h1;
+      c = this.h2;
+      d = this.h3;
+      a += (d ^ b & (c ^ d)) + blocks[0] - 680876936;
+      a = (a << 7 | a >>> 25) + b << 0;
+      d += (c ^ a & (b ^ c)) + blocks[1] - 389564586;
+      d = (d << 12 | d >>> 20) + a << 0;
+      c += (b ^ d & (a ^ b)) + blocks[2] + 606105819;
+      c = (c << 17 | c >>> 15) + d << 0;
+      b += (a ^ c & (d ^ a)) + blocks[3] - 1044525330;
+      b = (b << 22 | b >>> 10) + c << 0;
+    }
+
+    a += (d ^ b & (c ^ d)) + blocks[4] - 176418897;
+    a = (a << 7 | a >>> 25) + b << 0;
+    d += (c ^ a & (b ^ c)) + blocks[5] + 1200080426;
+    d = (d << 12 | d >>> 20) + a << 0;
+    c += (b ^ d & (a ^ b)) + blocks[6] - 1473231341;
+    c = (c << 17 | c >>> 15) + d << 0;
+    b += (a ^ c & (d ^ a)) + blocks[7] - 45705983;
+    b = (b << 22 | b >>> 10) + c << 0;
+    a += (d ^ b & (c ^ d)) + blocks[8] + 1770035416;
+    a = (a << 7 | a >>> 25) + b << 0;
+    d += (c ^ a & (b ^ c)) + blocks[9] - 1958414417;
+    d = (d << 12 | d >>> 20) + a << 0;
+    c += (b ^ d & (a ^ b)) + blocks[10] - 42063;
+    c = (c << 17 | c >>> 15) + d << 0;
+    b += (a ^ c & (d ^ a)) + blocks[11] - 1990404162;
+    b = (b << 22 | b >>> 10) + c << 0;
+    a += (d ^ b & (c ^ d)) + blocks[12] + 1804603682;
+    a = (a << 7 | a >>> 25) + b << 0;
+    d += (c ^ a & (b ^ c)) + blocks[13] - 40341101;
+    d = (d << 12 | d >>> 20) + a << 0;
+    c += (b ^ d & (a ^ b)) + blocks[14] - 1502002290;
+    c = (c << 17 | c >>> 15) + d << 0;
+    b += (a ^ c & (d ^ a)) + blocks[15] + 1236535329;
+    b = (b << 22 | b >>> 10) + c << 0;
+    a += (c ^ d & (b ^ c)) + blocks[1] - 165796510;
+    a = (a << 5 | a >>> 27) + b << 0;
+    d += (b ^ c & (a ^ b)) + blocks[6] - 1069501632;
+    d = (d << 9 | d >>> 23) + a << 0;
+    c += (a ^ b & (d ^ a)) + blocks[11] + 643717713;
+    c = (c << 14 | c >>> 18) + d << 0;
+    b += (d ^ a & (c ^ d)) + blocks[0] - 373897302;
+    b = (b << 20 | b >>> 12) + c << 0;
+    a += (c ^ d & (b ^ c)) + blocks[5] - 701558691;
+    a = (a << 5 | a >>> 27) + b << 0;
+    d += (b ^ c & (a ^ b)) + blocks[10] + 38016083;
+    d = (d << 9 | d >>> 23) + a << 0;
+    c += (a ^ b & (d ^ a)) + blocks[15] - 660478335;
+    c = (c << 14 | c >>> 18) + d << 0;
+    b += (d ^ a & (c ^ d)) + blocks[4] - 405537848;
+    b = (b << 20 | b >>> 12) + c << 0;
+    a += (c ^ d & (b ^ c)) + blocks[9] + 568446438;
+    a = (a << 5 | a >>> 27) + b << 0;
+    d += (b ^ c & (a ^ b)) + blocks[14] - 1019803690;
+    d = (d << 9 | d >>> 23) + a << 0;
+    c += (a ^ b & (d ^ a)) + blocks[3] - 187363961;
+    c = (c << 14 | c >>> 18) + d << 0;
+    b += (d ^ a & (c ^ d)) + blocks[8] + 1163531501;
+    b = (b << 20 | b >>> 12) + c << 0;
+    a += (c ^ d & (b ^ c)) + blocks[13] - 1444681467;
+    a = (a << 5 | a >>> 27) + b << 0;
+    d += (b ^ c & (a ^ b)) + blocks[2] - 51403784;
+    d = (d << 9 | d >>> 23) + a << 0;
+    c += (a ^ b & (d ^ a)) + blocks[7] + 1735328473;
+    c = (c << 14 | c >>> 18) + d << 0;
+    b += (d ^ a & (c ^ d)) + blocks[12] - 1926607734;
+    b = (b << 20 | b >>> 12) + c << 0;
+    bc = b ^ c;
+    a += (bc ^ d) + blocks[5] - 378558;
+    a = (a << 4 | a >>> 28) + b << 0;
+    d += (bc ^ a) + blocks[8] - 2022574463;
+    d = (d << 11 | d >>> 21) + a << 0;
+    da = d ^ a;
+    c += (da ^ b) + blocks[11] + 1839030562;
+    c = (c << 16 | c >>> 16) + d << 0;
+    b += (da ^ c) + blocks[14] - 35309556;
+    b = (b << 23 | b >>> 9) + c << 0;
+    bc = b ^ c;
+    a += (bc ^ d) + blocks[1] - 1530992060;
+    a = (a << 4 | a >>> 28) + b << 0;
+    d += (bc ^ a) + blocks[4] + 1272893353;
+    d = (d << 11 | d >>> 21) + a << 0;
+    da = d ^ a;
+    c += (da ^ b) + blocks[7] - 155497632;
+    c = (c << 16 | c >>> 16) + d << 0;
+    b += (da ^ c) + blocks[10] - 1094730640;
+    b = (b << 23 | b >>> 9) + c << 0;
+    bc = b ^ c;
+    a += (bc ^ d) + blocks[13] + 681279174;
+    a = (a << 4 | a >>> 28) + b << 0;
+    d += (bc ^ a) + blocks[0] - 358537222;
+    d = (d << 11 | d >>> 21) + a << 0;
+    da = d ^ a;
+    c += (da ^ b) + blocks[3] - 722521979;
+    c = (c << 16 | c >>> 16) + d << 0;
+    b += (da ^ c) + blocks[6] + 76029189;
+    b = (b << 23 | b >>> 9) + c << 0;
+    bc = b ^ c;
+    a += (bc ^ d) + blocks[9] - 640364487;
+    a = (a << 4 | a >>> 28) + b << 0;
+    d += (bc ^ a) + blocks[12] - 421815835;
+    d = (d << 11 | d >>> 21) + a << 0;
+    da = d ^ a;
+    c += (da ^ b) + blocks[15] + 530742520;
+    c = (c << 16 | c >>> 16) + d << 0;
+    b += (da ^ c) + blocks[2] - 995338651;
+    b = (b << 23 | b >>> 9) + c << 0;
+    a += (c ^ (b | ~d)) + blocks[0] - 198630844;
+    a = (a << 6 | a >>> 26) + b << 0;
+    d += (b ^ (a | ~c)) + blocks[7] + 1126891415;
+    d = (d << 10 | d >>> 22) + a << 0;
+    c += (a ^ (d | ~b)) + blocks[14] - 1416354905;
+    c = (c << 15 | c >>> 17) + d << 0;
+    b += (d ^ (c | ~a)) + blocks[5] - 57434055;
+    b = (b << 21 | b >>> 11) + c << 0;
+    a += (c ^ (b | ~d)) + blocks[12] + 1700485571;
+    a = (a << 6 | a >>> 26) + b << 0;
+    d += (b ^ (a | ~c)) + blocks[3] - 1894986606;
+    d = (d << 10 | d >>> 22) + a << 0;
+    c += (a ^ (d | ~b)) + blocks[10] - 1051523;
+    c = (c << 15 | c >>> 17) + d << 0;
+    b += (d ^ (c | ~a)) + blocks[1] - 2054922799;
+    b = (b << 21 | b >>> 11) + c << 0;
+    a += (c ^ (b | ~d)) + blocks[8] + 1873313359;
+    a = (a << 6 | a >>> 26) + b << 0;
+    d += (b ^ (a | ~c)) + blocks[15] - 30611744;
+    d = (d << 10 | d >>> 22) + a << 0;
+    c += (a ^ (d | ~b)) + blocks[6] - 1560198380;
+    c = (c << 15 | c >>> 17) + d << 0;
+    b += (d ^ (c | ~a)) + blocks[13] + 1309151649;
+    b = (b << 21 | b >>> 11) + c << 0;
+    a += (c ^ (b | ~d)) + blocks[4] - 145523070;
+    a = (a << 6 | a >>> 26) + b << 0;
+    d += (b ^ (a | ~c)) + blocks[11] - 1120210379;
+    d = (d << 10 | d >>> 22) + a << 0;
+    c += (a ^ (d | ~b)) + blocks[2] + 718787259;
+    c = (c << 15 | c >>> 17) + d << 0;
+    b += (d ^ (c | ~a)) + blocks[9] - 343485551;
+    b = (b << 21 | b >>> 11) + c << 0;
+
+    if (this.first) {
+      this.h0 = a + 1732584193 << 0;
+      this.h1 = b - 271733879 << 0;
+      this.h2 = c - 1732584194 << 0;
+      this.h3 = d + 271733878 << 0;
+      this.first = false;
+    } else {
+      this.h0 = this.h0 + a << 0;
+      this.h1 = this.h1 + b << 0;
+      this.h2 = this.h2 + c << 0;
+      this.h3 = this.h3 + d << 0;
+    }
+  };
+
+  /**
+      * @method hex
+      * @memberof Md5
+      * @instance
+      * @description Output hash as hex string
+      * @returns {String} Hex string
+      * @see {@link md5.hex}
+      * @example
+      * hash.hex();
+      */
+  Md5.prototype.hex = function () {
+    this.finalize();
+
+    var h0 = this.h0,h1 = this.h1,h2 = this.h2,h3 = this.h3;
+
+    return HEX_CHARS[h0 >> 4 & 0x0F] + HEX_CHARS[h0 & 0x0F] +
+    HEX_CHARS[h0 >> 12 & 0x0F] + HEX_CHARS[h0 >> 8 & 0x0F] +
+    HEX_CHARS[h0 >> 20 & 0x0F] + HEX_CHARS[h0 >> 16 & 0x0F] +
+    HEX_CHARS[h0 >> 28 & 0x0F] + HEX_CHARS[h0 >> 24 & 0x0F] +
+    HEX_CHARS[h1 >> 4 & 0x0F] + HEX_CHARS[h1 & 0x0F] +
+    HEX_CHARS[h1 >> 12 & 0x0F] + HEX_CHARS[h1 >> 8 & 0x0F] +
+    HEX_CHARS[h1 >> 20 & 0x0F] + HEX_CHARS[h1 >> 16 & 0x0F] +
+    HEX_CHARS[h1 >> 28 & 0x0F] + HEX_CHARS[h1 >> 24 & 0x0F] +
+    HEX_CHARS[h2 >> 4 & 0x0F] + HEX_CHARS[h2 & 0x0F] +
+    HEX_CHARS[h2 >> 12 & 0x0F] + HEX_CHARS[h2 >> 8 & 0x0F] +
+    HEX_CHARS[h2 >> 20 & 0x0F] + HEX_CHARS[h2 >> 16 & 0x0F] +
+    HEX_CHARS[h2 >> 28 & 0x0F] + HEX_CHARS[h2 >> 24 & 0x0F] +
+    HEX_CHARS[h3 >> 4 & 0x0F] + HEX_CHARS[h3 & 0x0F] +
+    HEX_CHARS[h3 >> 12 & 0x0F] + HEX_CHARS[h3 >> 8 & 0x0F] +
+    HEX_CHARS[h3 >> 20 & 0x0F] + HEX_CHARS[h3 >> 16 & 0x0F] +
+    HEX_CHARS[h3 >> 28 & 0x0F] + HEX_CHARS[h3 >> 24 & 0x0F];
+  };
+
+  /**
+      * @method toString
+      * @memberof Md5
+      * @instance
+      * @description Output hash as hex string
+      * @returns {String} Hex string
+      * @see {@link md5.hex}
+      * @example
+      * hash.toString();
+      */
+  Md5.prototype.toString = Md5.prototype.hex;
+
+  /**
+                                               * @method digest
+                                               * @memberof Md5
+                                               * @instance
+                                               * @description Output hash as bytes array
+                                               * @returns {Array} Bytes array
+                                               * @see {@link md5.digest}
+                                               * @example
+                                               * hash.digest();
+                                               */
+  Md5.prototype.digest = function () {
+    this.finalize();
+
+    var h0 = this.h0,h1 = this.h1,h2 = this.h2,h3 = this.h3;
+    return [
+    h0 & 0xFF, h0 >> 8 & 0xFF, h0 >> 16 & 0xFF, h0 >> 24 & 0xFF,
+    h1 & 0xFF, h1 >> 8 & 0xFF, h1 >> 16 & 0xFF, h1 >> 24 & 0xFF,
+    h2 & 0xFF, h2 >> 8 & 0xFF, h2 >> 16 & 0xFF, h2 >> 24 & 0xFF,
+    h3 & 0xFF, h3 >> 8 & 0xFF, h3 >> 16 & 0xFF, h3 >> 24 & 0xFF];
+
+  };
+
+  /**
+      * @method array
+      * @memberof Md5
+      * @instance
+      * @description Output hash as bytes array
+      * @returns {Array} Bytes array
+      * @see {@link md5.array}
+      * @example
+      * hash.array();
+      */
+  Md5.prototype.array = Md5.prototype.digest;
+
+  /**
+                                               * @method arrayBuffer
+                                               * @memberof Md5
+                                               * @instance
+                                               * @description Output hash as ArrayBuffer
+                                               * @returns {ArrayBuffer} ArrayBuffer
+                                               * @see {@link md5.arrayBuffer}
+                                               * @example
+                                               * hash.arrayBuffer();
+                                               */
+  Md5.prototype.arrayBuffer = function () {
+    this.finalize();
+
+    var buffer = new ArrayBuffer(16);
+    var blocks = new Uint32Array(buffer);
+    blocks[0] = this.h0;
+    blocks[1] = this.h1;
+    blocks[2] = this.h2;
+    blocks[3] = this.h3;
+    return buffer;
+  };
+
+  /**
+      * @method buffer
+      * @deprecated This maybe confuse with Buffer in node.js. Please use arrayBuffer instead.
+      * @memberof Md5
+      * @instance
+      * @description Output hash as ArrayBuffer
+      * @returns {ArrayBuffer} ArrayBuffer
+      * @see {@link md5.buffer}
+      * @example
+      * hash.buffer();
+      */
+  Md5.prototype.buffer = Md5.prototype.arrayBuffer;
+
+  /**
+                                                     * @method base64
+                                                     * @memberof Md5
+                                                     * @instance
+                                                     * @description Output hash as base64 string
+                                                     * @returns {String} base64 string
+                                                     * @see {@link md5.base64}
+                                                     * @example
+                                                     * hash.base64();
+                                                     */
+  Md5.prototype.base64 = function () {
+    var v1,v2,v3,base64Str = '',bytes = this.array();
+    for (var i = 0; i < 15;) {
+      v1 = bytes[i++];
+      v2 = bytes[i++];
+      v3 = bytes[i++];
+      base64Str += BASE64_ENCODE_CHAR[v1 >>> 2] +
+      BASE64_ENCODE_CHAR[(v1 << 4 | v2 >>> 4) & 63] +
+      BASE64_ENCODE_CHAR[(v2 << 2 | v3 >>> 6) & 63] +
+      BASE64_ENCODE_CHAR[v3 & 63];
+    }
+    v1 = bytes[i];
+    base64Str += BASE64_ENCODE_CHAR[v1 >>> 2] +
+    BASE64_ENCODE_CHAR[v1 << 4 & 63] +
+    '==';
+    return base64Str;
+  };
+
+  var exports = createMethod();
+
+  if (COMMON_JS) {
+    module.exports = exports;
+  } else {
+    /**
+           * @method md5
+           * @description Md5 hash function, export to global in browsers.
+           * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
+           * @returns {String} md5 hashes
+           * @example
+           * md5(''); // d41d8cd98f00b204e9800998ecf8427e
+           * md5('The quick brown fox jumps over the lazy dog'); // 9e107d9d372bb6826bd81d3542a419d6
+           * md5('The quick brown fox jumps over the lazy dog.'); // e4d909c290d0fb1ca068ffaddf22cbd0
+           *
+           * // It also supports UTF-8 encoding
+           * md5('中文'); // a7bac2239fcdcb3a067903d8077c4a07
+           *
+           * // It also supports byte `Array`, `Uint8Array`, `ArrayBuffer`
+           * md5([]); // d41d8cd98f00b204e9800998ecf8427e
+           * md5(new Uint8Array([])); // d41d8cd98f00b204e9800998ecf8427e
+           */
+    root.md5 = exports;
+    if (AMD) {
+      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+        return exports;
+      }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+  }
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 55), __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/webpack/buildin/global.js */ 3)))
+
+/***/ }),
+/* 55 */
+/*!********************************************************!*\
+  !*** ./node_modules/node-libs-browser/mock/process.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.nextTick = function nextTick(fn) {
+    var args = Array.prototype.slice.call(arguments);
+    args.shift();
+    setTimeout(function () {
+        fn.apply(null, args);
+    }, 0);
+};
+
+exports.platform = exports.arch = 
+exports.execPath = exports.title = 'browser';
+exports.pid = 1;
+exports.browser = true;
+exports.env = {};
+exports.argv = [];
+
+exports.binding = function (name) {
+	throw new Error('No such module. (Possibly not yet loaded)')
+};
+
+(function () {
+    var cwd = '/';
+    var path;
+    exports.cwd = function () { return cwd };
+    exports.chdir = function (dir) {
+        if (!path) path = __webpack_require__(/*! path */ 56);
+        cwd = path.resolve(dir, cwd);
+    };
+})();
+
+exports.exit = exports.kill = 
+exports.umask = exports.dlopen = 
+exports.uptime = exports.memoryUsage = 
+exports.uvCounters = function() {};
+exports.features = {};
+
+
+/***/ }),
+/* 56 */
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
+// backported and transplited with Babel, with backwards-compat fixes
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function (path) {
+  if (typeof path !== 'string') path = path + '';
+  if (path.length === 0) return '.';
+  var code = path.charCodeAt(0);
+  var hasRoot = code === 47 /*/*/;
+  var end = -1;
+  var matchedSlash = true;
+  for (var i = path.length - 1; i >= 1; --i) {
+    code = path.charCodeAt(i);
+    if (code === 47 /*/*/) {
+        if (!matchedSlash) {
+          end = i;
+          break;
+        }
+      } else {
+      // We saw the first non-path separator
+      matchedSlash = false;
+    }
+  }
+
+  if (end === -1) return hasRoot ? '/' : '.';
+  if (hasRoot && end === 1) {
+    // return '//';
+    // Backwards-compat fix:
+    return '/';
+  }
+  return path.slice(0, end);
+};
+
+function basename(path) {
+  if (typeof path !== 'string') path = path + '';
+
+  var start = 0;
+  var end = -1;
+  var matchedSlash = true;
+  var i;
+
+  for (i = path.length - 1; i >= 0; --i) {
+    if (path.charCodeAt(i) === 47 /*/*/) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          start = i + 1;
+          break;
+        }
+      } else if (end === -1) {
+      // We saw the first non-path separator, mark this as the end of our
+      // path component
+      matchedSlash = false;
+      end = i + 1;
+    }
+  }
+
+  if (end === -1) return '';
+  return path.slice(start, end);
+}
+
+// Uses a mixed approach for backwards-compatibility, as ext behavior changed
+// in new Node.js versions, so only basename() above is backported here
+exports.basename = function (path, ext) {
+  var f = basename(path);
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+exports.extname = function (path) {
+  if (typeof path !== 'string') path = path + '';
+  var startDot = -1;
+  var startPart = 0;
+  var end = -1;
+  var matchedSlash = true;
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find
+  var preDotState = 0;
+  for (var i = path.length - 1; i >= 0; --i) {
+    var code = path.charCodeAt(i);
+    if (code === 47 /*/*/) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1;
+          break;
+        }
+        continue;
+      }
+    if (end === -1) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension
+      matchedSlash = false;
+      end = i + 1;
+    }
+    if (code === 46 /*.*/) {
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1)
+          startDot = i;
+        else if (preDotState !== 1)
+          preDotState = 1;
+    } else if (startDot !== -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension
+      preDotState = -1;
+    }
+  }
+
+  if (startDot === -1 || end === -1 ||
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+    return '';
+  }
+  return path.slice(startDot, end);
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 55)))
+
+/***/ }),
+/* 57 */
+/*!****************************************!*\
+  !*** (webpack)/buildin/amd-options.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(this, {}))
+
+/***/ }),
+/* 58 */
+/*!***********************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/silent-login.js ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 30));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _custom_toast = _interopRequireDefault(__webpack_require__(/*! @/utils/custom_toast.js */ 9));
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 59);
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));
+var _tologin = __webpack_require__(/*! ./tologin */ 60);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+
+
+var SilentLogin = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$uni$login, _yield$uni$login2, loginErr, loginRes, _yield$uni$request, _yield$uni$request2, requestErr, requestRes;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+              uni.login({
+                provider: 'weixin' }));case 2:_yield$uni$login = _context.sent;_yield$uni$login2 = _slicedToArray(_yield$uni$login, 2);loginErr = _yield$uni$login2[0];loginRes = _yield$uni$login2[1];if (!
+
+
+            loginErr) {_context.next = 12;break;}
+            console.info('[===uni.login失败]: ', loginErr);
+            (0, _custom_toast.default)('uni.login error');return _context.abrupt("return",
+            Promise.reject(loginErr));case 12:
+
+            console.info('[===uni.login成功]: ', loginRes);_context.next = 15;return (
+              uni.request({
+                url: _config.default.rootHost + _config.default.login + '/userLoginByCode',
+                method: 'POST',
+                data: {
+                  code: loginRes.code,
+                  phone: '15336390730' } }));case 15:_yield$uni$request = _context.sent;_yield$uni$request2 = _slicedToArray(_yield$uni$request, 2);requestErr = _yield$uni$request2[0];requestRes = _yield$uni$request2[1];if (!
+
+
+
+            requestErr) {_context.next = 25;break;}
+            console.info('[===登录接口失败]: ', requestErr);
+            (0, _custom_toast.default)('静默登录请求失败');return _context.abrupt("return",
+            Promise.reject(requestErr));case 25:
+
+            console.info('[===登录接口成功]: ', requestRes);
+            if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
+              (0, _custom_storage.SetStorageSync)('user', JSON.stringify(requestRes.data.data));
+            } else {
+              (0, _custom_storage.ClearStorageSync)();
+              uni.showModal({
+                title: "提示",
+                content: "登录信息已过期，请重新登录",
+                confirmText: "前往登录",
+                showCancel: false,
+                success: function success(res) {
+                  (0, _tologin.ToLogin)();
+                } });
+
+            }case 27:case "end":return _context.stop();}}}, _callee);}));return function SilentLogin() {return _ref.apply(this, arguments);};}();var _default =
+
+
+
+
+SilentLogin;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 59 */
+/*!********************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_storage.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.ClearStorageSync = exports.ClearStorage = exports.RemoveStorageSync = exports.RemoveStorage = exports.GetStorageSync = exports.SetStorageSync = exports.SetStorage = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * 封装缓存存取操作 （上限10MB，单个key上限1MB）
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {string} key 本地缓存中指定的key
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {any} data 需要缓存的内容（原生类型、Date、JSON.stringify序列化的对象）
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {boolean=} ifToast 存储成功是否提示
+                                                                                                                                                                                                                                                                                                                                                                                                                                       */
+
+
+// 异步存储缓存
+var SetStorage = function SetStorage(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  uni.setStorage({
+    key: key,
+    data: data,
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('存储成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('存储失败');
+    } });
+
+};
+
+
+// 同步存储缓存
+exports.SetStorage = SetStorage;var SetStorageSync = function SetStorageSync(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  try {
+    uni.setStorageSync(key, data);
+    ifToast && (0, _custom_toast.default)('存储成功');
+  } catch (e) {
+    (0, _custom_toast.default)('存储缓存失败');
+  }
+};
+
+
+// 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
+exports.SetStorageSync = SetStorageSync;var GetStorageSync = function GetStorageSync(key) {
+  try {
+    var _GETDATA = uni.getStorageSync(key);
+    if (_GETDATA) return _GETDATA;
+  } catch (e) {
+    (0, _custom_toast.default)("\u8BFB\u53D6".concat(key, "\u7F13\u5B58\u5931\u8D25"));
+  }
+};
+
+
+// 异步清除指定key
+exports.GetStorageSync = GetStorageSync;var RemoveStorage = function RemoveStorage(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  uni.removeStorage({
+    key: key,
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除指定key
+exports.RemoveStorage = RemoveStorage;var RemoveStorageSync = function RemoveStorageSync(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  try {
+    uni.removeStorageSync(key);
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};
+
+
+// 异步清除所有缓存
+exports.RemoveStorageSync = RemoveStorageSync;var ClearStorage = function ClearStorage() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  uni.clearStorage({
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除所有缓存
+exports.ClearStorage = ClearStorage;var ClearStorageSync = function ClearStorageSync() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  try {
+    uni.clearStorageSync();
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};exports.ClearStorageSync = ClearStorageSync;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 60 */
+/*!******************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/tologin.js ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.ToLogin = void 0; // @description {toLogin} 权限问题跳转登录页
+
+var getCurrentPageUrl = function getCurrentPageUrl() {
+  var pages = uni.getCurrentPages();
+  var currentPage = pages[pages.length - 1];
+  var url = currentPage.route;
+  return url;
+};
+
+var ToLogin = function ToLogin() {
+  // let path = getCurrentPageUrl()
+  // if ( !path.includes('login') ) {
+  //   uni.reLaunch({
+  //     url: '/pages/login/login'
+  //   })
+  // }
+  uni.reLaunch({
+    url: '/pages/login/login' });
+
+};exports.ToLogin = ToLogin;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
