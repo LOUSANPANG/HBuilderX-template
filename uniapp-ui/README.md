@@ -16,11 +16,13 @@
 	- 色值
 	- 基础样式
 ### request
-- 基于 `luch-request` 二次封装
+- 基于 `luch-request` 二次 `promise` 封装
 	* 基础配置
-	* 请求前后配置
-	* 基础服务提取
+	* 请求前后拦截
+	* 统一处理状态码
+	* 统一处理权限
 ### vuex
+- 全局状态管理
 
 
 
@@ -37,6 +39,31 @@
 	状态(z-) 例如hover，选中等
 	j- 专门用于js获取节点，勿占用
 ```
+- BEM
+	* 同级块 `xx--xx`
+	* 同级子元素 `xx-xx`
+	* 下级块 `xx__xx`
+	* 下级子元素 `xx_xx`
+
+### template
+- 自定义组件名称 `my-xxx`
+- 组件属性名 `aa-bb`
+
+### js
+- 事件名称
+	* handleXx 点击方法
+	* customXx 自定义方法
+	* commonXx 提取方法
+
+### js note
+- jsdoc 注释格式
+- 功能标记 `TODO FIXME HACK XXX`
+
+### git commit + Angular git + git moji
+- [IMP] 更新
+- [ADD] 添加
+- [DEL] 删除
+- `fix feat style chore docs test reset`
 
 
 
