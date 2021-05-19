@@ -142,6 +142,7 @@ LOUSANPANG/HBuilderX-template
 - js
 	* 事件中访问原始的 DOM 事件，使用 $event 参数变量;
 	* 禁止蒙版下的页面滚动使用 @touchmove.stop.prevent="moveHandle"，moveHandle 可以用来处理 touchmove 的事件，也可以是一个空函数;
+	* $event 获取 event 对象。
 - css
 	* 不能使用 * 选择器;
 	* 设计稿 1px / 设计稿基准宽度 = 框架样式 1rpx / 750rpx;
@@ -150,3 +151,7 @@ LOUSANPANG/HBuilderX-template
 
 ## 五、TODO
 - 自定义授权设置
+- 定位授权逻辑
+- 登录授权逻辑
+- 全局状态管理检测登录
+- 自定义导航栏

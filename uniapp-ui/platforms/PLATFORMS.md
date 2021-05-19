@@ -2,6 +2,9 @@
 
 ## uni-app
 * 不能使用 `*` 选择器	。
+* 不支持按键修饰符。
+* 不支持 keep-alive。
+* 不支持 transition。
 
 ## app nvue
 * `rem` 根字体大小不可以通过 `page-meta` 配置。
@@ -22,12 +25,14 @@
 * 使用罗盘、地理位置、加速计等相关接口需要使用 https 协议，本地预览（localhost）可以使用 http 协议。
 * PC 端 Chrome 浏览器模拟器设备测试的时候，获取位置 API 需要连接谷歌服务器。
 * 组件内（页面除外）不支持 onLoad、onShow 等页面生命周期。
+* 不支持 v-once
 
 ## 非H5
 * `v-for="(value, name, index) in object"` 中，`index` 参数是不支持的。
 * 事件修饰符不支持 `prevent`、`capture`、`self`、`once`、`passive`。
 * 只能用于获取自定义组件，不支持通过 `this。$refs。content` 来获取内置组件实例（如：view、text）。
 * 不支持 作用域插槽、动态组件、异步组件、keep-alive、transition。
+* v-for="(item, index) in 10" 中，在H5平台 item 从 1 开始，其他平台 item 从 0 开始。
 
 ## 小程序
 * 小程序不支持在 `css` 中使用本地文件，需以 `base64` 方式方可使用，但 `uni-app` 会自动将小于 `40kb` 其转化为 `base64` 格式。
@@ -35,8 +40,13 @@
 ## weixin
 * 自定义组件中仅支持 `class` 选择器。
 * `css` 背景图片不支持相对路径（真机不支持，开发工具支持）。
+* 不支持 v-once。
 
 
 ## alipay
 * 组件内 `image` 标签不可使用相对路径。
 * 不支持 `vue` 的事件监听绑定方式。
+
+
+## baidu
+* 不要在 data 内使用 hidden ，可能会导致渲染错误。
