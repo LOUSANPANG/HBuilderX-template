@@ -1,4 +1,9 @@
-# 存 H5 App 微信小程序 QQ小程序 组件的目录
+## 存 H5 App 微信小程序 QQ小程序 组件的目录
+### 需要去微信工具里开启es6转换。
+### 可以使用wxs
+
+
+### 使用方式
 ```json
 - wxcomponents
 	- custom
@@ -36,6 +41,7 @@
     <custom name="uni-app"></custom>
 </view>
 ```
+
 
 ## 支付宝小程序 mycomponents
 ## 百度小程序 swancomponents
