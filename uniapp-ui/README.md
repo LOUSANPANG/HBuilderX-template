@@ -1,3 +1,13 @@
+## 安装使用
+```
+yarn add @vue/cli global
+
+vue create -p dcloudio/uni-preset-vue my-project
+
+选择自定义模版
+LOUSANPANG/HBuilderX-template
+```
+
 ## 一、基于 `uni-ui` 模版的二次封装
 ### 组件
 - 空状态组件
@@ -107,6 +117,12 @@
 
 ### HBuilderX
 - 默认不需要开启es6转换，但如果使用 wxcomponents wxml 自定义组件，HBuilderX 会自动开启es6转换
+- process.env.NODE_ENV 判断环境 development production
+- 补充d.ts，可以在项目下先执行 npm init，然后npm i @types/uni-app -D，来补充d.ts。
+
+### 打包
+- 如需制作wgt包，使用npm run build:app-plus会在/dist/build/app-plus下生成app打包资源，将app-plus中的文件压缩成zip（注意：不要包含app-plus目录），再重命名为${appid}.wgt， appid为manifest.json文件中的appid。
+- 
 
 ### 语法
 - template
