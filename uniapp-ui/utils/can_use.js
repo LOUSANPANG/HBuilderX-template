@@ -19,6 +19,8 @@ export const CanIUse = ( param ) => {
 
 /**
  * 同步获取系统信息
+ * @returns {object} res
+ * @returns {object.platform} res.platform 客户端环境
  */
 export const CanSystemInfoSync = () => {
 	try {
