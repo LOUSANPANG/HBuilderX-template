@@ -38,6 +38,11 @@ LOUSANPANG/HBuilderX-template
 
 
 ## 二、code standard
+### 文件管理
+- hybrid > App端存放本地html文件的目录
+- platforms > 存放各平台专用页面的目录
+- common > 存放`css scss`
+
 ### css
 - 命名
 ```
@@ -108,12 +113,10 @@ LOUSANPANG/HBuilderX-template
 
 
 ## 四、NOTE
+### 平台差异记录 `/platforms/PLATFORMS.md`
+
 ### 引入文件
-- js文件不支持使用 / 开头的方式引入，可以使用 @ 或者相对路径
-- 小程序图片、字体图标
-	* 小于 40kb，转化 base64；大于 40kb，需手动转 base64、网络图片
-	* `background-image: url('~@/static/logo.png');`
-	* 微信小程序不支持相对路径
+- js文件不支持使用`/`开头的方式引入，可以使用 `@`。
 
 ### HBuilderX
 - 默认不需要开启es6转换，但如果使用 wxcomponents wxml 自定义组件，HBuilderX 会自动开启es6转换
@@ -133,3 +136,8 @@ LOUSANPANG/HBuilderX-template
 	* 禁止蒙版下的页面滚动使用 @touchmove.stop.prevent="moveHandle"，moveHandle 可以用来处理 touchmove 的事件，也可以是一个空函数
 - css
 	* 不能使用 * 选择器
+
+
+
+## 五、TODO
+- 自定义授权设置
