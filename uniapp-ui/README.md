@@ -184,3 +184,4 @@ LOUSANPANG/HBuilderX-template
 - 全局状态管理检测登录
 - 自定义导航栏
 - 成功失败页
+- 自动化测试
