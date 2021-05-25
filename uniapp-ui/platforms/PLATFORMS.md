@@ -1,4 +1,4 @@
-# 存放各平台专用页面的目录
+# [存放各平台专用页面的目录](https://uniapp.dcloud.io/matter)
 
 ## uni-app
 * 不能使用 `*` 选择器	。
@@ -17,6 +17,7 @@
 * 不支持 `--status-bar-height` 变量。
 * 不可直接使用css的方式引入字体文件。
 * 暂不支持wxs、sjs、filter。js，但支持renderjs。
+* url(//alicdn.net)等路径，改为url(https://alicdn.net)，因为在App端//是file协议。
 
 ## h5
 * `< 4kb` 转化 `base64`。
@@ -25,9 +26,11 @@
 * 使用罗盘、地理位置、加速计等相关接口需要使用 https 协议，本地预览（localhost）可以使用 http 协议。
 * PC 端 Chrome 浏览器模拟器设备测试的时候，获取位置 API 需要连接谷歌服务器。
 * 组件内（页面除外）不支持 onLoad、onShow 等页面生命周期。
-* 不支持 v-once
+* 不支持 v-once。
+* 不支持微信小程序自定义组件。
 
 ## 非H5
+## 不支持 * 选择器。
 * `v-for="(value, name, index) in object"` 中，`index` 参数是不支持的。
 * 事件修饰符不支持 `prevent`、`capture`、`self`、`once`、`passive`。
 * 只能用于获取自定义组件，不支持通过 `this。$refs。content` 来获取内置组件实例（如：view、text）。
@@ -46,7 +49,14 @@
 ## alipay
 * 组件内 `image` 标签不可使用相对路径。
 * 不支持 `vue` 的事件监听绑定方式。
+* showLoading 是不透传的，也就是说 loading 显示的时候无法点击页面内容。
+* 使用伪元素做边框时，高度值不能用 1rpx，需要直接用 1px。
+* 不支持 ECharts。
+* 支付功能模拟不了，需要真机测试。
+
 
 
 ## baidu
 * 不要在 data 内使用 hidden ，可能会导致渲染错误。
+* 不支持属性选择器。
+* 不支持 scoped。

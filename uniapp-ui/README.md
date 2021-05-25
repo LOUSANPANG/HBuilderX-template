@@ -39,9 +39,30 @@ LOUSANPANG/HBuilderX-template
 
 ## 二、code standard
 ### 文件管理
-- hybrid > App端存放本地html文件的目录
-- platforms > 存放各平台专用页面的目录
-- common > 存放`css scss`
+- common
+	* 存放公共css
+	* 存放公共函数
+	* SDK
+- components
+	* 公共组件
+- hybrid
+	* App端存放本地html文件的目录
+- pages
+	* 页面
+- platforms
+	* 存放各平台专用页面的目录
+- resonsive
+	* 适配pc宽屏文件
+- services
+  * 接口服务
+- static
+	* 静态文件目录
+- store
+	* vuex
+- utils
+	* 工具文件
+- wxcomponents
+	* wx文件
 
 ### css
 - 命名
@@ -80,6 +101,8 @@ LOUSANPANG/HBuilderX-template
 - [DEL] 删除
 - `fix feat style chore docs test reset`
 
+### uni_modules规范
+
 
 
 
@@ -111,6 +134,11 @@ LOUSANPANG/HBuilderX-template
 
 ### js
 - 高性能渲染优先选用 `wxs`
+
+### 宽屏适配
+- leftWindow
+- topWindow
+- rightWindow
 
 
 
