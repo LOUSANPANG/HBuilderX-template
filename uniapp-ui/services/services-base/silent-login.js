@@ -28,11 +28,11 @@ const SilentLogin = async () => {
 	})
 
 	if (loginErr) {
-		console.info('[===uni.login失败]: ', loginErr)
+		console.info('[===uni.login失败]❌: ', loginErr)
 		CustomShowToast('uni.login error')
 		return Promise.reject(loginErr)
 	} else {
-		console.info('[===uni.login成功]: ', loginRes)
+		console.info('[===uni.login成功]✅: ', loginRes)
 		const [requestErr, requestRes] = await uni.request({
 			url: CONFIG.rootHost + CONFIG.login + '/userLoginByCode',
 			method: 'POST',
@@ -43,11 +43,11 @@ const SilentLogin = async () => {
 		})
 
 		if (requestErr) {
-			console.info('[===登录接口失败]: ', requestErr)
+			console.info('[===登录接口失败]❌: ', requestErr)
 			CustomShowToast('静默登录请求失败')
 			return Promise.reject(requestErr)
 		} else {
-			console.info('[===登录接口成功]: ', requestRes)
+			console.info('[===登录接口成功]✅: ', requestRes)
 			if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
 				SetStorageSync('user', JSON.stringify(requestRes.data.data))
 			} else {

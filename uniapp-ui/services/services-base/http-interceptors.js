@@ -39,7 +39,7 @@ $API.setConfig((config) => {
  * 通过 custom 做一系列其他操作
  */
 $API.interceptors.request.use((config) => {
-	console.info('[===请求拦截前]: ', config)
+	console.info('[===请求拦截前]⚙: ', config)
 	config.header = {
 		...config.header,
 		sign: Md5WithSalt(config.data, GetStorageSync('user') && JSON.parse(GetStorageSync('user')).key),
@@ -62,7 +62,7 @@ $API.interceptors.request.use((config) => {
  * code 数据判断
  */
 $API.interceptors.response.use(async (response) => {
-	console.info('[===请求拦截后成功码]: ', response)
+	console.info('[===请求拦截后成功码]✅: ', response)
 	const code = response.data.code
 
 	if (response.statusCode === 200) {
@@ -79,7 +79,7 @@ $API.interceptors.response.use(async (response) => {
 	}
 
 }, (response) => {
-	console.info('[===请求拦截后错误码]: ', response)
+	console.info('[===请求拦截后错误码]❌: ', response)
 	const statusCode = response.statusCode
 
 	if (statusCode === 404) {
