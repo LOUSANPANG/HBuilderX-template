@@ -178,7 +178,6 @@ LOUSANPANG/HBuilderX-template
 
 
 ## 五、TODO
-- 登录逻辑
 - 成功失败页
 - 加载页
 - 自动化测试
@@ -187,3 +186,4 @@ LOUSANPANG/HBuilderX-template
 
 ## 六、HACK
 - 授权逻辑及设置 `custom_authorize.js`
+- 登录逻辑
