@@ -178,10 +178,12 @@ LOUSANPANG/HBuilderX-template
 
 
 ## 五、TODO
-- 自定义授权设置
-- 定位授权逻辑
-- 登录授权逻辑
-- 全局状态管理检测登录
-- 自定义导航栏
+- 登录逻辑
 - 成功失败页
+- 加载页
 - 自动化测试
+
+
+
+## 六、HACK
+- 授权逻辑及设置 `custom_authorize.js`
