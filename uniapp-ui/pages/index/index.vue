@@ -4,6 +4,7 @@
 
 <script>
 	import { PostLogin } from '@/services/services-collection/login.js'
+
 	export default {
 		name: 'Index',
 
@@ -12,14 +13,14 @@
 		},
 
 		async onLoad() {
-			try {
-				const loginRes = await PostLogin({ code: '' })
-				// TODO success
-				console.log(loginRes)
-			} catch(e) {
-				//TODO fail code !== '1000' & return Promise.reject()
-				console.log(e)
-			}
+			// try {
+			// 	const loginRes = await PostLogin({ code: '' })
+			// 	// TODO success
+			// 	console.log(loginRes)
+			// } catch(e) {
+			// 	//TODO fail code !== '1000' & return Promise.reject()
+			// 	console.log(e)
+			// }
 		}
 	}
 </script>

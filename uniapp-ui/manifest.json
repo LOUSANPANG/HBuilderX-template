@@ -54,7 +54,8 @@
             "urlCheck" : false,
             "minified" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {}
     },
     "h5" : {
         "router" : {
