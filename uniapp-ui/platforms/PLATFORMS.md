@@ -18,6 +18,7 @@
 * 不可直接使用css的方式引入字体文件。
 * 暂不支持wxs、sjs、filter。js，但支持renderjs。
 * url(//alicdn.net)等路径，改为url(https://alicdn.net)，因为在App端//是file协议。
+* nvue web-view 必须指定样式宽高。
 
 ## h5
 * `< 4kb` 转化 `base64`。

@@ -167,6 +167,7 @@ LOUSANPANG/HBuilderX-template
 - template
 	* v-show 不支持 template 元素;
 	* v-slot 只能添加在 <template> 上;
+	* 小程序端 web-view 组件一定有原生导航栏，下面一定是全屏的 web-view 组件，navigationStyle: custom 对 web-view 组件无效。
 - js
 	* 事件中访问原始的 DOM 事件，使用 $event 参数变量;
 	* 禁止蒙版下的页面滚动使用 @touchmove.stop.prevent="moveHandle"，moveHandle 可以用来处理 touchmove 的事件，也可以是一个空函数;
