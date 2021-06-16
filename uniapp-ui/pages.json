@@ -1,14 +1,23 @@
 {
 	"pages": [{
 			"path": "pages/index/index",
+			"name": "index",
 			"style": {
 				"navigationBarTitleText": "index"
 			}
 		},
 		{
 			"path": "pages/login/login",
+			"name": "login",
 			"style": {
 				"navigationBarTitleText": "login"
+			}
+		},
+		{
+			"path": "pages/404/404",
+			"name": "nofound",
+			"style": {
+				"navigationBarTitleText": "404"
 			}
 		}
 	],

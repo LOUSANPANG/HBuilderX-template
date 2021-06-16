@@ -21,6 +21,9 @@
 			// 	//TODO fail code !== '1000' & return Promise.reject()
 			// 	console.log(e)
 			// }
+		},
+
+		methods: {
 		}
 	}
 </script>
