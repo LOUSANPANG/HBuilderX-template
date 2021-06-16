@@ -22,6 +22,7 @@ LOUSANPANG/HBuilderX-template
 - 自定义工具函数
 ### 样式
 - uni.scss 
+- styles
 	- 布局
 	- 色值
 	- 基础样式
@@ -33,6 +34,8 @@ LOUSANPANG/HBuilderX-template
 	* 统一处理权限
 ### vuex
 - 全局状态管理
+### router 拦截
+- 全局处理跳转登录拦截
 
 
 
@@ -40,7 +43,6 @@ LOUSANPANG/HBuilderX-template
 ## 二、code standard
 ### 文件管理
 - common
-	* 存放公共css
 	* 存放公共函数
 	* SDK
 - components
@@ -49,6 +51,7 @@ LOUSANPANG/HBuilderX-template
 	* App端存放本地html文件的目录
 - pages
 	* 页面
+	* 404
 - platforms
 	* 存放各平台专用页面的目录
 - resonsive
@@ -61,6 +64,8 @@ LOUSANPANG/HBuilderX-template
 	* vuex
 - utils
 	* 工具文件
+- styles
+	* mixin 变量等css
 - wxcomponents
 	* wx文件
 
@@ -180,6 +185,7 @@ LOUSANPANG/HBuilderX-template
 
 ## 五、TODO
 - 成功失败页
+- 404
 - 加载页
 - 自动化测试
 
