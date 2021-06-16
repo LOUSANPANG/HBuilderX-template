@@ -12,7 +12,8 @@
  * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
  */
 
-/* 颜色变量 */
+// 项目配置样式
+@import "./styles/index.scss";
 
 /* 行为相关颜色 */
 $uni-color-primary: #007aff;
@@ -74,30 +75,3 @@ $uni-color-subtitle: #555555; // 二级标题颜色
 $uni-font-size-subtitle:26px;
 $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:15px;
-
-/* 布局相关 */
-%uni-flex-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-%uni-position-center {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-/* 文本相关 */
-%uni-text-ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-%uni-multext-ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-}
