@@ -16,21 +16,23 @@ import CustomShowToast from './custom_toast.js'
  * @function _:onUpdateFailed() 监听小程序更新失败事件
  */
 export const DetectVersionUpdate = () => {
-  const _UpdateManager = uni.getUpdateManager()
+	// #ifdef MP
+	const _UpdateManager = uni.getUpdateManager()
 
-  _UpdateManager.onUpdateReady(function() {
-    uni.showModal({
-      title: '更新提示',
-      content: '新版本已经准备好，是否重启应用?',
-      success (res) {
-        if (res.confirm) {
-          _UpdateManager.applyUpdate()
-        }
-      }
-    })
-  })
+	_UpdateManager.onUpdateReady(function() {
+		uni.showModal({
+			title: '更新提示',
+			content: '新版本已经准备好，是否重启应用?',
+			success(res) {
+				if (res.confirm) {
+					_UpdateManager.applyUpdate()
+				}
+			}
+		})
+	})
 
-  _UpdateManager.onUpdateFailed(function() {
-    CustomShowToast('新版本下载失败，请尝试清空缓存重新启动', 5000)
-  })
+	_UpdateManager.onUpdateFailed(function() {
+		CustomShowToast('新版本下载失败，请尝试清空缓存重新启动', 5000)
+	})
+	// #endif
 }
