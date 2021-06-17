@@ -6,7 +6,7 @@
  */
 import { v1 as uuidv1 } from 'uuid'
 import Request from '../luch-request/index.js'
-import Md5WithSalt from './md5Signature.js'
+import Md5WithSalt from './md5-signature.js'
 import SilentLogin from './silent-login.js'
 import { ToLogin } from './tologin'
 import CustomShowToast from '@/utils/custom_toast.js'
