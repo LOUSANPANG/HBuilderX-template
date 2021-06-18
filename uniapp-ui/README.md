@@ -12,6 +12,10 @@ LOUSANPANG/HBuilderX-template
 ### 组件
 - 空状态组件
 - 骨架屏
+- 多种加载状态动画
+### page
+- 成功页
+- 失败页
 ### 兼容跨端
 - platforms
 ### 工具
@@ -46,12 +50,14 @@ LOUSANPANG/HBuilderX-template
 	* 存放公共函数
 	* SDK
 - components
-	* 公共组件
+	* 自定义-组件
+	* uni-组件
 - hybrid
 	* App端存放本地html文件的目录
 - pages
 	* 页面
 	* 404
+	* 状态页
 - platforms
 	* 存放各平台专用页面的目录
 - resonsive
@@ -184,10 +190,8 @@ LOUSANPANG/HBuilderX-template
 
 
 ## 五、TODO
-- 成功失败页
-- 无网络状态
 - 自动化测试
-
+- 404页面
 
 
 ## 六、HACK
