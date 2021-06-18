@@ -2,6 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/login/login",
+    "pages/status/success/success",
+    "pages/status/fail/fail",
     "pages/404/404"
   ],
   "subPackages": [],
@@ -13,6 +15,5 @@
     "navigationStyle": "default"
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }
