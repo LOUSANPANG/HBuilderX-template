@@ -15,6 +15,20 @@
 			}
 		},
 		{
+			"path": "pages/status/success/success",
+			"name": "success",
+			"style": {
+				"navigationBarTitleText": "成功"
+			}
+		},
+		{
+			"path": "pages/status/fail/fail",
+			"name": "fail",
+			"style": {
+				"navigationBarTitleText": "fail"
+			}
+		},
+		{
 			"path": "pages/404/404",
 			"name": "nofound",
 			"style": {
