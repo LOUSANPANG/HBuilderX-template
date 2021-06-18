@@ -92,20 +92,20 @@ $API.interceptors.response.use(async (response) => {
 
 	} else if (statusCode === 403) {
 		CustomShowToast(`${statusCode}没有权限访问`)
-		setTimeout(() => {
-			ClearStorageSync()
-			ToLogin()
-			// return Promise.reject(`${statusCode}没有权限访问`)
-		}, 2000)
+		// setTimeout(() => {
+		// 	ClearStorageSync()
+		// 	ToLogin()
+		// 	// return Promise.reject(`${statusCode}没有权限访问`)
+		// }, 2000)
 
 	} else if (statusCode === 401) {
 		// 401
 		CustomShowToast(`${statusCode}需要鉴权`)
-		setTimeout(() => {
-			ClearStorageSync()
-			ToLogin()
-			// return Promise.reject(`${statusCode}需要鉴权`)
-		}, 2000)
+		// setTimeout(() => {
+		// 	ClearStorageSync()
+		// 	ToLogin()
+		// 	// return Promise.reject(`${statusCode}需要鉴权`)
+		// }, 2000)
 	}
 })
 
