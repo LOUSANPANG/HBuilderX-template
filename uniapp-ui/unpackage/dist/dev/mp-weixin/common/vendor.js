@@ -8228,12 +8228,12 @@ function normalizeComponent (
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });Object.defineProperty(exports, "RouterMount", { enumerable: true, get: function get() {return _uniSimpleRouter.RouterMount;} });exports.router = void 0;
 var _uniSimpleRouter = __webpack_require__(/*! uni-simple-router */ 12);
-var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 49);function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 13);function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
 
 var router = (0, _uniSimpleRouter.createRouter)({
   platform: "mp-weixin",
   routes: [].concat(_toConsumableArray(
-  [{"path":"/pages/index/index","name":"index","aliasPath":"/"},{"path":"/pages/login/login","name":"login"},{"path":"/pages/404/404","name":"nofound"}]), [
+  [{"path":"/pages/index/index","meta":{"loginAuth":true},"name":"index","aliasPath":"/"},{"path":"/pages/login/login","name":"login"},{"path":"/pages/404/404","name":"nofound"}]), [
   {
     path: '*',
     redirect: function redirect(to) {
@@ -8275,6 +8275,112 @@ router.afterEach(function (to, from) {});
 
 /***/ }),
 /* 13 */
+/*!********************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_storage.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.ClearStorageSync = exports.ClearStorage = exports.RemoveStorageSync = exports.RemoveStorage = exports.GetStorageSync = exports.SetStorageSync = exports.SetStorage = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * 封装缓存存取操作 （上限10MB，单个key上限1MB）
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {string} key 本地缓存中指定的key
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {any} data 需要缓存的内容（原生类型、Date、JSON.stringify序列化的对象）
+                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {boolean=} ifToast 存储成功是否提示
+                                                                                                                                                                                                                                                                                                                                                                                                                                       */
+
+
+// 异步存储缓存
+var SetStorage = function SetStorage(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  uni.setStorage({
+    key: key,
+    data: data,
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('存储成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('存储失败');
+    } });
+
+};
+
+
+// 同步存储缓存
+exports.SetStorage = SetStorage;var SetStorageSync = function SetStorageSync(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  try {
+    uni.setStorageSync(key, data);
+    ifToast && (0, _custom_toast.default)('存储成功');
+  } catch (e) {
+    (0, _custom_toast.default)('存储缓存失败');
+  }
+};
+
+
+// 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
+exports.SetStorageSync = SetStorageSync;var GetStorageSync = function GetStorageSync(key) {
+  try {
+    var _GETDATA = uni.getStorageSync(key);
+    if (_GETDATA) return _GETDATA;
+  } catch (e) {
+    (0, _custom_toast.default)("\u8BFB\u53D6".concat(key, "\u7F13\u5B58\u5931\u8D25"));
+  }
+};
+
+
+// 异步清除指定key
+exports.GetStorageSync = GetStorageSync;var RemoveStorage = function RemoveStorage(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  uni.removeStorage({
+    key: key,
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除指定key
+exports.RemoveStorage = RemoveStorage;var RemoveStorageSync = function RemoveStorageSync(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  try {
+    uni.removeStorageSync(key);
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};
+
+
+// 异步清除所有缓存
+exports.RemoveStorageSync = RemoveStorageSync;var ClearStorage = function ClearStorage() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  uni.clearStorage({
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除所有缓存
+exports.ClearStorage = ClearStorage;var ClearStorageSync = function ClearStorageSync() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  try {
+    uni.clearStorageSync();
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};exports.ClearStorageSync = ClearStorageSync;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 14 */
 /*!******************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/config.js ***!
   \******************************************************************************************/
@@ -8299,23 +8405,23 @@ var CONFIG = {
 CONFIG;exports.default = _default;
 
 /***/ }),
-/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 21);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 22);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8346,7 +8452,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 22);
+module.exports = __webpack_require__(/*! ./runtime */ 23);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8362,7 +8468,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9093,7 +9199,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /*!**********************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-collection/login.js ***!
   \**********************************************************************************************************************/
@@ -9101,15 +9207,15 @@ if (hadRuntime) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.PostLogin = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));
-var _httpInterceptors = _interopRequireDefault(__webpack_require__(/*! ../services-base/http-interceptors.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.PostLogin = void 0;var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 14));
+var _httpInterceptors = _interopRequireDefault(__webpack_require__(/*! ../services-base/http-interceptors.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 var PostLogin = function PostLogin(data) {
   return _httpInterceptors.default.post(_config.default.login + '/userLogin', data);
 };exports.PostLogin = PostLogin;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /*!****************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/http-interceptors.js ***!
   \****************************************************************************************************************************/
@@ -9117,20 +9223,20 @@ var PostLogin = function PostLogin(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 20));
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 21));
 
 
 
 
 
-var _uuid = __webpack_require__(/*! uuid */ 25);
-var _index = _interopRequireDefault(__webpack_require__(/*! ../luch-request/index.js */ 30));
-var _md5Signature = _interopRequireDefault(__webpack_require__(/*! ./md5Signature.js */ 43));
-var _silentLogin = _interopRequireDefault(__webpack_require__(/*! ./silent-login.js */ 48));
+var _uuid = __webpack_require__(/*! uuid */ 26);
+var _index = _interopRequireDefault(__webpack_require__(/*! ../luch-request/index.js */ 31));
+var _md5Signature = _interopRequireDefault(__webpack_require__(/*! ./md5-signature.js */ 44));
+var _silentLogin = _interopRequireDefault(__webpack_require__(/*! ./silent-login.js */ 49));
 var _tologin = __webpack_require__(/*! ./tologin */ 50);
 var _custom_toast = _interopRequireDefault(__webpack_require__(/*! @/utils/custom_toast.js */ 9));
-var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 49);
-var _config2 = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 13);
+var _config2 = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 
 var $API = new _index.default();
@@ -9211,35 +9317,35 @@ function (response) {
 
   } else if (statusCode === 403) {
     (0, _custom_toast.default)("".concat(statusCode, "\u6CA1\u6709\u6743\u9650\u8BBF\u95EE"));
-    setTimeout(function () {
-      (0, _custom_storage.ClearStorageSync)();
-      (0, _tologin.ToLogin)();
-      // return Promise.reject(`${statusCode}没有权限访问`)
-    }, 2000);
+    // setTimeout(() => {
+    // 	ClearStorageSync()
+    // 	ToLogin()
+    // 	// return Promise.reject(`${statusCode}没有权限访问`)
+    // }, 2000)
 
   } else if (statusCode === 401) {
     // 401
     (0, _custom_toast.default)("".concat(statusCode, "\u9700\u8981\u9274\u6743"));
-    setTimeout(function () {
-      (0, _custom_storage.ClearStorageSync)();
-      (0, _tologin.ToLogin)();
-      // return Promise.reject(`${statusCode}需要鉴权`)
-    }, 2000);
+    // setTimeout(() => {
+    // 	ClearStorageSync()
+    // 	ToLogin()
+    // 	// return Promise.reject(`${statusCode}需要鉴权`)
+    // }, 2000)
   }
 });var _default =
 
 $API;exports.default = _default;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /*!************************************!*\
   !*** ./node_modules/uuid/index.js ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var v1 = __webpack_require__(/*! ./v1 */ 26);
-var v4 = __webpack_require__(/*! ./v4 */ 29);
+var v1 = __webpack_require__(/*! ./v1 */ 27);
+var v4 = __webpack_require__(/*! ./v4 */ 30);
 
 var uuid = v4;
 uuid.v1 = v1;
@@ -9249,15 +9355,15 @@ module.exports = uuid;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /*!*********************************!*\
   !*** ./node_modules/uuid/v1.js ***!
   \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(/*! ./lib/rng */ 27);
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 28);
+var rng = __webpack_require__(/*! ./lib/rng */ 28);
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 29);
 
 // **`v1()` - Generate time-based UUID**
 //
@@ -9368,7 +9474,7 @@ module.exports = v1;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /*!**********************************************!*\
   !*** ./node_modules/uuid/lib/rng-browser.js ***!
   \**********************************************/
@@ -9412,7 +9518,7 @@ if (getRandomValues) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /*!**********************************************!*\
   !*** ./node_modules/uuid/lib/bytesToUuid.js ***!
   \**********************************************/
@@ -9448,15 +9554,15 @@ module.exports = bytesToUuid;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /*!*********************************!*\
   !*** ./node_modules/uuid/v4.js ***!
   \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(/*! ./lib/rng */ 27);
-var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 28);
+var rng = __webpack_require__(/*! ./lib/rng */ 28);
+var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 29);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -9487,7 +9593,7 @@ module.exports = v4;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /*!***************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/index.js ***!
   \***************************************************************************************************************/
@@ -9495,11 +9601,11 @@ module.exports = v4;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 32));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 _Request.default;exports.default = _default;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /*!**********************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/Request.js ***!
   \**********************************************************************************************************************/
@@ -9521,11 +9627,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 32));
-var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 40));
-var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 41));
-var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 42));
-var _utils = __webpack_require__(/*! ../utils */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 33));
+var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 41));
+var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 42));
+var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 43));
+var _utils = __webpack_require__(/*! ../utils */ 36);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
 
 Request = /*#__PURE__*/function () {
   /**
@@ -9708,7 +9814,7 @@ Request = /*#__PURE__*/function () {
                                */exports.default = Request;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /*!******************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/dispatchRequest.js ***!
   \******************************************************************************************************************************/
@@ -9716,7 +9822,7 @@ Request = /*#__PURE__*/function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 function _default(config) {
@@ -9724,7 +9830,7 @@ function _default(config) {
 };exports.default = _default;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /*!************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/adapters/index.js ***!
   \************************************************************************************************************************/
@@ -9732,10 +9838,10 @@ function _default(config) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 34));
-var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 36));
-var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 39));
-var _utils = __webpack_require__(/*! ../utils */ 35);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 35));
+var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 37));
+var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 40));
+var _utils = __webpack_require__(/*! ../utils */ 36);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * 返回可选值存在的配置
@@ -9834,7 +9940,7 @@ function _default(config) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /*!**************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/buildURL.js ***!
   \**************************************************************************************************************************/
@@ -9844,7 +9950,7 @@ function _default(config) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildURL;
 
-var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 35));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
+var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 36));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -9913,7 +10019,7 @@ function buildURL(url, params) {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /*!***************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/utils.js ***!
   \***************************************************************************************************************/
@@ -10058,7 +10164,7 @@ function isUndefined(val) {
 }
 
 /***/ }),
-/* 36 */
+/* 37 */
 /*!****************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/buildFullPath.js ***!
   \****************************************************************************************************************************/
@@ -10068,8 +10174,8 @@ function isUndefined(val) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildFullPath;
 
-var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 37));
-var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 38));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 38));
+var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 39));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 /**
                                                                                                                                                                             * Creates a new URL by combining the baseURL with the requestedURL,
@@ -10088,7 +10194,7 @@ function buildFullPath(baseURL, requestedURL) {
 }
 
 /***/ }),
-/* 37 */
+/* 38 */
 /*!*******************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/isAbsoluteURL.js ***!
   \*******************************************************************************************************************************/
@@ -10112,7 +10218,7 @@ function isAbsoluteURL(url) {
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /*!*****************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/helpers/combineURLs.js ***!
   \*****************************************************************************************************************************/
@@ -10136,7 +10242,7 @@ function combineURLs(baseURL, relativeURL) {
 }
 
 /***/ }),
-/* 39 */
+/* 40 */
 /*!*********************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/settle.js ***!
   \*********************************************************************************************************************/
@@ -10162,7 +10268,7 @@ function settle(resolve, reject, response) {
 }
 
 /***/ }),
-/* 40 */
+/* 41 */
 /*!*********************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/InterceptorManager.js ***!
   \*********************************************************************************************************************************/
@@ -10223,7 +10329,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 InterceptorManager;exports.default = _default;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /*!**************************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/mergeConfig.js ***!
   \**************************************************************************************************************************/
@@ -10231,7 +10337,7 @@ InterceptorManager;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 35);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 36);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
@@ -10336,7 +10442,7 @@ function _default(globalsConfig) {var config2 = arguments.length > 1 && argument
 };exports.default = _default;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /*!***********************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/luch-request/core/defaults.js ***!
   \***********************************************************************************************************************/
@@ -10375,10 +10481,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } };exports.default = _default;
 
 /***/ }),
-/* 43 */
-/*!***********************************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/md5Signature.js ***!
-  \***********************************************************************************************************************/
+/* 44 */
+/*!************************************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/md5-signature.js ***!
+  \************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10388,7 +10494,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _jsMd = _interopRequireDefault(__webpack_require__(/*! js-md5 */ 44));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
+var _jsMd = _interopRequireDefault(__webpack_require__(/*! js-md5 */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
                                                                                                                                                      * 接口签名工具
                                                                                                                                                      * @param {Object} data 待签名数据（需进行md5处理的数据）
                                                                                                                                                      * @param {String} salt 盐值
@@ -10420,7 +10526,7 @@ var _jsMd = _interopRequireDefault(__webpack_require__(/*! js-md5 */ 44));functi
 Md5WithSalt;exports.default = _default;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /*!***************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/node_modules/js-md5/src/md5.js ***!
   \***************************************************************************************************************/
@@ -10453,7 +10559,7 @@ Md5WithSalt;exports.default = _default;
     root = self;
   }
   var COMMON_JS = !root.JS_MD5_NO_COMMON_JS && typeof module === 'object' && module.exports;
-  var AMD =  true && __webpack_require__(/*! !webpack amd options */ 47);
+  var AMD =  true && __webpack_require__(/*! !webpack amd options */ 48);
   var ARRAY_BUFFER = !root.JS_MD5_NO_ARRAY_BUFFER && typeof ArrayBuffer !== 'undefined';
   var HEX_CHARS = '0123456789abcdef'.split('');
   var EXTRA = [128, 32768, 8388608, -2147483648];
@@ -11111,10 +11217,10 @@ Md5WithSalt;exports.default = _default;
     }
   }
 })();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 45), __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/webpack/buildin/global.js */ 3)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 46), __webpack_require__(/*! ./../../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/webpack/buildin/global.js */ 3)))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11145,7 +11251,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 46);
+        if (!path) path = __webpack_require__(/*! path */ 47);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11158,7 +11264,7 @@ exports.features = {};
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11468,10 +11574,10 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 45)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 46)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /*!****************************************!*\
   !*** (webpack)/buildin/amd-options.js ***!
   \****************************************/
@@ -11484,7 +11590,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
-/* 48 */
+/* 49 */
 /*!***********************************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/services/services-base/silent-login.js ***!
   \***********************************************************************************************************************/
@@ -11492,7 +11598,7 @@ module.exports = __webpack_amd_options__;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 20));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 21));
 
 
 
@@ -11508,11 +11614,11 @@ module.exports = __webpack_amd_options__;
 
 
 var _custom_toast = _interopRequireDefault(__webpack_require__(/*! @/utils/custom_toast.js */ 9));
-var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 49);
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 13);
 
 
 
-var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 13));
+var _config = _interopRequireDefault(__webpack_require__(/*! @/config.js */ 14));
 var _tologin = __webpack_require__(/*! ./tologin */ 50);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 
@@ -11561,112 +11667,6 @@ var SilentLogin = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__P
 
 
 SilentLogin;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 49 */
-/*!********************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_storage.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.ClearStorageSync = exports.ClearStorage = exports.RemoveStorageSync = exports.RemoveStorage = exports.GetStorageSync = exports.SetStorageSync = exports.SetStorage = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-
-/**
-                                                                                                                                                                                                                                                                                                                                                                                                                                       * 封装缓存存取操作 （上限10MB，单个key上限1MB）
-                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {string} key 本地缓存中指定的key
-                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {any} data 需要缓存的内容（原生类型、Date、JSON.stringify序列化的对象）
-                                                                                                                                                                                                                                                                                                                                                                                                                                       * @param {boolean=} ifToast 存储成功是否提示
-                                                                                                                                                                                                                                                                                                                                                                                                                                       */
-
-
-// 异步存储缓存
-var SetStorage = function SetStorage(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  uni.setStorage({
-    key: key,
-    data: data,
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('存储成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('存储失败');
-    } });
-
-};
-
-
-// 同步存储缓存
-exports.SetStorage = SetStorage;var SetStorageSync = function SetStorageSync(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  try {
-    uni.setStorageSync(key, data);
-    ifToast && (0, _custom_toast.default)('存储成功');
-  } catch (e) {
-    (0, _custom_toast.default)('存储缓存失败');
-  }
-};
-
-
-// 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
-exports.SetStorageSync = SetStorageSync;var GetStorageSync = function GetStorageSync(key) {
-  try {
-    var _GETDATA = uni.getStorageSync(key);
-    if (_GETDATA) return _GETDATA;
-  } catch (e) {
-    (0, _custom_toast.default)("\u8BFB\u53D6".concat(key, "\u7F13\u5B58\u5931\u8D25"));
-  }
-};
-
-
-// 异步清除指定key
-exports.GetStorageSync = GetStorageSync;var RemoveStorage = function RemoveStorage(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  uni.removeStorage({
-    key: key,
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('清除缓存成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('清除缓存失败');
-    } });
-
-};
-
-
-// 同步清除指定key
-exports.RemoveStorage = RemoveStorage;var RemoveStorageSync = function RemoveStorageSync(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  try {
-    uni.removeStorageSync(key);
-    ifToast && (0, _custom_toast.default)('清除缓存成功');
-  } catch (e) {
-    (0, _custom_toast.default)('清除缓存失败');
-  }
-};
-
-
-// 异步清除所有缓存
-exports.RemoveStorageSync = RemoveStorageSync;var ClearStorage = function ClearStorage() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  uni.clearStorage({
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('清除缓存成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('清除缓存失败');
-    } });
-
-};
-
-
-// 同步清除所有缓存
-exports.ClearStorage = ClearStorage;var ClearStorageSync = function ClearStorageSync() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  try {
-    uni.clearStorageSync();
-    ifToast && (0, _custom_toast.default)('清除缓存成功');
-  } catch (e) {
-    (0, _custom_toast.default)('清除缓存失败');
-  }
-};exports.ClearStorageSync = ClearStorageSync;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
