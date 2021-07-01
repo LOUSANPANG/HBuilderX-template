@@ -4,7 +4,8 @@
 			"name": "index",
 			"meta": { "loginAuth": true },
 			"style": {
-				"navigationBarTitleText": "index"
+				"navigationBarTitleText": "index",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -13,35 +14,12 @@
 			"style": {
 				"navigationBarTitleText": "login"
 			}
-		},
-		{
-			"path": "pages/status/success/success",
-			"name": "success",
-			"style": {
-				"navigationBarTitleText": "成功"
-			}
-		},
-		{
-			"path": "pages/status/fail/fail",
-			"name": "fail",
-			"style": {
-				"navigationBarTitleText": "fail"
-			}
-		},
-		{
-			"path": "pages/404/404",
-			"name": "nofound",
-			"style": {
-				"navigationBarTitleText": "404"
-			}
 		}
 	],
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"navigationStyle": "default"
+		"backgroundColor": "#F8F8F8"
 	}
 }

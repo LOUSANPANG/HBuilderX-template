@@ -1,18 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/login/login",
-    "pages/status/success/success",
-    "pages/status/fail/fail",
-    "pages/404/404"
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "navigationStyle": "default"
+    "backgroundColor": "#F8F8F8"
   },
   "permission": {},
   "usingComponents": {}

@@ -29,9 +29,5 @@
 </script>
 
 <style lang="scss">
-	.index {
-		width: 100%;
-		height: 100vh;
-		position: relative;
-	}
+	@import "./index.scss"
 </style>
