@@ -17,9 +17,27 @@
 		}
 	],
 
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [{
+				"path": "status/fail/fail",
+				"style": {
+					"navigationBarTitleText": "失败页"
+				}
+			},
+			{
+				"path": "status/success/success",
+				"style": {
+					"navigationBarTitleText": "成功页"
+				}
+			}
+		]
+	}],
+
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarTitleText": "",
 		"backgroundColor": "#F8F8F8"
 	}
 }

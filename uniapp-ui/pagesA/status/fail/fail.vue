@@ -1,7 +1,7 @@
 <!-- 失败页 -->
 <template>
 	<view class="fail">
-		<image class="fail-logo" src="../../../static/system/fail.png" title="失败" />
+		<image class="fail-logo" src="../../static/status/fail.png" title="失败" />
 
 		<view class="fail-title">fail</view>
 	</view>

@@ -8233,7 +8233,7 @@ var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 13);f
 var router = (0, _uniSimpleRouter.createRouter)({
   platform: "mp-weixin",
   routes: _toConsumableArray(
-  [{"path":"/pages/index/index","name":"index","aliasPath":"/"},{"path":"/pages/login/login","name":"login"}]) });
+  [{"path":"/pages/index/index","name":"index","aliasPath":"/"},{"path":"/pages/login/login","name":"login"},{"path":"/pagesA/status/fail/fail"},{"path":"/pagesA/status/success/success"}]) });
 
 
 

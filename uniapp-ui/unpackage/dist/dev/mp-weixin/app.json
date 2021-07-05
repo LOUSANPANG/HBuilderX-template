@@ -3,12 +3,22 @@
     "pages/index/index",
     "pages/login/login"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "pagesA",
+      "pages": [
+        "status/fail/fail",
+        "status/success/success"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTitleText": "",
     "backgroundColor": "#F8F8F8"
   },
   "permission": {},
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }
