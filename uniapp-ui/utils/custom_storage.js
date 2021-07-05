@@ -1,4 +1,4 @@
-import CustomShowToast from './custom_toast.js'
+import customShowToast from './custom_toast.js'
 
 
 /**
@@ -8,88 +8,126 @@ import CustomShowToast from './custom_toast.js'
  * @param {boolean=} ifToast 存储成功是否提示
  */
 
+const isType = (value) => {
+	const type = Object.prototype.toString.apply(value)
+	return type
+}
+
+/**
+ * {} => '{}' => {}
+ * 1 => '1' => 1
+ * true => 'true => true
+ * 'string' => 'string' => 'string'
+ * null => 'null' => null
+ * @param {string|number|boolean|object|null} value 数据
+ * @param {string} type 存储 | 读取
+ * @returns {string|number|boolean|object|null}
+ */
+const cacheValue = (value, type) => {
+	let newValue
+	const valueType = isType(value)
+	if (type === 'set') {
+		if (valueType === '[object Object]' || valueType === '[object Array]') {
+			newValue = JSON.stringify([JSON.stringify(value), valueType])
+		} else {
+			newValue = JSON.stringify([value, valueType])
+		}
+	} else if (type === 'get') {
+		if (!value) return null
+		const [storageVal, storageType] = [...JSON.parse(value)]
+		if (storageType === '[object String]') {
+			newValue = storageVal
+		} else {
+			newValue = JSON.parse(storageVal)
+		}
+	}
+	return newValue
+}
+
 
 // 异步存储缓存
-export const SetStorage = ( key, data, ifToast = false ) => {
-  uni.setStorage({
-    key,
-    data,
-    success() {
-      ifToast && CustomShowToast('存储成功')
-    },
-    fail() {
-      CustomShowToast('存储失败')
-    }
-  })
+export const setStorage = (key, data, ifToast = false) => {
+	uni.setStorage({
+		key,
+		data: cacheValue(data, 'set'),
+		success() {
+			ifToast && customShowToast('存储成功')
+		},
+		fail() {
+			customShowToast('存储失败')
+		}
+	})
 }
 
 
 // 同步存储缓存
-export const SetStorageSync = ( key, data, ifToast = false ) => {
-  try {
-    uni.setStorageSync(key, data)
-    ifToast && CustomShowToast('存储成功')
-  } catch (e) {
-    CustomShowToast('存储缓存失败')
-  }
+export const setStorageSync = (key, data, ifToast = false) => {
+	try {
+		uni.setStorageSync(key, cacheValue(data, 'set'))
+		ifToast && customShowToast('存储成功')
+	} catch (e) {
+		customShowToast('存储缓存失败')
+	}
 }
 
 
 // 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
-export const GetStorageSync = ( key ) => {
-  try {
-    const _GETDATA = uni.getStorageSync(key)
-    if (_GETDATA) return _GETDATA
-  } catch (e) {
-    CustomShowToast(`读取${key}缓存失败`)
-  }
+export const getStorageSync = (key) => {
+	try {
+		const _GETDATA = cacheValue(uni.getStorageSync(key), 'get')
+		return _GETDATA
+	} catch (e) {
+		customShowToast(`读取${key}缓存失败`)
+	}
 }
 
 
 // 异步清除指定key
-export const RemoveStorage = ( key, ifToast = false ) => {
-  uni.removeStorage({
-    key,
-    success() {
-      ifToast && CustomShowToast('清除缓存成功')
-    },
-    fail() {
-      CustomShowToast('清除缓存失败')
-    }
-  })
+export const removeStorage = (key, ifToast = false) => {
+	if (!uni.getStorageSync(key)) return
+	uni.removeStorage({
+		key,
+		success() {
+			ifToast && customShowToast('清除缓存成功')
+		},
+		fail() {
+			customShowToast('清除缓存失败')
+		}
+	})
 }
 
 
 // 同步清除指定key
-export const RemoveStorageSync = ( key, ifToast = false ) => {
-  try {
-    uni.removeStorageSync(key)
-    ifToast && CustomShowToast('清除缓存成功')
-  } catch (e) {
-    CustomShowToast('清除缓存失败')
-  }
+export const removeStorageSync = (key, ifToast = false) => {
+	if (!uni.getStorageSync(key)) return
+	try {
+		uni.removeStorageSync(key)
+		ifToast && customShowToast('清除缓存成功')
+	} catch (e) {
+		customShowToast('清除缓存失败')
+	}
 }
 
 
 // 异步清除所有缓存
-export const ClearStorage = ( ifToast = false ) => {
-  uni.clearStorage({
-    success() {
-      ifToast && CustomShowToast('清除缓存成功')
-    },
-    fail() {
-      CustomShowToast('清除缓存失败')
-    }
-  })
+export const clearStorage = (ifToast = false) => {
+	uni.clearStorage({
+		success() {
+			ifToast && customShowToast('清除缓存成功')
+		},
+		fail() {
+			customShowToast('清除缓存失败')
+		}
+	})
 }
 
 
 // 同步清除所有缓存
-export const ClearStorageSync = ( ifToast = false ) => {
-  try {
-    uni.clearStorageSync()
-    ifToast && CustomShowToast('清除缓存成功')
-  } catch (e) {
-    CustomShowToast('清除缓存失败')
-  }
+export const clearStorageSync = (ifToast = false) => {
+	try {
+		uni.clearStorageSync()
+		ifToast && customShowToast('清除缓存成功')
+	} catch (e) {
+		customShowToast('清除缓存失败')
+	}
 }
