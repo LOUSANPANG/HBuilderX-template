@@ -1,4 +1,4 @@
-import CustomShowToast from './custom_toast.js'
+import customShowToast from './custom_toast.js'
 
 /**
  * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
@@ -12,9 +12,9 @@ import CustomShowToast from './custom_toast.js'
  * @param {string} ${attribute}代表组件属性
  * @param {string} ${option}代表组件属性的可选值
  */
-export const CanIUse = ( param ) => {
-  const _CANIUSE =  uni.canIUse(param)
-  return _CANIUSE
+export const canIUse = (param) => {
+	const _CANIUSE = uni.canIUse(param)
+	return _CANIUSE
 }
 
 /**
@@ -22,13 +22,12 @@ export const CanIUse = ( param ) => {
  * @returns {object} res
  * @returns {object.platform} res.platform 客户端环境
  */
-export const CanSystemInfoSync = () => {
+export const canSystemInfoSync = () => {
 	try {
-	    const res = uni.getSystemInfoSync()
-			return res
+		const res = uni.getSystemInfoSync()
+		return res
 	} catch (e) {
 		console.error(e)
-	    CustomShowToast('获取系统信息失败')
+		customShowToast('获取系统信息失败')
 	}
 }
-

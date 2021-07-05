@@ -13,26 +13,26 @@
  * b 无法通过wx.getUserInfo接口获取用户个人信息 将直接获取匿名数据
  * c 新增getUserProfile接口可获取用户信息 均需用户确认
  */
-import CustomShowToast from '@/utils/custom_toast.js'
+import customShowToast from '@/utils/custom_toast.js'
 import {
-	ClearStorageSync,
-	SetStorageSync
+	clearStorageSync,
+	setStorageSync
 } from '@/utils/custom_storage.js'
 import CONFIG from '@/config.js'
-import { ToLogin } from './tologin'
+import { toLogin } from './tologin'
 
 
-const SilentLogin = async () => {
+const silentLogin = async () => {
 	const [loginErr, loginRes] = await uni.login({
 		provider: 'weixin'
 	})
 
 	if (loginErr) {
-		console.info('[===uni.login失败]❌: ', loginErr)
-		CustomShowToast('uni.login error')
+		console.info('uni.login失败❌: ', loginErr)
+		customShowToast('uni.login error')
 		return Promise.reject(loginErr)
 	} else {
-		console.info('[===uni.login成功]✅: ', loginRes)
+		console.info('uni.login成功✅: ', loginRes)
 		const [requestErr, requestRes] = await uni.request({
 			url: CONFIG.rootHost + CONFIG.login + '/userLoginByCode',
 			method: 'POST',
@@ -43,22 +43,22 @@ const SilentLogin = async () => {
 		})
 
 		if (requestErr) {
-			console.info('[===登录接口失败]❌: ', requestErr)
-			CustomShowToast('静默登录请求失败')
+			console.info('登录接口失败❌: ', requestErr)
+			customShowToast('静默登录请求失败')
 			return Promise.reject(requestErr)
 		} else {
-			console.info('[===登录接口成功]✅: ', requestRes)
+			console.info('登录接口成功✅: ', requestRes)
 			if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
-				SetStorageSync('user', JSON.stringify(requestRes.data.data))
+				setStorageSync('user', requestRes.data.data)
 			} else {
-				ClearStorageSync()
+				clearStorageSync()
 				uni.showModal({
 					title: "提示",
 					content: "登录信息已过期，请重新登录",
 					confirmText: "前往登录",
 					showCancel: false,
 					success(res) {
-						ToLogin()
+						toLogin()
 					}
 				})
 			}
@@ -66,4 +66,4 @@ const SilentLogin = async () => {
 	}
 }
 
-export default SilentLogin
+export default silentLogin

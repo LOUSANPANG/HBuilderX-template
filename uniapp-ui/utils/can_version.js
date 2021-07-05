@@ -5,7 +5,7 @@
  * 第 3（patch） 位版本号的更新一般不需要依赖客户端更新，如：基础库v2.1.0 ~ v2.1.3 都运行在 v6.6.7 客户端，新版本发布会覆盖旧版本。
  */
 
-import CustomShowToast from './custom_toast.js'
+import customShowToast from './custom_toast.js'
 
 
 /**
@@ -15,7 +15,7 @@ import CustomShowToast from './custom_toast.js'
  * @function _:applyUpdate() 强制小程序重启并使用新版本。在小程序新版本下载完成后（即收到 onUpdateReady 回调）调用
  * @function _:onUpdateFailed() 监听小程序更新失败事件
  */
-export const DetectVersionUpdate = () => {
+export const detectVersionUpdate = () => {
 	// #ifdef MP
 	const _UpdateManager = uni.getUpdateManager()
 
@@ -32,7 +32,7 @@ export const DetectVersionUpdate = () => {
 	})
 
 	_UpdateManager.onUpdateFailed(function() {
-		CustomShowToast('新版本下载失败，请尝试清空缓存重新启动', 5000)
+		customShowToast('新版本下载失败，请尝试清空缓存重新启动', 4000)
 	})
 	// #endif
 }

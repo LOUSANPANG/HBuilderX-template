@@ -4,7 +4,7 @@
  * @param {number} duration 时间
  * @param {string} icon 图标
  */
-const CustomShowToast = (title, duration = 2000, icon = 'none') => {
+const customShowToast = (title, duration = 2000, icon = 'none') => {
 	return new Promise((resolve, reject) => {
 		uni.showToast({
 			title,
@@ -17,4 +17,4 @@ const CustomShowToast = (title, duration = 2000, icon = 'none') => {
 	})
 }
 
-export default CustomShowToast
+export default customShowToast

@@ -1,21 +1,15 @@
-/**
- * 修改全局默认配置
- * baseURL
- * header
- * custom
- */
+// 拦截器
 import { v1 as uuidv1 } from 'uuid'
 import Request from '../luch-request/index.js'
-import Md5WithSalt from './md5-signature.js'
-import SilentLogin from './silent-login.js'
-import { ToLogin } from './tologin'
-import CustomShowToast from '@/utils/custom_toast.js'
-import { GetStorageSync, ClearStorageSync } from '@/utils/custom_storage.js'
+import md5WithSalt from './md5-signature.js'
+import silentLogin from './silent-login.js'
+import { toLogin } from './tologin'
+import customShowToast from '@/utils/custom_toast.js'
+import { getStorageSync, clearStorageSync } from '@/utils/custom_storage.js'
 import CONFIG from '@/config.js'
 
 
 const $API = new Request()
-
 
 $API.setConfig((config) => {
 	const _config = {
@@ -32,25 +26,22 @@ $API.setConfig((config) => {
 	}
 })
 
-
 /**
  * 请求前拦截
  * header 添加 token
  * 通过 custom 做一系列其他操作
  */
 $API.interceptors.request.use((config) => {
-	console.info('[===请求拦截前]⚙: ', config)
+	console.info('请求拦截前⛔️: ', config)
 	config.header = {
 		...config.header,
-		sign: Md5WithSalt(config.data, GetStorageSync('user') && JSON.parse(GetStorageSync('user')).key),
-		Authorization: GetStorageSync('user') && JSON.parse(GetStorageSync('user')).token
+		sign: md5WithSalt(config.data, getStorageSync('user') && getStorageSync('user').key),
+		Authorization: getStorageSync('user') && getStorageSync('user').token
 	}
 	// if (config.custom.auth) {
 	//   config.header.token = 'token'
 	// }
-
 	return Promise.resolve(config)
-
 }, config => {
 	return Promise.reject(config)
 })
@@ -62,13 +53,13 @@ $API.interceptors.request.use((config) => {
  * code 数据判断
  */
 $API.interceptors.response.use(async (response) => {
-	console.info('[===请求拦截后成功码]✅: ', response)
+	console.info('请求拦截后成功码✅: ', response)
 	const code = response.data.code
 
 	if (response.statusCode === 200) {
 		if (code === '11111') {
 			// token 失效 静默登录
-			await SilentLogin()
+			await silentLogin()
 			// 递归
 			return await $API.post(response.config.url, response.config.data)
 		} else if (code === '10000') {
@@ -79,31 +70,31 @@ $API.interceptors.response.use(async (response) => {
 	}
 
 }, (response) => {
-	console.info('[===请求拦截后错误码]❌: ', response)
+	console.info('请求拦截后错误码❌: ', response)
 	const statusCode = response.statusCode
 
 	if (statusCode === 404) {
-		CustomShowToast(`${statusCode}请求资源不存在`)
+		customShowToast(`${statusCode}请求资源不存在`)
 		// return Promise.reject(`${statusCode}请求资源不存在`)
 
 	} else if (statusCode === 500 || statusCode === 502 || statusCode === 503) {
-		CustomShowToast(`${statusCode}系统繁忙稍后重试`)
+		customShowToast(`${statusCode}系统繁忙稍后重试`)
 		// return Promise.reject(`${statusCode}系统繁忙稍后重试`)
 
 	} else if (statusCode === 403) {
-		CustomShowToast(`${statusCode}没有权限访问`)
+		customShowToast(`${statusCode}没有权限访问`)
 		// setTimeout(() => {
-		// 	ClearStorageSync()
-		// 	ToLogin()
+		// 	clearStorageSync()
+		// 	toLogin()
 		// 	// return Promise.reject(`${statusCode}没有权限访问`)
 		// }, 2000)
 
 	} else if (statusCode === 401) {
 		// 401
-		CustomShowToast(`${statusCode}需要鉴权`)
+		customShowToast(`${statusCode}需要鉴权`)
 		// setTimeout(() => {
-		// 	ClearStorageSync()
-		// 	ToLogin()
+		// 	clearStorageSync()
+		// 	toLogin()
 		// 	// return Promise.reject(`${statusCode}需要鉴权`)
 		// }, 2000)
 	}

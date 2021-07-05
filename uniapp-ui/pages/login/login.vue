@@ -21,7 +21,7 @@
 
 		methods: {
 			handleLogin() {
-				uni.redirectTo({ url: this.routeQuery.formPath })
+				uni.navigateTo({ url: this.routeQuery.formPath })
 			}
 		}
 	}

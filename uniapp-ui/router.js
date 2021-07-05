@@ -1,31 +1,26 @@
 // router
 import { RouterMount, createRouter } from 'uni-simple-router'
-import { GetStorageSync } from '@/utils/custom_storage.js'
+import { getStorageSync } from '@/utils/custom_storage.js'
 
 const router = createRouter({
 	platform: process.env.VUE_APP_PLATFORM,
 	routes: [
-		...ROUTES,
-		{
-			path: '*',
-			redirect: (to) => {
-				return { name: '404' }
-			}
-		}
+		...ROUTES
 	]
 })
 
 //全局路由前置守卫
 router.beforeEach((to, from, next) => {
 	const loginAuth = to.meta.loginAuth
-	const token = GetStorageSync('token')
+	const token = getStorageSync('token')
 	if (loginAuth) {
 		token
-			? next()
-			: next({
-					name: 'login',
-					params: { formPath: to.fullPath }
-				})
+			?
+			next() :
+			next({
+				name: 'login',
+				params: { formPath: to.fullPath }
+			})
 	} else {
 		next()
 	}

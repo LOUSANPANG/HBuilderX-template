@@ -15,9 +15,9 @@ const app = new Vue({
 })
 
 // #ifdef H5
-	RouterMount(app,router, '#app')
+RouterMount(app, router, '#app')
 // #endif
 
 // #ifndef H5
-	app.$mount()
+app.$mount()
 // #endif

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import { PostLogin } from '@/services/services-collection/login.js'
+	import { postLogin } from '@/services/api/login.js'
 
 	export default {
 		name: 'Index',
@@ -14,7 +14,7 @@
 
 		async onLoad() {
 			// try {
-			// 	const loginRes = await PostLogin({ code: '' })
+			// 	const loginRes = await postLogin({ code: '' })
 			// 	// TODO success
 			// 	console.log(loginRes)
 			// } catch(e) {
