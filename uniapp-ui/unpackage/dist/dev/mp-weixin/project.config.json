@@ -41,6 +41,10 @@
   "libVersion": "",
   "appid": "wx0709755458983867",
   "projectname": "uniapp-ui",
+  "simulatorType": "qywx_simulator_plugin",
+  "simulatorPluginLibVersion": {
+    "qywx_simulator_plugin": "2.8.3"
+  },
   "condition": {
     "search": {
       "list": []

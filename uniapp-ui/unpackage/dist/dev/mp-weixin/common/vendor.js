@@ -11721,6 +11721,104 @@ var toLogin = function toLogin() {
 };exports.toLogin = toLogin;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
+/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */
+/*!********************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/is_environment.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = isEnvironment;
+
+
+
+
+
+
+
+
+
+var _can_use = __webpack_require__(/*! ./can_use.js */ 76); /**
+                                         * 当前终端环境
+                                         * 建议开发者在小程序的app.js里面对环境变量进行捕获并作为全局变量进行缓存
+                                         *
+                                         * 企业微信
+                                         * 	额外返回environment字段并赋值为wxwork
+                                         * 	wx.qy的接口，都只能在企业微信端调用
+                                         *
+                                         */function isEnvironment() {var systemInfo = (0, _can_use.canSystemInfoSync)();if (systemInfo.environment) {return systemInfo.environment;} else {return 'wx';}
+}
+
+/***/ }),
+/* 76 */
+/*!*************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/can_use.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.canSystemInfoSync = exports.canIUse = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/**
+                                                                                                                                                                                                                                                                                                        * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
+                                                                                                                                                                                                                                                                                                        * @example uni.canIUse('getSystemInfoSync.return.safeArea.left')
+                                                                                                                                                                                                                                                                                                        * @Description 使用 ${API}.${method}.${param}.${option} 或者 ${component}.${attribute}.${option} 方式来调用
+                                                                                                                                                                                                                                                                                                        * @param {string} ${API}代表 API 名字
+                                                                                                                                                                                                                                                                                                        * @param {string} ${method}代表调用方式，有效值为return, success, object, callback
+                                                                                                                                                                                                                                                                                                        * @param {string} ${param}代表参数或者返回值
+                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表参数的可选值或者返回值的属性
+                                                                                                                                                                                                                                                                                                        * @param {string} ${component}代表组件名字
+                                                                                                                                                                                                                                                                                                        * @param {string} ${attribute}代表组件属性
+                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表组件属性的可选值
+                                                                                                                                                                                                                                                                                                        */
+var canIUse = function canIUse(param) {
+  var _CANIUSE = uni.canIUse(param);
+  return _CANIUSE;
+};
+
+/**
+    * 同步获取系统信息
+    * @returns {object} res
+    * @returns {object.platform} res.platform 客户端环境
+    */exports.canIUse = canIUse;
+var canSystemInfoSync = function canSystemInfoSync() {
+  try {
+    var res = uni.getSystemInfoSync();
+    return res;
+  } catch (e) {
+    console.error(e);
+    (0, _custom_toast.default)('获取系统信息失败');
+  }
+};exports.canSystemInfoSync = canSystemInfoSync;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
