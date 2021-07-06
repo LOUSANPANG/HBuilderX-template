@@ -1,9 +1,10 @@
 <template>
-	<view class="index"></view>
+	<view class="index">
+	</view>
 </template>
 
 <script>
-	import { postLogin } from '@/services/api/login.js'
+	// import { postLogin } from '@/services/api/login.js'
 
 	export default {
 		name: 'Index',
