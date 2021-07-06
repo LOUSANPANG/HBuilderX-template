@@ -1,7 +1,7 @@
 // @description {toLogin} 权限问题跳转登录页
 
 const getCurrentPageUrl = () => {
-	let pages = uni.getCurrentPages()
+	let pages = getCurrentPages()
 	let currentPage = pages[pages.length - 1]
 	let url = currentPage.route
 	return url
@@ -9,7 +9,7 @@ const getCurrentPageUrl = () => {
 
 export const toLogin = () => {
 	let path = getCurrentPageUrl()
-	if (!path.includes('login')) {
+	if (!path.includes('/login/login')) {
 		uni.navigateTo({
 			url: '/pages/login/login'
 		})

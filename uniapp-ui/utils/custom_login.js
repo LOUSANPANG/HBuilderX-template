@@ -11,8 +11,9 @@ const customLogin = async () => {
 	if (err) {
 		console.log('uni.login失败❌：', err)
 		customShowToast('登录失败')
+		return null
 	} else {
-		return res
+		return res.code
 	}
 
 	// #endif

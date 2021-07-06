@@ -14,20 +14,16 @@
  * c 新增getUserProfile接口可获取用户信息 均需用户确认
  */
 import customShowToast from '@/utils/custom_toast.js'
-import {
-	clearStorageSync,
-	setStorageSync
-} from '@/utils/custom_storage.js'
+import { clearStorageSync, setStorageSync } from '@/utils/custom_storage.js'
+import customLogin from '@/utils/custom_login.js'
 import CONFIG from '@/config.js'
 import { toLogin } from './tologin'
 
 
 const silentLogin = async () => {
-	const [loginErr, loginRes] = await uni.login({
-		provider: 'weixin'
-	})
+	const loginRes = await customLogin()
 
-	if (loginErr) {
+	if (!loginRes) {
 		console.info('uni.login失败❌: ', loginErr)
 		customShowToast('uni.login error')
 		return Promise.reject(loginErr)
