@@ -4,11 +4,13 @@ import { router, RouterMount } from './router.js'
 // import store from '@/store'
 import CONFIG from './config.js'
 
+import customShowToast from './utils/custom_toast.js'
 import isEnvironment from './utils/is_environment.js'
 
 
 Vue.config.productionTip = false
 Vue.prototype.$CONFIG = CONFIG
+Vue.prototype.$TOAST = customShowToast
 Vue.prototype.$ISENV = isEnvironment()
 
 Vue.use(router)
