@@ -1,6 +1,6 @@
-(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
-
-/***/ 1:
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
+/* 0 */,
+/* 1 */
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
   \************************************************************/
@@ -1920,361 +1920,7 @@ var uni$1 = uni;var _default =
 uni$1;exports.default = _default;
 
 /***/ }),
-
-/***/ 10:
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // fixed by xxxxxx auto components
-  if (components) {
-    if (!options.components) {
-      options.components = {}
-    }
-    var hasOwn = Object.prototype.hasOwnProperty
-    for (var name in components) {
-      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
-        options.components[name] = components[name]
-      }
-    }
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ 11:
-/*!******************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/router.js ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });Object.defineProperty(exports, "RouterMount", { enumerable: true, get: function get() {return _uniSimpleRouter.RouterMount;} });exports.router = void 0;
-var _uniSimpleRouter = __webpack_require__(/*! uni-simple-router */ 12);
-var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 13);function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
-
-var router = (0, _uniSimpleRouter.createRouter)({
-  platform: "mp-weixin",
-  routes: _toConsumableArray(
-  [{"path":"/pages/index/index","name":"index","aliasPath":"/"},{"path":"/pages/login/login","name":"login"},{"path":"/pagesA/status/fail/fail"},{"path":"/pagesA/status/success/success"}]) });
-
-
-
-//全局路由前置守卫
-exports.router = router;router.beforeEach(function (to, from, next) {
-  var loginAuth = to.meta.loginAuth;
-  var token = (0, _custom_storage.getStorageSync)('token');
-  if (loginAuth) {
-    token ?
-
-    next() :
-    next({
-      name: 'login',
-      params: { formPath: to.fullPath } });
-
-  } else {
-    next();
-  }
-});
-
-// 全局路由后置守卫
-router.afterEach(function (to, from) {});
-
-/***/ }),
-
-/***/ 12:
-/*!*****************************************************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/node_modules/uni-simple-router/dist/uni-simple-router.js ***!
-  \*****************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(uni) {!function (e, t) { true ? module.exports = t() : undefined;}(self, function () {return e = { 779: function _(e, t, r) {var o = r(173);e.exports = function e(t, r, n) {return o(r) || (n = r || n, r = []), n = n || {}, t instanceof RegExp ? function (e, t) {var r = e.source.match(/\((?!\?)/g);if (r) for (var o = 0; o < r.length; o++) {t.push({ name: o, prefix: null, delimiter: null, optional: !1, repeat: !1, partial: !1, asterisk: !1, pattern: null });}return c(e, t);}(t, r) : o(t) ? function (t, r, o) {for (var n = [], a = 0; a < t.length; a++) {n.push(e(t[a], r, o).source);}return c(new RegExp("(?:" + n.join("|") + ")", s(o)), r);}(t, r, n) : function (e, t, r) {return f(a(e, r), t, r);}(t, r, n);}, e.exports.parse = a, e.exports.compile = function (e, t) {return u(a(e, t), t);}, e.exports.tokensToFunction = u, e.exports.tokensToRegExp = f;var n = new RegExp(["(\\\\.)", "([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))"].join("|"), "g");function a(e, t) {for (var r, o = [], a = 0, i = 0, u = "", c = t && t.delimiter || "/"; null != (r = n.exec(e));) {var s = r[0],f = r[1],h = r.index;if (u += e.slice(i, h), i = h + s.length, f) u += f[1];else {var v = e[i],y = r[2],g = r[3],d = r[4],m = r[5],b = r[6],O = r[7];u && (o.push(u), u = "");var P = null != y && null != v && v !== y,k = "+" === b || "*" === b,j = "?" === b || "*" === b,w = r[2] || c,R = d || m;o.push({ name: g || a++, prefix: y || "", delimiter: w, optional: j, repeat: k, partial: P, asterisk: !!O, pattern: R ? p(R) : O ? ".*" : "[^" + l(w) + "]+?" });}}return i < e.length && (u += e.substr(i)), u && o.push(u), o;}function i(e) {return encodeURI(e).replace(/[\/?#]/g, function (e) {return "%" + e.charCodeAt(0).toString(16).toUpperCase();});}function u(e, t) {for (var r = new Array(e.length), n = 0; n < e.length; n++) {"object" == typeof e[n] && (r[n] = new RegExp("^(?:" + e[n].pattern + ")$", s(t)));}return function (t, n) {for (var a = "", u = t || {}, l = (n || {}).pretty ? i : encodeURIComponent, p = 0; p < e.length; p++) {var c = e[p];if ("string" != typeof c) {var s,f = u[c.name];if (null == f) {if (c.optional) {c.partial && (a += c.prefix);continue;}throw new TypeError('Expected "' + c.name + '" to be defined');}if (o(f)) {if (!c.repeat) throw new TypeError('Expected "' + c.name + '" to not repeat, but received `' + JSON.stringify(f) + "`");if (0 === f.length) {if (c.optional) continue;throw new TypeError('Expected "' + c.name + '" to not be empty');}for (var h = 0; h < f.length; h++) {if (s = l(f[h]), !r[p].test(s)) throw new TypeError('Expected all "' + c.name + '" to match "' + c.pattern + '", but received `' + JSON.stringify(s) + "`");a += (0 === h ? c.prefix : c.delimiter) + s;}} else {if (s = c.asterisk ? encodeURI(f).replace(/[?#]/g, function (e) {return "%" + e.charCodeAt(0).toString(16).toUpperCase();}) : l(f), !r[p].test(s)) throw new TypeError('Expected "' + c.name + '" to match "' + c.pattern + '", but received "' + s + '"');a += c.prefix + s;}} else a += c;}return a;};}function l(e) {return e.replace(/([.+*?=^!:${}()[\]|\/\\])/g, "\\$1");}function p(e) {return e.replace(/([=!:$\/()])/g, "\\$1");}function c(e, t) {return e.keys = t, e;}function s(e) {return e && e.sensitive ? "" : "i";}function f(e, t, r) {o(t) || (r = t || r, t = []);for (var n = (r = r || {}).strict, a = !1 !== r.end, i = "", u = 0; u < e.length; u++) {var p = e[u];if ("string" == typeof p) i += l(p);else {var f = l(p.prefix),h = "(?:" + p.pattern + ")";t.push(p), p.repeat && (h += "(?:" + f + h + ")*"), i += h = p.optional ? p.partial ? f + "(" + h + ")?" : "(?:" + f + "(" + h + "))?" : f + "(" + h + ")";}}var v = l(r.delimiter || "/"),y = i.slice(-v.length) === v;return n || (i = (y ? i.slice(0, -v.length) : i) + "(?:" + v + "(?=$))?"), i += a ? "$" : n && y ? "" : "(?=" + v + "|$)", c(new RegExp("^" + i, s(r)), t);}}, 173: function _(e) {e.exports = Array.isArray || function (e) {return "[object Array]" == Object.prototype.toString.call(e);};}, 844: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.buildVueRouter = t.buildVueRoutes = void 0;var n = r(366),a = r(883),i = r(789),u = r(169);t.buildVueRoutes = function (e, t) {for (var r = e.routesMap, o = r.pathMap, l = r.finallyPathList, p = Object.keys(t), c = 0; c < p.length; c++) {var s = p[c],f = o[s],h = t[s];if (f) {var v = i.getRoutePath(f, e).finallyPath;if (v instanceof Array) throw new Error("非 vueRouterDev 模式下，alias、aliasPath、path 无法提供数组类型！ " + JSON.stringify(f));null != f.name && (h.name = f.name);var y = h.path,g = h.alias;delete h.alias, h.path = v, "/" === y && null != g && (h.alias = g, h.path = y), f.beforeEnter && (h.beforeEnter = function (t, r, o) {u.onTriggerEachHook(t, r, e, n.hookToggle.enterHooks, o);});} else a.warn(s + " 路由地址在路由表中未找到，确定是否传递漏啦", e, !0);}return l.includes("*") && (t["*"] = o["*"]), t;}, t.buildVueRouter = function (e, t, r) {var n;n = "[object Array]" === i.getDataType(r) ? r : Object.values(r);var a = e.options.h5,u = a.scrollBehavior,l = a.fallback,p = t.options.scrollBehavior;t.options.scrollBehavior = function (e, t, r) {return p && p(e, t, r), u(e, t, r);}, t.fallback = l;var c = new t.constructor(o(o({}, e.options.h5), { base: t.options.base, mode: t.options.mode, routes: n }));t.matcher = c.matcher;};}, 147: function _(e, t) {"use strict";var _r,o = this && this.__extends || (_r = function r(e, t) {return (_r = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (e, t) {e.__proto__ = t;} || function (e, t) {for (var r in t) {Object.prototype.hasOwnProperty.call(t, r) && (e[r] = t[r]);}})(e, t);}, function (e, t) {function o() {this.constructor = e;}_r(e, t), e.prototype = null === t ? Object.create(t) : (o.prototype = t.prototype, new o());});Object.defineProperty(t, "__esModule", { value: !0 }), t.proxyH5Mount = t.proxyEachHook = t.MyArray = void 0;var n = function (e) {function t(r, o, n, a) {var i = e.call(this) || this;return i.router = r, i.vueEachArray = o, i.myEachHook = n, i.hookName = a, Object.setPrototypeOf(i, t.prototype), i;}return o(t, e), t.prototype.push = function (e) {var t = this;this.vueEachArray.push(e);var r = this.length;this[this.length] = function (e, o, n) {r > 0 ? t.vueEachArray[r](e, o, function () {n && n();}) : t.myEachHook(e, o, function (a) {!1 === a ? n(!1) : t.vueEachArray[r](e, o, function (e) {n(a);});}, t.router, !0);};}, t;}(Array);t.MyArray = n, t.proxyEachHook = function (e, t) {for (var r = ["beforeHooks", "afterHooks"], o = 0; o < r.length; o++) {var a = r[o],i = e.lifeCycle[a][0];if (i) {var u = t[a];t[a] = new n(e, u, i, a);}}}, t.proxyH5Mount = function (e) {var t;if (0 === e.mount.length) {if (null === (t = e.options.h5) || void 0 === t ? void 0 : t.vueRouterDev) return;navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) && setTimeout(function () {if (document.getElementsByTagName("uni-page").length > 0) return !1;window.location.reload();}, 0);} else e.mount[0].app.$mount(), e.mount = [];};}, 814: function _(e, t) {"use strict";var r = this && this.__assign || function () {return (r = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.runtimeQuit = t.registerLoddingPage = void 0;var o = null;t.registerLoddingPage = function (e) {if (e.options.registerLoadingPage) {var t = e.options.APP,o = t.loadingPageHook,n = t.loadingPageStyle;o(new plus.nativeObj.View("router-loadding", r({ top: "0px", left: "0px", height: "100%", width: "100%" }, n())));}}, t.runtimeQuit = function (e) {void 0 === e && (e = "再按一次退出应用");var t = +new Date();o ? t - o < 1e3 && plus.runtime.quit() : (o = t, uni.showToast({ title: e, icon: "none", position: "bottom", duration: 1e3 }), setTimeout(function () {o = null;}, 1e3));};}, 334: function _(e, t) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 }), t.getEnterPath = void 0, t.getEnterPath = function (e, t) {switch (t.options.platform) {case "mp-alipay":case "mp-weixin":case "mp-toutiao":case "mp-qq":return e.$options.mpInstance.route;case "mp-baidu":return e.$options.mpInstance.is || e.$options.mpInstance.pageinstance.route;}return e.$options.mpInstance.route;};}, 282: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);},n = this && this.__rest || function (e, t) {var r = {};for (var o in e) {Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);}if (null != e && "function" == typeof Object.getOwnPropertySymbols) {var n = 0;for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);}}return r;};Object.defineProperty(t, "__esModule", { value: !0 }), t.notCallProxyHook = t.proxyVueSortHookName = t.indexProxyHook = t.appProxyHook = t.lifeCycle = t.baseConfig = t.mpPlatformReg = t.keyword = void 0;var a = r(883),i = r(789);t.keyword = ["query"], t.mpPlatformReg = "(^mp-weixin$)|(^mp-baidu$)|(^mp-alipay$)|(^mp-toutiao$)|(^mp-qq$)|(^mp-360$)", t.baseConfig = { h5: { paramsToQuery: !1, vueRouterDev: !1, vueNext: !1, mode: "hash", base: "/", linkActiveClass: "router-link-active", linkExactActiveClass: "router-link-exact-active", scrollBehavior: function scrollBehavior(e, t, r) {return { x: 0, y: 0 };}, fallback: !0 }, APP: { registerLoadingPage: !0, loadingPageStyle: function loadingPageStyle() {return JSON.parse('{"backgroundColor":"#FFF"}');}, loadingPageHook: function loadingPageHook(e) {e.show();}, launchedHook: function launchedHook() {plus.navigator.closeSplashscreen();}, animation: {} }, applet: { animationDuration: 300 }, platform: "h5", keepUniOriginNav: !1, debugger: !1, routerBeforeEach: function routerBeforeEach(e, t, r) {r();}, routerAfterEach: function routerAfterEach(e, t) {}, routerErrorEach: function routerErrorEach(e, t) {t.$lockStatus = !1, a.err(e, t, !0);}, detectBeforeLock: function detectBeforeLock(e, t, r) {}, routes: [{ path: "/choose-location" }, { path: "/open-location" }, { path: "/preview-image" }] }, t.lifeCycle = { beforeHooks: [], afterHooks: [], routerBeforeHooks: [], routerAfterHooks: [], routerErrorHooks: [] }, t.appProxyHook = { app: { created: [], beforeMount: [], mounted: [], onLaunch: [], onShow: [], onHide: [], beforeDestroy: [], destroyed: [] } }, t.indexProxyHook = { app: t.appProxyHook.app, page: function (e) {e.onLaunch;var t = n(e, ["onLaunch"]);return o(o({}, t), { onLoad: [], onReady: [], onUnload: [], onResize: [] });}(i.copyData(t.appProxyHook.app)), component: [] }, t.proxyVueSortHookName = { app: ["created", "beforeMount", "mounted", "onLaunch", "onShow", "onHide", "beforeDestroy", "destroyed"], page: ["created", "beforeMount", "mounted", "onLoad", "onReady", "onShow", "onResize", "onHide", "beforeDestroy", "destroyed", "onUnload"], component: ["created", "beforeMount", "mounted", "beforeDestroy", "destroyed"] }, t.notCallProxyHook = ["onHide", "beforeDestroy", "destroyed", "destroyed", "onUnload", "onResize"];}, 801: function _(e, t, r) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 }), t.createRouteMap = void 0;var o = r(883),n = r(789);t.createRouteMap = function (e, t) {var r = { finallyPathList: [], finallyPathMap: Object.create(null), aliasPathMap: Object.create(null), pathMap: Object.create(null), vueRouteMap: Object.create(null), nameMap: Object.create(null) };return t.forEach(function (t) {var a = n.getRoutePath(t, e),i = a.finallyPath,u = a.aliasPath,l = a.path;if (null == l) throw new Error("请提供一个完整的路由对象，包括以绝对路径开始的 ‘path’ 字符串 " + JSON.stringify(t));if (i instanceof Array && !e.options.h5.vueRouterDev && "h5" === e.options.platform) throw new Error("非 vueRouterDev 模式下，route.alias 目前无法提供数组类型！ " + JSON.stringify(t));var p = i,c = u;"h5" !== e.options.platform && 0 !== p.indexOf("/") && "*" !== l && o.warn("当前路由对象下，route：" + JSON.stringify(t) + " 是否缺少了前缀 ‘/’", e, !0), r.finallyPathMap[p] || (r.finallyPathMap[p] = t, r.aliasPathMap[c] = t, r.pathMap[l] = t, r.finallyPathList.push(p), null != t.name && (r.nameMap[t.name] = t));}), r;};}, 662: function _(e, t, r) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 }), t.registerEachHooks = t.registerRouterHooks = t.registerHook = void 0;var o = r(366),n = r(169);function a(e, t) {e[0] = t;}t.registerHook = a, t.registerRouterHooks = function (e, t) {return a(e.routerBeforeHooks, function (e, r, o) {t.routerBeforeEach(e, r, o);}), a(e.routerAfterHooks, function (e, r) {t.routerAfterEach(e, r);}), a(e.routerErrorHooks, function (e, r) {t.routerErrorEach(e, r);}), e;}, t.registerEachHooks = function (e, t, r) {a(e.lifeCycle[t], function (e, a, i, u, l) {l ? n.onTriggerEachHook(e, a, u, o.hookToggle[t], i) : r(e, a, i);});};}, 460: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.initMixins = t.getMixins = void 0;var n = r(801),a = r(844),i = r(147),u = r(814),l = r(845),p = r(890),c = r(789),s = r(334),f = r(282),h = !1,v = !1,y = { app: !1, page: "" };function g(e, t) {var r = t.options.platform;return new RegExp(f.mpPlatformReg, "g").test(r) && (r = "app-lets"), { h5: { beforeCreate: function beforeCreate() {var e;if (this.$options.router) {t.$route = this.$options.router;var r = [];(null === (e = t.options.h5) || void 0 === e ? void 0 : e.vueRouterDev) ? r = t.options.routes : (r = n.createRouteMap(t, this.$options.router.options.routes).finallyPathMap, t.routesMap.vueRouteMap = r, a.buildVueRoutes(t, r)), a.buildVueRouter(t, this.$options.router, r), i.proxyEachHook(t, this.$options.router);}} }, "app-plus": { beforeCreate: function beforeCreate() {h || (h = !0, l.proxyPageHook(this, t, "appProxyHook", "app"), u.registerLoddingPage(t));} }, "app-lets": { beforeCreate: function beforeCreate() {var e = this.$options.mpType;"component" !== e || v ? "component" !== e && (y[e] || ("page" === e ? (y[e] = s.getEnterPath(this, t), t.enterPath = y[e]) : y[e] = !0, l.proxyPageHook(this, t, "appletsProxyHook", e))) : c.assertParentChild(y.page, this) && l.proxyPageHook(this, t, "appletsProxyHook", e);}, onLoad: function onLoad() {!v && c.assertParentChild(y.page, this) && (v = !0, p.forceGuardEach(t));} } }[r];}t.getMixins = g, t.initMixins = function (e, t) {var r = n.createRouteMap(t, t.options.routes);t.routesMap = r, e.mixin(o({}, g(0, t)));};}, 789: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);},n = this && this.__rest || function (e, t) {var r = {};for (var o in e) {Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);}if (null != e && "function" == typeof Object.getOwnPropertySymbols) {var n = 0;for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);}}return r;},a = this && this.__spreadArrays || function () {for (var e = 0, t = 0, r = arguments.length; t < r; t++) {e += arguments[t].length;}var o = Array(e),n = 0;for (t = 0; t < r; t++) {for (var a = arguments[t], i = 0, u = a.length; i < u; i++, n++) {o[n] = a[i];}}return o;};Object.defineProperty(t, "__esModule", { value: !0 }), t.resolveAbsolutePath = t.assertParentChild = t.reservedWord = t.resetPageHook = t.callHook = t.replaceHook = t.lockDetectWarn = t.deepClone = t.baseClone = t.assertDeepObject = t.paramsToQuery = t.forMatNextToFrom = t.urlToJson = t.getUniCachePage = t.copyData = t.getDataType = t.routesForMapRoute = t.notRouteTo404 = t.getWildcardRule = t.assertNewOptions = t.getRoutePath = t.notDeepClearNull = t.mergeConfig = t.timeOut = t.def = t.voidFun = void 0;var i = r(282),u = r(169),l = r(883),p = r(890),c = r(779);function s(e, t) {for (var r = Object.create(null), n = Object.keys(e).concat(["resolveQuery", "parseQuery"]), i = 0; i < n.length; i += 1) {var u = n[i];null != t[u] ? t[u].constructor === Object ? r[u] = o(o({}, e[u]), t[u]) : r[u] = "routes" === u ? a(e[u], t[u]) : t[u] : r[u] = e[u];}return r;}function f(e, t) {var r = e.aliasPath || e.alias || e.path;return "h5" !== t.options.platform && (r = e.path), { finallyPath: r, aliasPath: e.aliasPath || e.path, path: e.path, alias: e.alias };}function h(e, t) {var r = e.routesMap.finallyPathMap["*"];if (r) return r;throw t && u.ERRORHOOK[0](t, e), new Error("当前路由表匹配规则已全部匹配完成，未找到满足的匹配规则。你可以使用 '*' 通配符捕捉最后的异常");}function v(e) {return Object.prototype.toString.call(e);}function y(e) {return JSON.parse(JSON.stringify(e));}function g(e, t) {for (var r = 0, o = Object.keys(e); r < o.length; r++) {var n = o[r],a = n;e[n] !== e && ("object" == typeof e[n] ? (t[a] = "[object Array]" === v(e[n]) ? [] : {}, g(e[n], t[a])) : t[a] = e[n]);}}function d(e) {var t = "[object Array]" === v(e) ? [] : {};return g(e, t), t;}function m(e, t) {for (var r = [], o = 0, n = Object.entries(e); o < n.length; o++) {var a = n[o][1][0];a && a.hook && r.push(a.hook(t));}return r;}t.voidFun = function () {}, t.def = function (e, t, r) {Object.defineProperty(e, t, { get: function get() {return r();} });}, t.timeOut = function (e) {return new Promise(function (t) {setTimeout(function () {t();}, e);});}, t.mergeConfig = s, t.notDeepClearNull = function (e) {for (var t in e) {null == e[t] && delete e[t];}return e;}, t.getRoutePath = f, t.assertNewOptions = function (e) {var t,r = e.platform,o = e.routes;if (null == r) throw new Error("你在实例化路由时必须传递 'platform'");if (null == o || 0 === o.length) throw new Error("你在实例化路由时必须传递 routes 为空，这是无意义的。");return "h5" === e.platform && (null === (t = e.h5) || void 0 === t ? void 0 : t.vueRouterDev) && (i.baseConfig.routes = []), s(i.baseConfig, e);}, t.getWildcardRule = h, t.notRouteTo404 = function (e, t, r, o) {if ("*" !== t.path) return t;var n = t.redirect;if (void 0 === n) throw new Error(" *  通配符必须配合 redirect 使用。redirect: string | Location | Function");var a = n;return "function" == typeof a && (a = a(r)), p.navjump(a, e, o, void 0, void 0, void 0, !1);}, t.routesForMapRoute = function (e, t, r) {var o;if (null === (o = e.options.h5) || void 0 === o ? void 0 : o.vueRouterDev) return { path: t };for (var n = t.split("?")[0], a = "", i = e.routesMap, u = 0; u < r.length; u++) {for (var l = i[r[u]], p = 0, s = Object.entries(l); p < s.length; p++) {var f = s[p],y = f[0],g = f[1];if ("*" !== y) {var d = g,m = y;if ("[object Array]" === v(l) && (m = d), null != c(m).exec(n)) return "[object String]" === v(d) ? i.finallyPathMap[d] : d;} else "" === a && (a = "*");}}if ("" !== a) return h(e);throw new Error(t + " 路径无法在路由表中找到！检查跳转路径及路由表");}, t.getDataType = v, t.copyData = y, t.getUniCachePage = function (e) {var t = getCurrentPages();if (null == e) return t;if (0 === t.length) return t;var r = t.reverse()[e];return null == r ? [] : r;}, t.urlToJson = function (e) {var t = {},r = e.split("?"),o = r[0],n = r[1];if (null != n) for (var a = 0, i = n.split("&"); a < i.length; a++) {var u = i[a].split("=");t[u[0]] = u[1];}return { path: o, query: t };}, t.forMatNextToFrom = function (e, t, r) {var o = [t, r],n = o[0],a = o[1];if ("h5" === e.options.platform) {var i = e.options.h5,u = i.vueNext,l = i.vueRouterDev;u || l || (n = p.createRoute(e, void 0, n), a = p.createRoute(e, void 0, a));} else n = p.createRoute(e, void 0, d(n)), a = p.createRoute(e, void 0, d(a));return { matTo: n, matFrom: a };}, t.paramsToQuery = function (e, t) {var r;if ("h5" === e.options.platform && !(null === (r = e.options.h5) || void 0 === r ? void 0 : r.paramsToQuery)) return t;if ("[object Object]" === v(t)) {var a = t,i = a.name,l = a.params,p = n(a, ["name", "params"]),c = l;if ("h5" !== e.options.platform && null == c && (c = {}), null != i && null != c) {var s = e.routesMap.nameMap[i];null == s && (s = h(e, { type: 2, msg: "命名路由为：" + i + " 的路由，无法在路由表中找到！", toRule: t }));var y = f(s, e).finallyPath;if (!y.includes(":")) return o(o({}, p), { path: y, query: c });u.ERRORHOOK[0]({ type: 2, msg: "动态路由：" + y + " 无法使用 paramsToQuery！", toRule: t }, e);}}return t;}, t.assertDeepObject = function (e) {var t = null;try {t = JSON.stringify(e).match(/\{|\[|\}|\]/g);} catch (e) {l.warnLock("传递的参数解析对象失败。" + e);}return null != t && t.length > 3;}, t.baseClone = g, t.deepClone = d, t.lockDetectWarn = function (e, t, r, o, n) {if ("afterHooks" === n) o();else {var a = e.options.detectBeforeLock;a && a(e, t, r), e.$lockStatus ? e.options.routerErrorEach({ type: 2, msg: "当前页面正在处于跳转状态，请稍后再进行跳转...." }, e) : o();}}, t.replaceHook = function (e, t, r, o) {var n = t.$options,a = e[r][o],u = {};if ("[object Array]" === v(a) && (u = { beforeCreate: [], created: [], beforeMount: [], mounted: [], beforeDestroy: [], destroyed: [] }), null != a) {for (var l = i.proxyVueSortHookName[o], p = function p(r) {var p = l[r],c = n[p];if ("[object Array]" === v(c)) {var s = { options: [], hook: Function },f = c.splice(c.length - 1, 1, function () {for (var e = [], t = 0; t < arguments.length; t++) {e[t] = arguments[t];}return s.options = e;})[0];s.hook = function (r) {return e.enterPath.replace(/^\//, "") !== r.replace(/^\//, "") && "app" !== o ? function () {} : (i.notCallProxyHook.includes(p) || f.apply(t, s.options), function () {c.splice(c.length - 1, 1, f);});}, Object.keys(u).length > 0 ? u[p] = [s] : a[p] = [s];}}, c = 0; c < l.length; c++) {p(c);}Object.keys(u).length > 0 && a.push(u);}}, t.callHook = m, t.resetPageHook = function (e, t) {var r = t.trim().match(/^(\/?[^\?\s]+)(\?[\s\S]*$)?$/);if (null == r) throw new Error("还原hook失败。请检查 【" + t + "】 路径是否正确。");t = r[1];var o = "appletsProxyHook";"app-plus" === e.options.platform && (o = "appProxyHook");for (var n = [], a = 0, i = Object.entries(e[o]); a < i.length; a++) {var u = i[a][1];if ("[object Array]" === v(u)) for (var l = 0; l < u.length; l++) {n = n.concat(m(u[l], t));} else n = n.concat(m(u, t));}setTimeout(function () {for (var e = 0; e < n.length; e++) {n[e]();}}, 500);}, t.reservedWord = function (e) {if ("string" == typeof e) return e;for (var t = o(o({}, y(e.params || {})), y(e.query || {})), r = 0; r < i.keyword.length; r++) {var n = i.keyword[r];Reflect.has(t, n) && ("[object Object]" === v(e.query) && delete e.query[n], "[object Object]" === v(e.params) && delete e.params[n], l.warnLock(JSON.stringify(i.keyword) + " 作为插件的保留字，在参数传递中不允许使用。已自动被过滤掉！换个参数名试试吧！ "));}return e;}, t.assertParentChild = function (e, t) {for (; null != t.$parent;) {var r = t.$parent.$mp;if (r.page && r.page.is === e) return !0;t = t.$parent;}try {if (t.$mp.page.is === e || t.$mp.page.route === e) return !0;} catch (e) {return !1;}return !1;}, t.resolveAbsolutePath = function (e, t) {var r = /^\/?([^\?\s]+)(\?.+)?$/,o = e.trim();if (!r.test(o)) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10001)。");var n = o.match(r);if (null == n) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10002)。");var a = n[2] || "";if (/^\.\/[^\.]+/.test(o)) return (t.currentRoute.path + e).replace(/[^\/]+\.\//, "");var i = n[1].replace(/\//g, "\\/").replace(/\.\./g, "[^\\/]+").replace(/\./g, "\\."),u = new RegExp("^\\/" + i + "$"),l = t.options.routes.filter(function (e) {return u.test(e.path);});if (1 !== l.length) throw new Error("【" + e + "】 路径错误，尝试转成绝对路径失败，请手动转成绝对路径(10003)。");return l[0].path + a;};}, 883: function _(e, t) {"use strict";function r(e, t, r, o) {if (void 0 === o && (o = !1), !o) {var n = "[object Object]" === t.toString();if (!1 === t) return !1;if (n && !1 === t[e]) return !1;}return console[e](r), !0;}Object.defineProperty(t, "__esModule", { value: !0 }), t.warnLock = t.log = t.warn = t.err = t.isLog = void 0, t.isLog = r, t.err = function (e, t, o) {r("error", t.options.debugger, e, o);}, t.warn = function (e, t, o) {r("warn", t.options.debugger, e, o);}, t.log = function (e, t, o) {r("log", t.options.debugger, e, o);}, t.warnLock = function (e) {console.warn(e);};}, 607: function _(e, t, r) {"use strict";var o = this && this.__createBinding || (Object.create ? function (e, t, r, o) {void 0 === o && (o = r), Object.defineProperty(e, o, { enumerable: !0, get: function get() {return t[r];} });} : function (e, t, r, o) {void 0 === o && (o = r), e[o] = t[r];}),n = this && this.__exportStar || function (e, t) {for (var r in e) {"default" === r || Object.prototype.hasOwnProperty.call(t, r) || o(t, e, r);}};Object.defineProperty(t, "__esModule", { value: !0 }), t.createRouter = t.RouterMount = t.runtimeQuit = void 0, n(r(366), t), n(r(309), t);var a = r(814);Object.defineProperty(t, "runtimeQuit", { enumerable: !0, get: function get() {return a.runtimeQuit;} });var i = r(963);Object.defineProperty(t, "RouterMount", { enumerable: !0, get: function get() {return i.RouterMount;} }), Object.defineProperty(t, "createRouter", { enumerable: !0, get: function get() {return i.createRouter;} });}, 366: function _(e, t) {"use strict";var r, o, n;Object.defineProperty(t, "__esModule", { value: !0 }), t.rewriteMethodToggle = t.navtypeToggle = t.hookToggle = void 0, (n = t.hookToggle || (t.hookToggle = {})).beforeHooks = "beforeEach", n.afterHooks = "afterEach", n.enterHooks = "beforeEnter", (o = t.navtypeToggle || (t.navtypeToggle = {})).push = "navigateTo", o.replace = "redirectTo", o.replaceAll = "reLaunch", o.pushTab = "switchTab", o.back = "navigateBack", (r = t.rewriteMethodToggle || (t.rewriteMethodToggle = {})).navigateTo = "push", r.navigate = "push", r.redirectTo = "replace", r.reLaunch = "replaceAll", r.switchTab = "pushTab", r.navigateBack = "back";}, 309: function _(e, t) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 });}, 169: function _(e, t, r) {"use strict";var o = this && this.__rest || function (e, t) {var r = {};for (var o in e) {Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);}if (null != e && "function" == typeof Object.getOwnPropertySymbols) {var n = 0;for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);}}return r;};Object.defineProperty(t, "__esModule", { value: !0 }), t.loopCallHook = t.transitionTo = t.onTriggerEachHook = t.callHook = t.callBeforeRouteLeave = t.HOOKLIST = t.ERRORHOOK = void 0;var n = r(789),a = r(890),i = r(147);function u(e, t, r, o) {var a,i = n.getUniCachePage(0);if (Object.keys(i).length > 0) {var u = void 0;switch ("h5" === e.options.platform ? u = i.$options.beforeRouteLeave : null != i.$vm && (u = i.$vm.$options.beforeRouteLeave), n.getDataType(u)) {case "[object Array]":a = (a = u[0]).bind(i);break;case "[object Function]":a = u.bind(i.$vm);}}return l(a, t, r, e, o);}function l(e, t, r, o, n, a) {void 0 === a && (a = !0), null != e && e instanceof Function ? !0 === a ? e(t, r, n, o, !1) : (e(t, r, function () {}, o, !1), n()) : n();}function p(e, t, r, o, a, i) {var u = n.forMatNextToFrom(e, t, r),l = u.matTo,p = u.matFrom;"h5" === e.options.platform ? c(a, 0, i, e, l, p, o) : c(a.slice(0, 4), 0, function () {i(function () {c(a.slice(4), 0, n.voidFun, e, l, p, o);});}, e, l, p, o);}function c(e, r, i, u, l, p, s) {var f = n.routesForMapRoute(u, l.path, ["finallyPathMap", "pathMap"]);if (e.length - 1 < r) return i();var h = e[r],v = t.ERRORHOOK[0];h(u, l, p, f, function (t) {if (!1 === t) "h5" === u.options.platform && i(!1), v({ type: 0, msg: "管道函数传递 false 导航被终止!", matTo: l, matFrom: p, nextTo: t }, u);else if ("string" == typeof t || "object" == typeof t) {var n = s,f = t;if ("object" == typeof t) {var h = t.NAVTYPE;f = o(t, ["NAVTYPE"]), null != h && (n = h);}a.navjump(f, u, n, { from: p, next: i });} else null == t ? (r++, c(e, r, i, u, l, p, s)) : v({ type: 1, msg: "管道函数传递未知类型，无法被识别。导航被终止！", matTo: l, matFrom: p, nextTo: t }, u);});}t.ERRORHOOK = [function (e, t) {return t.lifeCycle.routerErrorHooks[0](e, t);}], t.HOOKLIST = [function (e, t, r, o, n) {return l(e.lifeCycle.routerBeforeHooks[0], t, r, e, n);}, function (e, t, r, o, n) {return u(e, t, r, n);}, function (e, t, r, o, n) {return l(e.lifeCycle.beforeHooks[0], t, r, e, n);}, function (e, t, r, o, n) {return l(o.beforeEnter, t, r, e, n);}, function (e, t, r, o, n) {return l(e.lifeCycle.afterHooks[0], t, r, e, n, !1);}, function (e, t, r, o, n) {return e.$lockStatus = !1, "h5" === e.options.platform && i.proxyH5Mount(e), l(e.lifeCycle.routerAfterHooks[0], t, r, e, n, !1);}], t.callBeforeRouteLeave = u, t.callHook = l, t.onTriggerEachHook = function (e, r, o, n, a) {var i = [];switch (n) {case "beforeEach":i = t.HOOKLIST.slice(0, 3);break;case "afterEach":i = t.HOOKLIST.slice(4);break;case "beforeEnter":i = t.HOOKLIST.slice(3, 4);}p(o, e, r, "push", i, a);}, t.transitionTo = p, t.loopCallHook = c;}, 890: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.createRoute = t.forceGuardEach = t.backOptionsBuild = t.navjump = t.lockNavjump = void 0;var n = r(366),a = r(99),i = r(789),u = r(169),l = r(845),p = r(169);function c(e, t, r, o, n) {i.lockDetectWarn(t, e, r, function () {"h5" !== t.options.platform && (t.$lockStatus = !0), s(e, t, r, void 0, o, n);});}function s(e, t, r, c, s, h, v) {if (void 0 === v && (v = !0), "back" === r) {var y;if (y = "string" == typeof e ? +e : e.delta || 1, "h5" === t.options.platform) {t.$route.go(-y);var g = (h || { success: i.voidFun }).success || i.voidFun,d = (h || { complete: i.voidFun }).complete || i.voidFun;return g({ errMsg: "navigateBack:ok" }), void d({ errMsg: "navigateBack:ok" });}e = f(t, y, h);}e = i.reservedWord(e);var m = a.queryPageToMap(e, t).rule;m.type = n.navtypeToggle[r];var b = i.paramsToQuery(t, m),O = a.resolveQuery(b, t);if ("h5" === t.options.platform) {if ("push" !== r && (r = "replace"), null != c) c.next(o({ replace: "push" !== r }, O));else if ("push" === r && Reflect.has(O, "events")) {if (Reflect.has(O, "name")) throw new Error("在h5端上使用 'push'、'navigateTo' 跳转时，如果包含 events 不允许使用 name 跳转，因为 name 实现了动态路由。请更换为 path 或者 url 跳转！");uni.navigateTo(O, !0, i.voidFun, s);} else t.$route[r](O, O.success || i.voidFun, O.fail || i.voidFun);} else {var P = { path: "" };if (null == c) {var k = i.routesForMapRoute(t, O.path, ["finallyPathMap", "pathMap"]);k = i.notRouteTo404(t, k, O, r), O = o(o(o(o({}, k), { params: {} }), O), { path: k.path }), P = l.createToFrom(O, t);} else P = c.from;if (l.createFullPath(O, P), !1 === v) return O;u.transitionTo(t, O, P, r, p.HOOKLIST, function (e) {uni[n.navtypeToggle[r]](O, !0, e, s);});}}function f(e, t, r) {var n = h(e, t),a = o(o({}, r || {}), { path: n.path, query: n.query, delta: t });if ("[object Object]" === i.getDataType(r)) {var u = r,l = u.animationDuration,p = u.animationType;null != l && (a.animationDuration = l), null != p && (a.animationType = p);var c = r.from;null != c && (a.BACKTYPE = c);}return a;}function h(e, t, r) {void 0 === t && (t = 0);var u = { name: "", meta: {}, path: "", fullPath: "", NAVTYPE: "", query: {}, params: {}, BACKTYPE: (r || { BACKTYPE: "" }).BACKTYPE || "" };if (19970806 === t) return u;if ("h5" === e.options.platform) {var l = { path: "" };l = null != r ? r : e.$route.currentRoute;var p = i.copyData(l.params);delete p.__id__;var c = a.parseQuery(o(o({}, p), i.copyData(l.query)), e);l = o(o({}, l), { query: c }), u.path = l.path, u.fullPath = l.fullPath || "", u.query = l.query || {}, u.NAVTYPE = n.rewriteMethodToggle[l.type || "reLaunch"];} else {var s = {};if (null != r) s = o(o({}, r), { openType: r.type });else {var f = i.getUniCachePage(t);if (0 === Object.keys(f).length) throw e.options.routerErrorEach({ type: 3, msg: "不存在的页面栈，请确保有足够的页面可用，当前 level:" + t }, e), new Error("不存在的页面栈，请确保有足够的页面可用，当前 level:" + t);var h = f.options || {},v = h.query;null != v && 1 === Object.keys(h).length && (h = JSON.parse(decodeURIComponent(v)));var y = JSON.parse(decodeURIComponent(JSON.stringify(h)));s = o(o({}, f.$page || {}), { query: y, fullPath: decodeURIComponent((f.$page || {}).fullPath || "/" + f.route) }), "app-plus" !== e.options.platform && (s.path = "/" + f.route);}var g = s.openType;u.query = s.query, u.path = s.path, u.fullPath = s.fullPath, u.NAVTYPE = n.rewriteMethodToggle[g || "reLaunch"];}var d = i.routesForMapRoute(e, u.path, ["finallyPathMap", "pathMap"]),m = o(o({}, u), d);return m.query = a.parseQuery(m.query, e), m;}t.lockNavjump = c, t.navjump = s, t.backOptionsBuild = f, t.forceGuardEach = function (e, t, r) {if (void 0 === t && (t = "replaceAll"), void 0 === r && (r = !1), "h5" === e.options.platform) throw new Error("在h5端上使用：forceGuardEach 是无意义的，目前 forceGuardEach 仅支持在非h5端上使用");var o = i.getUniCachePage(0);0 === Object.keys(o).length && e.options.routerErrorEach({ type: 3, msg: "不存在的页面栈，请确保有足够的页面可用，当前 level:0" }, e);var n = o;c({ path: "/" + n.route, query: n.options }, e, t, r);}, t.createRoute = h;}, 845: function _(e, t, r) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 }), t.proxyPageHook = t.createFullPath = t.createToFrom = void 0;var o = r(789),n = r(890),a = r(99);t.createToFrom = function (e, t) {var r = o.getUniCachePage(0);return "[object Array]" === o.getDataType(r) ? o.deepClone(e) : n.createRoute(t);}, t.createFullPath = function (e, t) {if (null == e.fullPath) {var r = a.stringifyQuery(e.query);e.fullPath = e.path + r;}null == t.fullPath && (r = a.stringifyQuery(t.query), t.fullPath = t.path + r);}, t.proxyPageHook = function (e, t, r, n) {o.replaceHook(t, e, r, n);};}, 99: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.stringifyQuery = t.parseQuery = t.resolveQuery = t.queryPageToMap = void 0;var n = r(789),a = r(169),i = r(883),u = /[!'()*]/g,l = function l(e) {return "%" + e.charCodeAt(0).toString(16);},p = /%2C/g,c = function c(e) {return encodeURIComponent(e).replace(u, l).replace(p, ",");};t.queryPageToMap = function (e, t) {var r = {},i = "",u = e.success,l = e.fail;if ("[object Object]" === n.getDataType(e)) {var p = e;if (null != p.path) {var c = n.urlToJson(p.path),s = c.path,f = c.query;i = n.routesForMapRoute(t, s, ["finallyPathList", "pathMap"]), r = o(o({}, f), e.query || {}), p.path = s, p.query = r, delete e.params;} else null != p.name ? null == (i = t.routesMap.nameMap[p.name]) ? i = n.getWildcardRule(t, { type: 2, msg: "命名路由为：" + p.name + " 的路由，无法在路由表中找到！", toRule: e }) : (r = e.params || {}, delete e.query) : i = n.getWildcardRule(t, { type: 2, msg: e + " 解析失败，请检测当前路由表下是否有包含。", toRule: e });} else e = n.urlToJson(e), i = n.routesForMapRoute(t, e.path, ["finallyPathList", "pathMap"]), r = e.query;if ("h5" === t.options.platform) {n.getRoutePath(i, t).finallyPath.includes(":") && null == e.name && a.ERRORHOOK[0]({ type: 2, msg: "当有设置 alias或者aliasPath 为动态路由时，不允许使用 path 跳转。请使用 name 跳转！", route: i }, t);var h = e.complete,v = e.success,y = e.fail;if ("[object Function]" === n.getDataType(h)) {var g = function g(e, t) {"[object Function]" === n.getDataType(t) && t.apply(this, e), h.apply(this, e);};u = function u() {for (var e = [], t = 0; t < arguments.length; t++) {e[t] = arguments[t];}g.call(this, e, v);}, l = function l() {for (var e = [], t = 0; t < arguments.length; t++) {e[t] = arguments[t];}g.call(this, e, y);};}}var d = e;return "[object Function]" === n.getDataType(d.success) && (d.success = u), "[object Function]" === n.getDataType(d.fail) && (d.fail = l), { rule: d, route: i, query: r };}, t.resolveQuery = function (e, t) {var r = "query";null != e.params && (r = "params"), null != e.query && (r = "query");var o = n.copyData(e[r] || {}),a = t.options.resolveQuery;if (a) {var u = a(o);"[object Object]" !== n.getDataType(u) ? i.warn("请按格式返回参数： resolveQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t) : e[r] = u;} else {if (!n.assertDeepObject(o)) return e;var l = JSON.stringify(o);e[r] = { query: l };}return e;}, t.parseQuery = function (e, t) {var r = t.options.parseQuery;if (r) e = r(n.copyData(e)), "[object Object]" !== n.getDataType(e) && i.warn("请按格式返回参数： parseQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t);else if (Reflect.get(e, "query")) {var o = Reflect.get(e, "query"),a = { query: decodeURIComponent(o) };try {if ("object" == typeof (a = JSON.parse(a.query))) return a;} catch (e) {i.warn("尝试解析深度对象失败，按原样输出。" + e, t);}}return e;}, t.stringifyQuery = function (e) {var t = e ? Object.keys(e).map(function (t) {var r = e[t];if (void 0 === r) return "";if (null === r) return c(t);if (Array.isArray(r)) {var o = [];return r.forEach(function (e) {void 0 !== e && (null === e ? o.push(c(t)) : o.push(c(t) + "=" + c(e)));}), o.join("&");}return c(t) + "=" + c(r);}).filter(function (e) {return e.length > 0;}).join("&") : null;return t ? "?" + t : "";};}, 314: function _(e, t, r) {"use strict";Object.defineProperty(t, "__esModule", { value: !0 }), t.rewriteMethod = void 0;var o = r(366),n = r(789),a = r(883),i = r(809),u = ["navigateTo", "redirectTo", "reLaunch", "switchTab", "navigateBack"];t.rewriteMethod = function (e) {!1 === e.options.keepUniOriginNav && u.forEach(function (t) {var r = uni[t];uni[t] = function (u, l, p, c) {void 0 === l && (l = !1), l ? i.uniOriginJump(e, r, t, u, p, c) : ("app-plus" === e.options.platform && 0 === Object.keys(e.appMain).length && (e.appMain = { NAVTYPE: t, path: u.url }), function (e, t, r) {if ("app-plus" === r.options.platform) {var i = null;e && (i = e.openType), null != i && "appLaunch" === i && (t = "reLaunch");}if ("reLaunch" === t && '{"url":"/"}' === JSON.stringify(e) && (a.warn("uni-app 原生方法：reLaunch({url:'/'}) 默认被重写啦！你可以使用 this.$Router.replaceAll() 或者 uni.reLaunch({url:'/?xxx=xxx'})", r, !0), t = "navigateBack", e = { from: "backbutton" }), "navigateBack" === t) {var u = 1;null == e && (e = { delta: 1 }), "[object Number]" === n.getDataType(e.delta) && (u = e.delta), r.back(u, e);} else {var l = o.rewriteMethodToggle[t],p = e.url;if (!p.startsWith("/")) {var c = n.resolveAbsolutePath(p, r);p = c, e.url = c;}if ("switchTab" === t) {var s = n.routesForMapRoute(r, p, ["pathMap", "finallyPathList"]),f = n.getRoutePath(s, r).finallyPath;if ("[object Array]" === n.getDataType(f) && a.warn("uni-app 原生方法跳转路径为：" + p + "。此路为是tab页面时，不允许设置 alias 为数组的情况，并且不能为动态路由！当然你可以通过通配符*解决！", r, !0), "*" === f && a.warn("uni-app 原生方法跳转路径为：" + p + "。在路由表中找不到相关路由表！当然你可以通过通配符*解决！", r, !0), "h5" === r.options.platform) {var h = e.success;e.success = function () {for (var t = [], r = 0; r < arguments.length; r++) {t[r] = arguments[r];}null == h || h.apply(null, t), n.timeOut(150).then(function () {var t = e.detail || {};if (Object.keys(t).length > 0 && Reflect.has(t, "index")) {var r = n.getUniCachePage(0);if (0 === Object.keys(r).length) return !1;var o = r,a = o.$options.onTabItemTap;if (a) for (var i = 0; i < a.length; i++) {a[i].call(o, t);}}});};}p = f;}var v = e,y = v.events,g = v.success,d = v.fail,m = v.complete,b = v.animationType,O = { path: p, events: y, success: g, fail: d, complete: m, animationDuration: v.animationDuration, animationType: b };r[l](n.notDeepClearNull(O));}}(u, t, e));};});};}, 963: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);};Object.defineProperty(t, "__esModule", { value: !0 }), t.createRouter = t.RouterMount = void 0;var n = r(282),a = r(789),i = r(662),u = r(460),l = r(890),p = r(314),c = function c() {},s = new Promise(function (e) {return c = e;});t.createRouter = function (e) {var t = a.assertNewOptions(e),r = { options: t, mount: [], Vue: null, appProxyHook: n.appProxyHook, appletsProxyHook: n.indexProxyHook, appMain: {}, enterPath: "", $route: null, $lockStatus: !1, routesMap: {}, lifeCycle: i.registerRouterHooks(n.lifeCycle, t), push: function push(e) {l.lockNavjump(e, r, "push");}, replace: function replace(e) {l.lockNavjump(e, r, "replace");}, replaceAll: function replaceAll(e) {l.lockNavjump(e, r, "replaceAll");}, pushTab: function pushTab(e) {l.lockNavjump(e, r, "pushTab");}, back: function back(e, t) {void 0 === e && (e = 1), "[object Object]" !== a.getDataType(t) ? t = { from: "navigateBack" } : Reflect.has(t, "from") || (t = o(o({}, t), { from: "navigateBack" })), l.lockNavjump(e + "", r, "back", void 0, t);}, forceGuardEach: function forceGuardEach(e, t) {l.forceGuardEach(r, e, t);}, beforeEach: function beforeEach(e) {i.registerEachHooks(r, "beforeHooks", e);}, afterEach: function afterEach(e) {i.registerEachHooks(r, "afterHooks", e);}, install: function install(e) {r.Vue = e, p.rewriteMethod(this), u.initMixins(e, this), Object.defineProperty(e.prototype, "$Router", { get: function get() {return r;} }), Object.defineProperty(e.prototype, "$Route", { get: function get() {return l.createRoute(r);} }), Object.defineProperty(e.prototype, "$AppReady", { get: function get() {return "h5" === r.options.platform ? Promise.resolve() : s;}, set: function set(e) {!0 === e && c();} });} };return a.def(r, "keyword", function () {return n.keyword;}), a.def(r, "currentRoute", function () {return l.createRoute(r);}), r.beforeEach(function (e, t, r) {return r();}), r.afterEach(function () {}), r;}, t.RouterMount = function (e, t, r) {if (void 0 === r && (r = "#app"), "[object Array]" !== a.getDataType(t.mount)) throw new Error("挂载路由失败，router.app 应该为数组类型。当前类型：" + typeof t.mount);if (t.mount.push({ app: e, el: r }), "h5" === t.options.platform) {var o = t.$route;o.replace({ path: o.currentRoute.fullPath });}};}, 809: function _(e, t, r) {"use strict";var o = this && this.__assign || function () {return (o = Object.assign || function (e) {for (var t, r = 1, o = arguments.length; r < o; r++) {for (var n in t = arguments[r]) {Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);}}return e;}).apply(this, arguments);},n = this && this.__awaiter || function (e, t, r, o) {return new (r || (r = Promise))(function (n, a) {function i(e) {try {l(o.next(e));} catch (e) {a(e);}}function u(e) {try {l(o.throw(e));} catch (e) {a(e);}}function l(e) {var t;e.done ? n(e.value) : (t = e.value, t instanceof r ? t : new r(function (e) {e(t);})).then(i, u);}l((o = o.apply(e, t || [])).next());});},a = this && this.__generator || function (e, t) {var r,o,n,a,i = { label: 0, sent: function sent() {if (1 & n[0]) throw n[1];return n[1];}, trys: [], ops: [] };return a = { next: u(0), throw: u(1), return: u(2) }, "function" == typeof Symbol && (a[Symbol.iterator] = function () {return this;}), a;function u(a) {return function (u) {return function (a) {if (r) throw new TypeError("Generator is already executing.");for (; i;) {try {if (r = 1, o && (n = 2 & a[0] ? o.return : a[0] ? o.throw || ((n = o.return) && n.call(o), 0) : o.next) && !(n = n.call(o, a[1])).done) return n;switch (o = 0, n && (a = [2 & a[0], n.value]), a[0]) {case 0:case 1:n = a;break;case 4:return i.label++, { value: a[1], done: !1 };case 5:i.label++, o = a[1], a = [0];continue;case 7:a = i.ops.pop(), i.trys.pop();continue;default:if (!((n = (n = i.trys).length > 0 && n[n.length - 1]) || 6 !== a[0] && 2 !== a[0])) {i = 0;continue;}if (3 === a[0] && (!n || a[1] > n[0] && a[1] < n[3])) {i.label = a[1];break;}if (6 === a[0] && i.label < n[1]) {i.label = n[1], n = a;break;}if (n && i.label < n[2]) {i.label = n[2], i.ops.push(a);break;}n[2] && i.ops.pop(), i.trys.pop();continue;}a = t.call(e, i);} catch (e) {a = [6, e], o = 0;} finally {r = n = 0;}}if (5 & a[0]) throw a[1];return { value: a[0] ? a[1] : void 0, done: !0 };}([a, u]);};}},i = this && this.__rest || function (e, t) {var r = {};for (var o in e) {Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);}if (null != e && "function" == typeof Object.getOwnPropertySymbols) {var n = 0;for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);}}return r;};Object.defineProperty(t, "__esModule", { value: !0 }), t.formatOriginURLQuery = t.uniOriginJump = void 0;var u = r(99),l = r(789),p = r(282),c = 0,s = "reLaunch";function f(e, t, r) {var n,a = t.url,i = t.path,p = t.query,c = t.animationType,s = t.animationDuration,f = t.events,h = t.success,v = t.fail,y = t.complete,g = t.delta,d = t.animation,m = u.stringifyQuery(p || {}),b = "" === m ? i || a : (i || a) + m,O = {};return "app-plus" === e.options.platform && "navigateBack" !== r && (O = (null === (n = e.options.APP) || void 0 === n ? void 0 : n.animation) || {}, O = o(o({}, O), d || {})), l.notDeepClearNull({ delta: g, url: b, animationType: c || O.animationType, animationDuration: s || O.animationDuration, events: f, success: h, fail: v, complete: y });}t.uniOriginJump = function (e, t, r, u, h, v) {var y = f(e, u, r),g = y.complete,d = i(y, ["complete"]),m = e.options.platform.trim();0 === c && "h5" !== m && l.resetPageHook(e, d.url), null != v && !1 === v ? (0 === c && (c++, "h5" !== m && (e.Vue.prototype.$AppReady = !0)), g && g.apply(null, { msg: "forceGuardEach强制触发并且不执行跳转" }), h && h.apply(null, { msg: "forceGuardEach强制触发并且不执行跳转" })) : t(o(o({}, d), { from: u.BACKTYPE, complete: function complete() {for (var t, o, i, u, f = [], v = 0; v < arguments.length; v++) {f[v] = arguments[v];}return n(this, void 0, void 0, function () {var n, v, y;return a(this, function (a) {switch (a.label) {case 0:return 0 === c && (c++, "h5" !== m && (e.Vue.prototype.$AppReady = !0), "app-plus" === m && ((n = plus.nativeObj.View.getViewById("router-loadding")) && n.close(), (v = null === (t = e.options.APP) || void 0 === t ? void 0 : t.launchedHook) && v())), y = 0, new RegExp(p.mpPlatformReg, "g").test(m) ? y = null === (o = e.options.applet) || void 0 === o ? void 0 : o.animationDuration : "app-plus" === m && "navigateBack" === r && "navigateTo" === s && (y = null === (u = null === (i = e.options.APP) || void 0 === i ? void 0 : i.animation) || void 0 === u ? void 0 : u.animationDuration), "navigateTo" !== r && "navigateBack" !== r || 0 === y ? [3, 2] : [4, l.timeOut(y)];case 1:a.sent(), a.label = 2;case 2:return s = r, g && g.apply(null, f), h && h.apply(null, f), [2];}});});} }));}, t.formatOriginURLQuery = f;} }, t = {}, function r(o) {if (t[o]) return t[o].exports;var n = t[o] = { exports: {} };return e[o].call(n.exports, n, n.exports, r), n.exports;}(607);var e, t;});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 13:
-/*!********************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_storage.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.clearStorageSync = exports.clearStorage = exports.removeStorageSync = exports.removeStorage = exports.getStorageSync = exports.setStorageSync = exports.setStorage = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
-
-
-/**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * 封装缓存存取操作 （上限10MB，单个key上限1MB）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {string} key 本地缓存中指定的key
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {any} data 需要缓存的内容（原生类型、Date、JSON.stringify序列化的对象）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {boolean=} ifToast 存储成功是否提示
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */
-
-var isType = function isType(value) {
-  var type = Object.prototype.toString.apply(value);
-  return type;
-};
-
-/**
-    * {} => '{}' => {}
-    * 1 => '1' => 1
-    * true => 'true => true
-    * 'string' => 'string' => 'string'
-    * null => 'null' => null
-    * @param {string|number|boolean|object|null} value 数据
-    * @param {string} type 存储 | 读取
-    * @returns {string|number|boolean|object|null}
-    */
-var cacheValue = function cacheValue(value, type) {
-  var newValue;
-  var valueType = isType(value);
-  if (type === 'set') {
-    if (valueType === '[object Object]' || valueType === '[object Array]') {
-      newValue = JSON.stringify([JSON.stringify(value), valueType]);
-    } else {
-      newValue = JSON.stringify([value, valueType]);
-    }
-  } else if (type === 'get') {
-    if (!value) return null;var _ref = _toConsumableArray(
-    JSON.parse(value)),storageVal = _ref[0],storageType = _ref[1];
-    if (storageType === '[object String]') {
-      newValue = storageVal;
-    } else {
-      newValue = JSON.parse(storageVal);
-    }
-  }
-  return newValue;
-};
-
-
-// 异步存储缓存
-var setStorage = function setStorage(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  uni.setStorage({
-    key: key,
-    data: cacheValue(data, 'set'),
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('存储成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('存储失败');
-    } });
-
-};
-
-
-// 同步存储缓存
-exports.setStorage = setStorage;var setStorageSync = function setStorageSync(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  try {
-    uni.setStorageSync(key, cacheValue(data, 'set'));
-    ifToast && (0, _custom_toast.default)('存储成功');
-  } catch (e) {
-    (0, _custom_toast.default)('存储缓存失败');
-  }
-};
-
-
-// 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
-exports.setStorageSync = setStorageSync;var getStorageSync = function getStorageSync(key) {
-  try {
-    var _GETDATA = cacheValue(uni.getStorageSync(key), 'get');
-    return _GETDATA;
-  } catch (e) {
-    (0, _custom_toast.default)("\u8BFB\u53D6".concat(key, "\u7F13\u5B58\u5931\u8D25"));
-  }
-};
-
-
-// 异步清除指定key
-exports.getStorageSync = getStorageSync;var removeStorage = function removeStorage(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (!uni.getStorageSync(key)) return;
-  uni.removeStorage({
-    key: key,
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('清除缓存成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('清除缓存失败');
-    } });
-
-};
-
-
-// 同步清除指定key
-exports.removeStorage = removeStorage;var removeStorageSync = function removeStorageSync(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (!uni.getStorageSync(key)) return;
-  try {
-    uni.removeStorageSync(key);
-    ifToast && (0, _custom_toast.default)('清除缓存成功');
-  } catch (e) {
-    (0, _custom_toast.default)('清除缓存失败');
-  }
-};
-
-
-// 异步清除所有缓存
-exports.removeStorageSync = removeStorageSync;var clearStorage = function clearStorage() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  uni.clearStorage({
-    success: function success() {
-      ifToast && (0, _custom_toast.default)('清除缓存成功');
-    },
-    fail: function fail() {
-      (0, _custom_toast.default)('清除缓存失败');
-    } });
-
-};
-
-
-// 同步清除所有缓存
-exports.clearStorage = clearStorage;var clearStorageSync = function clearStorageSync() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  try {
-    uni.clearStorageSync();
-    ifToast && (0, _custom_toast.default)('清除缓存成功');
-  } catch (e) {
-    (0, _custom_toast.default)('清除缓存失败');
-  }
-};exports.clearStorageSync = clearStorageSync;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 14:
-/*!******************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/config.js ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
-                                                                                                      * 导出全局变量 静态配置文件
-                                                                                                      * @return {object} CONFIG 全局变量
-                                                                                                      * @return {object} CONFIG.SERVERAPI 服务地址列表
-                                                                                                      * @return {string} CONFIG.SERVERAPI.test 测试服务地址
-                                                                                                      */
-
-var rootHost = 'https://vipcard.sdykt.com.cn';
-
-var CONFIG = {
-  rootHost: rootHost,
-  login: '/jeecg-boot/userManage' };var _default =
-
-
-CONFIG;exports.default = _default;
-
-/***/ }),
-
-/***/ 2:
+/* 2 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -8321,799 +7967,7 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
 
 /***/ }),
-
-/***/ 21:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 22);
-
-/***/ }),
-
-/***/ 22:
-/*!************************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() {
-  return this || (typeof self === "object" && self);
-})() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(/*! ./runtime */ 23);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
-
-/***/ }),
-
-/***/ 23:
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-!(function(global) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  runtime.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  runtime.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  runtime.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  runtime.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  runtime.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return runtime.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        if (delegate.iterator.return) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  runtime.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  runtime.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() {
-    return this || (typeof self === "object" && self);
-  })() || Function("return this")()
-);
-
-
-/***/ }),
-
-/***/ 3:
+/* 3 */
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -9143,8 +7997,7 @@ module.exports = g;
 
 
 /***/ }),
-
-/***/ 4:
+/* 4 */
 /*!*******************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/pages.json ***!
   \*******************************************************************************************/
@@ -9154,84 +8007,10 @@ module.exports = g;
 
 
 /***/ }),
-
-/***/ 75:
-/*!********************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/is_environment.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = isEnvironment;
-
-
-
-
-
-
-
-
-
-var _can_use = __webpack_require__(/*! ./can_use.js */ 76); /**
-                                         * 当前终端环境
-                                         * 建议开发者在小程序的app.js里面对环境变量进行捕获并作为全局变量进行缓存
-                                         *
-                                         * 企业微信
-                                         * 	额外返回environment字段并赋值为wxwork
-                                         * 	wx.qy的接口，都只能在企业微信端调用
-                                         *
-                                         */function isEnvironment() {var systemInfo = (0, _can_use.canSystemInfoSync)();if (systemInfo.environment) {return systemInfo.environment;} else {return 'wx';}
-}
-
-/***/ }),
-
-/***/ 76:
-/*!*************************************************************************************************!*\
-  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/can_use.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.canSystemInfoSync = exports.canIUse = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-/**
-                                                                                                                                                                                                                                                                                                        * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
-                                                                                                                                                                                                                                                                                                        * @example uni.canIUse('getSystemInfoSync.return.safeArea.left')
-                                                                                                                                                                                                                                                                                                        * @Description 使用 ${API}.${method}.${param}.${option} 或者 ${component}.${attribute}.${option} 方式来调用
-                                                                                                                                                                                                                                                                                                        * @param {string} ${API}代表 API 名字
-                                                                                                                                                                                                                                                                                                        * @param {string} ${method}代表调用方式，有效值为return, success, object, callback
-                                                                                                                                                                                                                                                                                                        * @param {string} ${param}代表参数或者返回值
-                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表参数的可选值或者返回值的属性
-                                                                                                                                                                                                                                                                                                        * @param {string} ${component}代表组件名字
-                                                                                                                                                                                                                                                                                                        * @param {string} ${attribute}代表组件属性
-                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表组件属性的可选值
-                                                                                                                                                                                                                                                                                                        */
-var canIUse = function canIUse(param) {
-  var _CANIUSE = uni.canIUse(param);
-  return _CANIUSE;
-};
-
-/**
-    * 同步获取系统信息
-    * @returns {object} res
-    * @returns {object.platform} res.platform 客户端环境
-    */exports.canIUse = canIUse;
-var canSystemInfoSync = function canSystemInfoSync() {
-  try {
-    var res = uni.getSystemInfoSync();
-    return res;
-  } catch (e) {
-    console.error(e);
-    (0, _custom_toast.default)('获取系统信息失败');
-  }
-};exports.canSystemInfoSync = canSystemInfoSync;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 8:
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */
 /*!*****************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/can_version.js ***!
   \*****************************************************************************************************/
@@ -9280,8 +8059,7 @@ var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toas
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-
-/***/ 9:
+/* 9 */
 /*!******************************************************************************************************!*\
   !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_toast.js ***!
   \******************************************************************************************************/
@@ -9311,7 +8089,405 @@ var customShowToast = function customShowToast(title) {var duration = arguments.
 customShowToast;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
-/***/ })
+/***/ }),
+/* 10 */
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-}]);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 11 */
+/*!******************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/config.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 导出全局变量 静态配置文件
+                                                                                                      * @return {object} CONFIG 全局变量
+                                                                                                      * @return {object} CONFIG.SERVERAPI 服务地址列表
+                                                                                                      * @return {string} CONFIG.SERVERAPI.test 测试服务地址
+                                                                                                      */
+
+var rootHost = 'https://vipcard.sdykt.com.cn';
+
+var CONFIG = {
+  rootHost: rootHost,
+  login: '/jeecg-boot/userManage' };var _default =
+
+
+CONFIG;exports.default = _default;
+
+/***/ }),
+/* 12 */
+/*!********************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/is_environment.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = isEnvironment;
+
+
+
+
+
+
+
+
+
+var _can_use = __webpack_require__(/*! ./can_use.js */ 13); /**
+                                         * 当前终端环境
+                                         * 建议开发者在小程序的app.js里面对环境变量进行捕获并作为全局变量进行缓存
+                                         *
+                                         * 企业微信
+                                         * 	额外返回environment字段并赋值为wxwork
+                                         * 	wx.qy的接口，都只能在企业微信端调用
+                                         *
+                                         */function isEnvironment() {var systemInfo = (0, _can_use.canSystemInfoSync)();if (systemInfo.environment) {return systemInfo.environment;} else {return 'wx';}
+}
+
+/***/ }),
+/* 13 */
+/*!*************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/can_use.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.canSystemInfoSync = exports.canIUse = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+/**
+                                                                                                                                                                                                                                                                                                        * 判断APP、小程序的API，回调，参数，组件，是否在当前版本可用
+                                                                                                                                                                                                                                                                                                        * @example uni.canIUse('getSystemInfoSync.return.safeArea.left')
+                                                                                                                                                                                                                                                                                                        * @Description 使用 ${API}.${method}.${param}.${option} 或者 ${component}.${attribute}.${option} 方式来调用
+                                                                                                                                                                                                                                                                                                        * @param {string} ${API}代表 API 名字
+                                                                                                                                                                                                                                                                                                        * @param {string} ${method}代表调用方式，有效值为return, success, object, callback
+                                                                                                                                                                                                                                                                                                        * @param {string} ${param}代表参数或者返回值
+                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表参数的可选值或者返回值的属性
+                                                                                                                                                                                                                                                                                                        * @param {string} ${component}代表组件名字
+                                                                                                                                                                                                                                                                                                        * @param {string} ${attribute}代表组件属性
+                                                                                                                                                                                                                                                                                                        * @param {string} ${option}代表组件属性的可选值
+                                                                                                                                                                                                                                                                                                        */
+var canIUse = function canIUse(param) {
+  var _CANIUSE = uni.canIUse(param);
+  return _CANIUSE;
+};
+
+/**
+    * 同步获取系统信息
+    * @returns {object} res
+    * @returns {object.platform} res.platform 客户端环境
+    */exports.canIUse = canIUse;
+var canSystemInfoSync = function canSystemInfoSync() {
+  try {
+    var res = uni.getSystemInfoSync();
+    return res;
+  } catch (e) {
+    console.error(e);
+    (0, _custom_toast.default)('获取系统信息失败');
+  }
+};exports.canSystemInfoSync = canSystemInfoSync;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 14 */
+/*!******************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/router.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _custom_storage = __webpack_require__(/*! @/utils/custom_storage.js */ 15);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // 跳转拦截
+
+_vue.default.prototype.$JUMP = function (backurl) {var jumpType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'navigateTo';
+  var token = (0, _custom_storage.getStorageSync)('token');
+
+  if (token) {
+    uni[jumpType]({
+      url: backurl });
+
+  } else {
+    uni.navigateTo({
+      url: "/pages/login/login?backurl=".concat(url) });
+
+  }
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 15 */
+/*!********************************************************************************************************!*\
+  !*** /Users/louguanghao/Downloads/project/GitHub/HBuilderX-template/uniapp-ui/utils/custom_storage.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.clearStorageSync = exports.clearStorage = exports.removeStorageSync = exports.removeStorage = exports.getStorageSync = exports.setStorageSync = exports.setStorage = void 0;var _custom_toast = _interopRequireDefault(__webpack_require__(/*! ./custom_toast.js */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
+
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * 封装缓存存取操作 （上限10MB，单个key上限1MB）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {string} key 本地缓存中指定的key
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {any} data 需要缓存的内容（原生类型、Date、JSON.stringify序列化的对象）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             * @param {boolean=} ifToast 存储成功是否提示
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             */
+
+var isType = function isType(value) {
+  var type = Object.prototype.toString.apply(value);
+  return type;
+};
+
+/**
+    * {} => '{}' => {}
+    * 1 => '1' => 1
+    * true => 'true => true
+    * 'string' => 'string' => 'string'
+    * null => 'null' => null
+    * @param {string|number|boolean|object|null} value 数据
+    * @param {string} type 存储 | 读取
+    * @returns {string|number|boolean|object|null}
+    */
+var cacheValue = function cacheValue(value, type) {
+  var newValue;
+  var valueType = isType(value);
+  if (type === 'set') {
+    if (valueType === '[object Object]' || valueType === '[object Array]') {
+      newValue = JSON.stringify([JSON.stringify(value), valueType]);
+    } else {
+      newValue = JSON.stringify([value, valueType]);
+    }
+  } else if (type === 'get') {
+    if (!value) return null;var _ref = _toConsumableArray(
+    JSON.parse(value)),storageVal = _ref[0],storageType = _ref[1];
+    if (storageType === '[object String]') {
+      newValue = storageVal;
+    } else {
+      newValue = JSON.parse(storageVal);
+    }
+  }
+  return newValue;
+};
+
+
+// 异步存储缓存
+var setStorage = function setStorage(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  uni.setStorage({
+    key: key,
+    data: cacheValue(data, 'set'),
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('存储成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('存储失败');
+    } });
+
+};
+
+
+// 同步存储缓存
+exports.setStorage = setStorage;var setStorageSync = function setStorageSync(key, data) {var ifToast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  try {
+    uni.setStorageSync(key, cacheValue(data, 'set'));
+    ifToast && (0, _custom_toast.default)('存储成功');
+  } catch (e) {
+    (0, _custom_toast.default)('存储缓存失败');
+  }
+};
+
+
+// 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
+exports.setStorageSync = setStorageSync;var getStorageSync = function getStorageSync(key) {
+  try {
+    var _GETDATA = cacheValue(uni.getStorageSync(key), 'get');
+    return _GETDATA;
+  } catch (e) {
+    (0, _custom_toast.default)("\u8BFB\u53D6".concat(key, "\u7F13\u5B58\u5931\u8D25"));
+  }
+};
+
+
+// 异步清除指定key
+exports.getStorageSync = getStorageSync;var removeStorage = function removeStorage(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  if (!uni.getStorageSync(key)) return;
+  uni.removeStorage({
+    key: key,
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除指定key
+exports.removeStorage = removeStorage;var removeStorageSync = function removeStorageSync(key) {var ifToast = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  if (!uni.getStorageSync(key)) return;
+  try {
+    uni.removeStorageSync(key);
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};
+
+
+// 异步清除所有缓存
+exports.removeStorageSync = removeStorageSync;var clearStorage = function clearStorage() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  uni.clearStorage({
+    success: function success() {
+      ifToast && (0, _custom_toast.default)('清除缓存成功');
+    },
+    fail: function fail() {
+      (0, _custom_toast.default)('清除缓存失败');
+    } });
+
+};
+
+
+// 同步清除所有缓存
+exports.clearStorage = clearStorage;var clearStorageSync = function clearStorageSync() {var ifToast = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  try {
+    uni.clearStorageSync();
+    ifToast && (0, _custom_toast.default)('清除缓存成功');
+  } catch (e) {
+    (0, _custom_toast.default)('清除缓存失败');
+  }
+};exports.clearStorageSync = clearStorageSync;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ })
+]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
