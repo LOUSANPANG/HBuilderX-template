@@ -1,4 +1,5 @@
-node_modules/
-unpackage/
-.DS_Store
+/node_modules
+/unpackage
 *.log
+*.lock
+.DS_Store

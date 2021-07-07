@@ -1,21 +1,4 @@
-const TransformPages = require('uni-read-pages')
-const { webpack } = new TransformPages()
-
 module.exports = {
-	configureWebpack: {
-		plugins: [
-			new webpack.DefinePlugin({
-				// router
-				ROUTES: webpack.DefinePlugin.runtimeValue(() => {
-					const tfPages = new TransformPages({
-						includes: ['path', 'meta', 'name', 'aliasPath']
-					})
-					return JSON.stringify(tfPages.routes)
-				}, true)
-			})
-		]
-	},
-
 	chainWebpack: (config) => {
 		// 发行或运行时启用了压缩时会生效
 		config.optimization.minimizer('terser').tap((args) => {
