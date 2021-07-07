@@ -1,6 +1,5 @@
 <template>
 	<view class="login">
-		<button type="primary" @click="handleLogin">登录</button>
 	</view>
 </template>
 
@@ -9,21 +8,12 @@
 		name: 'Login',
 
 		data() {
-			return {
-				routeQuery: {}
-			}
+			return {}
 		},
 
-		onLoad() {
-			const { query } = this.$Route
-			this.routeQuery = query
-		},
+		onLoad() {},
 
-		methods: {
-			handleLogin() {
-				uni.navigateTo({ url: this.routeQuery.formPath })
-			}
-		}
+		methods: {}
 	}
 </script>
 

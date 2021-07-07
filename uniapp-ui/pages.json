@@ -2,7 +2,7 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"name": "index",
-			// "meta": { "loginAuth": true },
+			"meta": { "loginAuth": true },
 			"style": {
 				"navigationBarTitleText": "index",
 				"navigationStyle": "custom"

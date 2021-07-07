@@ -1,35 +1,17 @@
-// router
-import { RouterMount, createRouter } from 'uni-simple-router'
+// 跳转拦截
+import Vue from 'vue'
 import { getStorageSync } from '@/utils/custom_storage.js'
 
-const router = createRouter({
-	platform: process.env.VUE_APP_PLATFORM,
-	routes: [
-		...ROUTES
-	]
-})
-
-//全局路由前置守卫
-router.beforeEach((to, from, next) => {
-	const loginAuth = to.meta.loginAuth
+Vue.prototype.$JUMP = function(backurl, jumpType = 'navigateTo') {
 	const token = getStorageSync('token')
-	if (loginAuth) {
-		token
-			?
-			next() :
-			next({
-				name: 'login',
-				params: { formPath: to.fullPath }
-			})
+
+	if(token) {
+		uni[jumpType]({
+			url: backurl
+		})
 	} else {
-		next()
+		uni.navigateTo({
+			url: `/pages/login/login?backurl=${url}`
+		})
 	}
-})
-
-// 全局路由后置守卫
-router.afterEach((to, from) => {})
-
-export {
-	router,
-	RouterMount
 }
