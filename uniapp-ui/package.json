@@ -3,9 +3,37 @@
   "version": "0.1.0",
   "description": "uniapp-template tools",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+	"uni-app": {
+		"scripts": {
+			"mp-dev": {
+				"title": "本地开发",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin"
+				},
+				"define": {
+					"MP-DEV": true
+				}
+			},
+			"mp-test": {
+				"title": "测试环境",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin"
+				},
+				"define": {
+					"MP-TEST": true
+				}
+			},
+			"mp-release": {
+				"title": "正式环境",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin"
+				},
+				"define": {
+					"MP-RELEASE": true
+				}
+			}
+		}
+	},
   "keywords": [
     "uniapp-ui",
     "wx"

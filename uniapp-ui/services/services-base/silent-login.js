@@ -30,7 +30,7 @@ const silentLogin = async () => {
 	} else {
 		console.info('uni.login成功✅: ', loginRes)
 		const [requestErr, requestRes] = await uni.request({
-			url: CONFIG.rootHost + CONFIG.login + '/userLoginByCode',
+			url: CONFIG.wxLogin + '/userLoginByCode',
 			method: 'POST',
 			data: {
 				code: loginRes.code,

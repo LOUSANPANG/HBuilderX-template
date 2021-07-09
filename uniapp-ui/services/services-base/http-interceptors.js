@@ -13,7 +13,7 @@ const $API = new Request()
 
 $API.setConfig((config) => {
 	const _config = {
-		baseURL: CONFIG.rootHost,
+		baseURL: CONFIG.host,
 		header: {
 			uuid: uuidv1(),
 			timestamp: Date.parse(new Date()) / 1000
