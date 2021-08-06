@@ -2,12 +2,35 @@
 @import  "./variables.scss";
 @import "./mixin.scss";
 
-page {
-	position: relative;
+
+uni-page-body {
 	width: 100%;
 	height: 100%;
 }
 
 image {
 	display: block;
+	will-change: transform;
+}
+
+
+// 按钮样式
+@mixin btnDefault {
+	@include flexCenter;
+	background: $theme-primary;
+	border-radius: 33rpx;
+}
+@mixin btnPrimary {
+	@include flexCenter;
+	border: 1rpx solid $theme-primary-neutral;
+	background-color: #FFFFFF;
+	border-radius: 33rpx;
+}
+@mixin btnInfo {
+	@include flexCenter;
+	background-color: $theme-primary-info;
+	border-radius: 33rpx;
+}
+@mixin borderInfo {
+	border: 1rpx solid $theme-primary-info;
 }

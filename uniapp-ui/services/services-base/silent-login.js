@@ -26,7 +26,8 @@ const silentLogin = async () => {
 	if (!loginRes) {
 		console.info('uni.login失败❌: ', loginErr)
 		customShowToast('uni.login error')
-		return Promise.reject(loginErr)
+		return null
+		// return Promise.reject(loginErr)
 	} else {
 		console.info('uni.login成功✅: ', loginRes)
 		const [requestErr, requestRes] = await uni.request({
@@ -41,11 +42,15 @@ const silentLogin = async () => {
 		if (requestErr) {
 			console.info('登录接口失败❌: ', requestErr)
 			customShowToast('静默登录请求失败')
-			return Promise.reject(requestErr)
+			return null
+			// return Promise.reject(requestErr)
 		} else {
 			console.info('登录接口成功✅: ', requestRes)
-			if (requestRes.statusCode === 200 && requestRes.data.code === '10000') {
-				setStorageSync('user', requestRes.data.data)
+			if (requestRes.statusCode === 200 && requestRes.data.code === '00') {
+				const data = requestRes.data.data
+				setStorageSync('token', data.token)
+				setStorageSync('key', data.key)
+				setStorageSync('user', data)
 			} else {
 				clearStorageSync()
 				uni.showModal({

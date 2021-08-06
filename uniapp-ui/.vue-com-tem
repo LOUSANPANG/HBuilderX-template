@@ -12,10 +12,9 @@
 		},
 
 		methods: {}
-
 	}
 </script>
 
 <style lang="scss">
-	@import ""
+	@import "";
 </style>

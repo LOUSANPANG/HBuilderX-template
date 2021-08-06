@@ -4,7 +4,7 @@
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "1",
-		"transformPx" : false,
+    "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
         "usingComponents" : true,
@@ -52,14 +52,16 @@
         "appid" : "wx0709755458983867",
         "setting" : {
             "urlCheck" : false,
-            "minified" : false
+            "minified" : false,
+            "es6" : true,
+            "postcss" : true
         },
         "usingComponents" : true,
         "permission" : {}
     },
     "h5" : {
         "router" : {
-            "mode" : "history",
+            "mode" : "hash",
             "base" : "/"
         },
         "template" : "template.h5.html",

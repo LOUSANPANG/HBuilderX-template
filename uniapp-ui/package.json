@@ -1,12 +1,14 @@
 {
-  "name": "uiapp-template",
-  "version": "0.1.0",
-  "description": "uniapp-template tools",
-  "main": "main.js",
+	"name": "uiapp-template",
+	"description": "uniapp-template tools",
+	"author": "LOUSANPANG",
+	"license": "ISC",
+
 	"uni-app": {
 		"scripts": {
+
 			"mp-dev": {
-				"title": "本地开发",
+				"title": "MP本地开发",
 				"env": {
 					"UNI_PLATFORM": "mp-weixin"
 				},
@@ -15,7 +17,7 @@
 				}
 			},
 			"mp-test": {
-				"title": "测试环境",
+				"title": "MP测试环境",
 				"env": {
 					"UNI_PLATFORM": "mp-weixin"
 				},
@@ -24,24 +26,51 @@
 				}
 			},
 			"mp-release": {
-				"title": "正式环境",
+				"title": "MP正式环境",
 				"env": {
 					"UNI_PLATFORM": "mp-weixin"
 				},
 				"define": {
 					"MP-RELEASE": true
 				}
+			},
+
+			"h5-dev": {
+				"title": "H5本地开发",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5"
+				},
+				"define": {
+					"H5-DEV": true
+				}
+			},
+			"h5-test": {
+				"title": "H5测试环境",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5"
+				},
+				"define": {
+					"H5-TEST": true
+				}
+			},
+			"h5-release": {
+				"title": "H5正式环境",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5"
+				},
+				"define": {
+					"H5-RELEASE": true
+				}
 			}
+
 		}
 	},
-  "keywords": [
-    "uniapp-ui",
-    "wx"
-  ],
-  "author": "LOUSANPANG",
-  "license": "ISC",
-  "dependencies": {
-    "js-md5": "^0.7.3",
-    "uuid": "^8.3.2"
-  }
+
+	"dependencies": {
+		"js-md5": "^0.7.3",
+		"uuid": "^8.3.2"
+	}
 }

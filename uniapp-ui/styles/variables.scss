@@ -1,8 +1,10 @@
 // ------------------------------------------
 // * 主题色
 // ------------------------------------------
-// $theme-primary: ;
-// $theme-primary-light: ;
+$theme-primary: #1D456F;
+$theme-primary-neutral: #09315C;
+$theme-primary-light: #022A58;
+$theme-primary-info: #F6E571;
 
 // ------------------------------------------
 // * 功能色
@@ -15,13 +17,6 @@
 // ------------------------------------------
 // * 文本颜色
 // ------------------------------------------
-$text-color-primary: #f40;
-$text-color-success: #88B04B;
-$text-color-fail: #dd524d;
-// $text-color-secondary: ;
-
-// ------------------------------------------
-// * 文本大小
-// ------------------------------------------
-// $text-size-base: 24px;
-// $text-size-small: 16px;
+$text-color-primary: #FFFFFF;
+$text-color-light: #002D60;
+$text-color-info: #F6E571;

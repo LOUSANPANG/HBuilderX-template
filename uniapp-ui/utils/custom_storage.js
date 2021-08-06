@@ -70,11 +70,31 @@ export const setStorageSync = (key, data, ifToast = false) => {
 	}
 }
 
-
 // 同步读取缓存[实际工作中暂未用到异步读取缓存][存储数据量暂时不是很大]
 export const getStorageSync = (key) => {
 	try {
 		const _GETDATA = cacheValue(uni.getStorageSync(key), 'get')
+		return _GETDATA
+	} catch (e) {
+		customShowToast(`读取${key}缓存失败`)
+	}
+}
+
+
+// H5存储临时缓存
+export const setSessionStorage = (key, data, ifToast = false) => {
+	try {
+		sessionStorage.setItem(key, cacheValue(data, 'set'))
+		ifToast && customShowToast('存储成功')
+	} catch (e) {
+		customShowToast('存储临时缓存失败')
+	}
+}
+
+// H5同步读取临时缓存
+export const getSessionStorage = (key) => {
+	try {
+		const _GETDATA = cacheValue(sessionStorage.getItem(key), 'get')
 		return _GETDATA
 	} catch (e) {
 		customShowToast(`读取${key}缓存失败`)
