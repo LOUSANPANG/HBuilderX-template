@@ -15,8 +15,8 @@ Vue.config.productionTip = false
 Vue.prototype.$CONFIG = CONFIG
 Vue.prototype.$TOAST = customShowToast
 Vue.prototype.$ISENV = isEnvironment()
-Vue.prototype.$ICON = CONFIG.icon
-Vue.prototype.$FSfURL = CONFIG.fsfUrl
+Vue.prototype.$ICON = process.env.HOST.ICON_URL
+Vue.prototype.$FSfURL = process.env.HOST.FSF_URL
 
 
 App.mpType = 'app'

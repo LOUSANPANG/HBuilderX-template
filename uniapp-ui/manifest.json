@@ -54,12 +54,22 @@
         "appid" : "wx0709755458983867",
         "setting" : {
             "urlCheck" : false,
-            "minified" : false,
+            "minified" : true,
             "es6" : true,
             "postcss" : true
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {
+					"scope.userLocation": {
+						"desc": "uniapp希望获取您的位置信息"
+					}
+				},
+				"plugins": {
+					// "live-player-plugin": {
+					// 	"version": "",
+					// 	"provider": ""
+					// }
+				}
     },
     "h5" : {
         "router" : {
