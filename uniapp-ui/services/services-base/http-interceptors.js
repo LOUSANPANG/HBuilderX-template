@@ -1,6 +1,6 @@
 // 拦截器
 import { v1 as uuidv1 } from 'uuid'
-import Request from '@/js-sdk/luch-request/index.js'
+import Request from '@/js-sdk/luch-request/luch-request/index.js'
 import md5WithSalt from './md5-signature.js'
 import silentLogin from './silent-login.js'
 import { toLogin } from './tologin'
@@ -63,12 +63,12 @@ $API.interceptors.response.use(async (response) => {
 			await silentLogin()
 			// 递归
 			return await $API.post(response.config.url, response.config.data)
-		} else if (code === '00') {
+		} else if (resCode === '00') {
 			return Promise.resolve(response.data)
 		} else {
 			customShowToast(resCode + resMsg)
-			return null
-			// return Promise.reject(response.data)
+			// return null
+			return Promise.reject(response.data)
 		}
 	}
 

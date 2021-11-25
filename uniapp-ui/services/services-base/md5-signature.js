@@ -7,10 +7,11 @@ import md5 from 'js-md5'
 
 function md5WithSalt(data = {}, salt) {
 	let md5Val
+	let strData
 	// if (!salt) throw new Error('salt is required')
 	if (typeof data !== 'object') throw new Error("data's type should be Object")
 	if (typeof data === 'object' && !Object.keys(data).length) {
-		md5Val = ''
+		strData = ''
 	} else {
 		// 数据字段按ascii码升序排列
 		const keysArr = Object.keys(data)
@@ -24,11 +25,12 @@ function md5WithSalt(data = {}, salt) {
 				strArr.push(sortedKeysArr[i] + '=' + data[sortedKeysArr[i]])
 			}
 		}
-		// 生成md5值
-		const str = salt + strArr.join('&')
-		const hash = md5.create().update(str)
-		md5Val = hash.hex()
+		strData = strArr.join('&')
 	}
+	// 生成md5值
+	const str = salt + strData
+	const hash = md5.create().update(str)
+	md5Val = hash.hex()
 	return md5Val
 }
 
