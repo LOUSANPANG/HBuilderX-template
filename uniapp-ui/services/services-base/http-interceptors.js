@@ -14,10 +14,6 @@ const $API = new Request()
 $API.setConfig((config) => {
 	const _config = {
 		baseURL: CONFIG.host,
-		header: {
-			uuid: uuidv1(),
-			timestamp: Date.parse(new Date()) / 1000
-		},
 		custom: {}
 	}
 	return {
@@ -34,6 +30,8 @@ $API.setConfig((config) => {
 $API.interceptors.request.use((config) => {
 	config.header = {
 		...config.header,
+		uuid: uuidv1(),
+		timestamp: Date.parse(new Date()) / 1000,
 		sign: md5WithSalt(config.data, getStorageSync('key')),
 		Authorization: getStorageSync('token')
 	}
