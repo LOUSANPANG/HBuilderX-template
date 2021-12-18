@@ -18,7 +18,12 @@
     "navigationBarTitleText": "",
     "backgroundColor": "#F8F8F8"
   },
-  "permission": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc": "uniapp希望获取您的位置信息"
+    }
+  },
+  "plugins": {},
   "usingComponents": {},
   "sitemapLocation": "sitemap.json"
 }

@@ -3,7 +3,7 @@
  * @param {Object} data 待签名数据（需进行md5处理的数据）
  * @param {String} salt 盐值
  */
-import md5 from 'js-md5'
+import md5 from '@/js_sdk/js-md5/build/md5.min.js'
 
 function md5WithSalt(data = {}, salt) {
 	let md5Val

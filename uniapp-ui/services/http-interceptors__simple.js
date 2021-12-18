@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import uuidv1 from 'uuid/v1';
+import uuidv1 from '@/js_sdk/uuid/dist/v1.js';
 import Request from '@/js-sdk/luch-request/index.js';
 
 import { setStorageSync, getStorageSync } from '@/utils/custom_storage.js'

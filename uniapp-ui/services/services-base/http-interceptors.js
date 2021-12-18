@@ -1,5 +1,5 @@
 // 拦截器
-import { v1 as uuidv1 } from 'uuid'
+import uuidv1 from '@/js_sdk/uuid/dist/v1.js'
 import Request from '@/js-sdk/luch-request/luch-request/index.js'
 import md5WithSalt from './md5-signature.js'
 import silentLogin from './silent-login.js'
