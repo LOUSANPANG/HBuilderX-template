@@ -15,7 +15,4 @@
 
 <style lang="scss">
 	@import "./index.scss";
-	button {
-		margin-top: 200rpx;
-	}
 </style>
