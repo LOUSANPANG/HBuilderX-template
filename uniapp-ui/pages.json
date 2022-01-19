@@ -22,7 +22,7 @@
 	],
 
 	"subPackages": [{
-		"root": "pagesA",
+		"root": "pagesChild/pagesA",
 		"pages": [{
 				"path": "status/fail/fail",
 				"style": {
@@ -36,6 +36,12 @@
 				}
 			}
 		]
+	}],
+	
+	"preloadRule": [{
+		"pages/index": {
+			"packages": ["pagesChild/pagesA"]
+		}
 	}],
 
 	"globalStyle": {
