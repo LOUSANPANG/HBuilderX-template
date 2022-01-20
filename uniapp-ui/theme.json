@@ -1,0 +1,60 @@
+// "darkmode": true,
+// "themeLocation":"theme.json",
+// {
+// 	"globalStyle": {
+// 		"navigationBarBackgroundColor": "@navBgColor",
+// 		"navigationBarTextStyle": "@navTxtStyle",
+// 		"backgroundColor": "@bgColor",
+// 		"backgroundTextStyle": "@bgTxtStyle",
+// 		"backgroundColorTop": "@bgColorTop",
+// 		"backgroundColorBottom": "@bgColorBottom"
+// 	},
+// 	"tabBar": {
+// 		"color": "@tabFontColor",
+// 		"selectedColor": "@tabSelectedColor",
+// 		"backgroundColor": "@tabBgColor",
+// 		"borderStyle": "@tabBorderStyle",
+// 		"list": [{
+// 				"iconPath": "@iconPath1",
+// 				"selectedIconPath": "@selectedIconPath1"
+// 		}, {
+// 				"iconPath": "@iconPath2",
+// 				"selectedIconPath": "@selectedIconPath2"
+// 		}]
+// 	}
+// }
+	
+{
+	"light": {
+		"navBgColor": "#f6f6f6",
+		"navTxtStyle": "black",
+		"bgColor": "#ffffff",
+		"bgTxtStyle": "light",
+		"bgColorTop": "#eeeeee",
+		"bgColorBottom": "#efefef",
+		"tabFontColor": "#000000",
+		"tabSelectedColor": "#3cc51f",
+		"tabBgColor": "#ffffff",
+		"tabBorderStyle": "black",
+		"iconPath1": "image/icon1_light.png",
+		"selectedIconPath1": "image/selected_icon1_light.png",
+		"iconPath2": "image/icon2_light.png",
+		"selectedIconPath2": "image/selected_icon2_light.png"
+	},
+	"dark": {
+		"navBgColor": "#191919",
+		"navTxtStyle": "white",
+		"bgColor": "#1f1f1f",
+		"bgTxtStyle": "dark",
+		"bgColorTop": "#191919",
+		"bgColorBottom": "#1f1f1f",
+		"tabFontColor": "#ffffff",
+		"tabSelectedColor": "#51a937",
+		"tabBgColor": "#191919",
+		"tabBorderStyle": "white",
+		"iconPath1": "image/icon1_dark.png",
+		"selectedIconPath1": "image/selected_icon1_dark.png",
+		"iconPath2": "image/icon2_dark.png",
+		"selectedIconPath2": "image/selected_icon2_dark.png"
+	}
+}
