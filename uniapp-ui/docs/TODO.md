@@ -2,3 +2,4 @@
 
 - 自动化测试
 - 404页面
+- 检测网络状态变化 wx.onNetworkStatusChange 进行通知
