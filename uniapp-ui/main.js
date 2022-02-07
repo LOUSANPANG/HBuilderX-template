@@ -6,6 +6,7 @@ import CONFIG from './config.js'
 
 import customShowToast from './utils/custom_toast.js'
 import isEnvironment from './utils/is_environment.js'
+import './utils/promise_vue3.js'
 import './filter/filter.js'
 import './router.js'
 

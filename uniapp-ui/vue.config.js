@@ -16,6 +16,7 @@ module.exports = {
 		// 	return args
 		// })
 		
+		// 配置环境变量
 		config
 			.plugin('define')
 			.tap(args => {
