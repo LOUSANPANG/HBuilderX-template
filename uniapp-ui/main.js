@@ -5,7 +5,7 @@ import uView from 'uview-ui'
 import CONFIG from './config.js'
 
 import customShowToast from './utils/custom_toast.js'
-import isEnvironment from './utils/is_environment.js'
+import { systemInfo } from './utils/is_systeminfo.js'
 import './utils/promise_vue3.js'
 import './filter/filter.js'
 import './router.js'
@@ -15,7 +15,7 @@ Vue.use(uView)
 Vue.config.productionTip = false
 Vue.prototype.$CONFIG = CONFIG
 Vue.prototype.$TOAST = customShowToast
-Vue.prototype.$ISENV = isEnvironment()
+Vue.prototype.$SYSTEMINFO = systemInfo
 Vue.prototype.$ICON = process.env.HOST.ICON_URL
 Vue.prototype.$FSfURL = process.env.HOST.FSF_URL
 
