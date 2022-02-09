@@ -11,11 +11,9 @@
 			return {}
 		},
 
-		onLoad() {},
-
 		methods: {}
 	}
-</script>
+	</script>
 
 <style lang="scss">
 </style>
