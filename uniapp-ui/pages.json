@@ -22,27 +22,35 @@
 	],
 
 	"subPackages": [{
-		"root": "pagesChild/pagesA",
+		"root": "pagesChild/status",
 		"pages": [{
-				"path": "status/fail/fail",
+				"path": "pages/fail/fail",
 				"style": {
 					"navigationBarTitleText": "失败页"
 				}
 			},
 			{
-				"path": "status/success/success",
+				"path": "pages/success/success",
 				"style": {
 					"navigationBarTitleText": "成功页"
+				}
+			},
+			{
+				"path": "pages/404/404",
+				"style": {
+					"navigationBarTitleText": "404"
 				}
 			}
 		]
 	}],
 
-	"preloadRule": [{
-		"pages/index": {
-			"packages": ["pagesChild/pagesA"]
+	//ifdef MP-WEIXIN
+	"preloadRule": {
+		"pages/index/index": {
+			"packages": ["pagesChild/status"]
 		}
-	}],
+	},
+	//endif
 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
