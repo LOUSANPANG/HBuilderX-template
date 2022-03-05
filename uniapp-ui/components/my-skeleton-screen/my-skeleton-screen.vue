@@ -45,20 +45,20 @@
 
 	@keyframes shine-lines {
 		0% {
-			background-position: -100px;
+			background-position: -100rpx;
 		}
 		40%,
 		100% {
-			background-position: 140px;
+			background-position: 140rpx;
 		}
 	}
 	@keyframes shine-thumbnail {
 		0% {
-			background-position: -100px + $thumbnail-offset;
+			background-position: -100rpx + $thumbnail-offset;
 		}
 		40%,
 		100% {
-			background-position: 140px + $thumbnail-offset;
+			background-position: 140rpx + $thumbnail-offset;
 		}
 	}
 
