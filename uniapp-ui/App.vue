@@ -17,5 +17,6 @@
 </script>
 
 <style lang="scss">
+	@import "./styles/iconfont.css";
 	@import "uview-ui/index.scss";
 </style>

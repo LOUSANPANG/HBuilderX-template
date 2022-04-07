@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "custom-icon"; /* Project id 3308660 */
+  src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALMAAsAAAAABpgAAAKBAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHFQGYACCcApwfwE2AiQDCAsGAAQgBYULBy4b3QXILnCcJy2ACduHytEuHniYAIB4+H7t9dzdFyK0KbAEVEBkfxWwcTG2vh0P6BhURk/7jB9IsakW9Dy7OODNaIAT+KC7WtNLWGU8rzBBGQuskrb+5n4faDP7+wUhO75sHIIWlAvF/L2YGXvr4HL6E58e+EDkB61B3x40Fz1YlmYTbA/LAgm8RDJu0F0QrhHhGYFysyS0bsN6T1VO7ZdYVRFDb3Dnx6njjlblPChJYaZUKCbdm8QDVUR2M/sY9/fPx0fzUUqmKDcUbT4ysdT328VxQV74L5C/UBDXFD6WoQg5JgGJ2I5ObpQTIBort/P6w/okeLu4tLRawmhdZH/dkFsJOkP2mbiZf9TcDKRzsA8wyvROZK1lV/efKSu8l1dGucpbn5Ffu2kxFxzPD+zLVkSFyTc9P7n2ZsdeFRyr0rGuttb9POnu/1BV4bT3qfv23sNGy6r4Z/nJ7KNA8E1dvbdm2e9SCby6ZMWuJWRuSvW0gx8k7iJ0TG2ILIG43J3pY4pnKB8jLBm89T5WpcEj2VChwTvuEt035CoMoYmcRYvIBbSY3ADlJhhG2OJFTqQyDNtCCM12yFR7BLlmJ5rIHymioggtJjug3M6YO6/CcFwfXUAtaIE9gWIotqcyMWkiFLX74Rt00lBz2XzFDpATL+wHMT0LyMwwRua3YRw6gyk2RKYIlNjHMAwJKpOPRjpZZDdkM0dAL+k4itQIQ5pAFmCdAIVBYvZ6ShiphCCRNuJ7NpAjFdIY3QUgfgBxLnjRdIBAcTJ0JsSkbQ28ZTjkGJiEDUTMZgOVoVIZChFQwbN8yBAdmSG+M8RGp0gqdNRK0f9ksi4GNYuxPJeOnY1QKQA=') format('woff2');
+}
+
+.custom-icon {
+  font-family: "custom-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 字体图标的前缀为"custom-icon-" */
+/* <u-icon name="home" custom-prefix="custom-icon"></u-icon> */
+.custom-icon-home:before {
+  content: "\e7a7";
+}
