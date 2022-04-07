@@ -85,7 +85,11 @@
 					// }
 				}
     },
-    /* H5 特有配置 */
+		/* uView需要开启了component2模式才支持支付宝小程序 */
+		"mp-alipay" : {
+    	"component2": true
+    },
+		/* H5 特有配置 */
 		"h5" : {
         "router" : {
             "mode" : "hash",
