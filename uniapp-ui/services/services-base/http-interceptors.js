@@ -54,6 +54,10 @@ $API.interceptors.request.use((config) => {
 $API.interceptors.response.use(async (response) => {
 	console.info('请求拦截后成功码✅: ', response)
 	const { resCode, resMsg } = response.data
+	
+	// if (response.config.custom.verification) { // 演示自定义参数的作用
+	// 	return response.data
+	// }
 
 	if (response.statusCode === 200) {
 		if (resCode === '02') {
