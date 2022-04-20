@@ -1,9 +1,9 @@
-/uniapp-ui/node_modules
-/uniapp-ui/unpackage
-/uniapp-ui/dist
-/uniapp-ui/*.log
-/uniapp-ui/*.lock
-/uniapp-ui/.DS_Store
+node_modules
+unpackage
+/dist
+*.log
+*.lock
+.DS_Store
 
 # Editor directories and files
 .idea

@@ -1,0 +1,139 @@
+{
+	"name": "uniapp-template",
+	"description": "uniapp-template tools",
+	"author": "LOUSANPANG",
+	"license": "ISC",
+
+	"uni-app": {
+		"scripts": {
+
+			"mp-dev": {
+				"title": "MP本地开发",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin",
+					"HOST": "http://10.160.11.XX:8090",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"MP-DEV": true
+				}
+			},
+			"mp-test": {
+				"title": "MP测试环境",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"MP-TEST": true
+				}
+			},
+			"mp-beta": {
+				"title": "MP BETA",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"MP-BETA": true
+				}
+			},
+			"mp-stage": {
+				"title": "MP验收环境",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"MP-STAGE": true
+				}
+			},
+			"mp-release": {
+				"title": "MP正式环境",
+				"env": {
+					"UNI_PLATFORM": "mp-weixin",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"MP-RELEASE": true
+				}
+			},
+
+			"h5-dev": {
+				"title": "H5本地开发",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"H5-DEV": true
+				}
+			},
+			"h5-test": {
+				"title": "H5测试环境",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"H5-TEST": true
+				}
+			},
+			"h5-beta": {
+				"title": "H5 BETA",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"H5-BETA": true
+				}
+			},
+			"h5-stage": {
+				"title": "H5验收环境",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"HOST": "",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"H5-STAGE": true
+				}
+			},
+			"h5-release": {
+				"title": "H5正式环境",
+				"BROWSER": "chorme",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"FSF_URL": "",
+					"ICON_URL": ""
+				},
+				"define": {
+					"H5-RELEASE": true
+				}
+			}
+
+		}
+	}
+
+}

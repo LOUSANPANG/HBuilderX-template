@@ -23,7 +23,7 @@ export default {
 			mixDataList:[],
 			mixList:[],
 			// 请求接口地址
-			mixUrl: 'jeecg-boot/hiddenTrouble/list',
+			mixUrl: 'xxx',
 			// 返回 data 中的列表键名
 			mixListKey: 'list', // _数据为空的时候为null，若为[]需要i修改服务返回的数据判断\
 			// 最多调用次数, 0无次数限制

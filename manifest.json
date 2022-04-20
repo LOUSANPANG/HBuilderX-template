@@ -1,5 +1,5 @@
 {
-    "name" : "uniapp-ui",
+    "name" : "LOUSANPANG-template",
     "appid" : "__UNI__2745265",
     "description" : "",
     "versionName" : "1.0.0",
@@ -62,7 +62,7 @@
     /* 微信小程序 特有配置 */
 		"mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx0709755458983867",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
             "minified" : true,
