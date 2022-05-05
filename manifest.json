@@ -5,20 +5,20 @@
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
-		"uniStatistics" : {
-			"enable": false
-		},
-		/* App 特有配置 */
+    "uniStatistics" : {
+        "enable" : false
+    },
+    /* App 特有配置 */
     "app-plus" : {
-				/* 分包 */
-				"optimization" : {
-						"subPackages" : true
-				},
-				/* 开启分包优化后，必须配置资源释放模式 */
-				"runmode" : "liberate",
+        /* 分包 */
+        "optimization" : {
+            "subPackages" : true
+        },
+        /* 开启分包优化后，必须配置资源释放模式 */
+        "runmode" : "liberate",
         "usingComponents" : true,
         "nvueCompiler" : "uni-app",
-				/* App 启动界面信息 */
+        /* App 启动界面信息 */
         "splashscreen" : {
             "alwaysShowBeforeRender" : true,
             "waiting" : true,
@@ -27,7 +27,7 @@
         },
         /* 模块权限 */
         "modules" : {},
-				/* App 发布信息 */
+        /* App 发布信息 */
         "distribute" : {
             /* android打包配置 */
             "android" : {
@@ -51,16 +51,18 @@
             },
             /* ios打包配置 */
             "ios" : {
-							"password": "",
-							"p12": ""
-						},
+                "password" : "",
+                "p12" : ""
+            },
             "sdkConfigs" : {
                 "ad" : {}
             }
+        },
+        "nativePlugins" : {
         }
     },
     /* 微信小程序 特有配置 */
-		"mp-weixin" : {
+    "mp-weixin" : {
         /* 小程序特有相关 */
         "appid" : "",
         "setting" : {
@@ -69,28 +71,27 @@
             "es6" : true,
             "postcss" : true
         },
-				"optimization" : {
-					"subPackages": true
-				},
+        "optimization" : {
+            "subPackages" : true
+        },
         "usingComponents" : true,
         "permission" : {
-					"scope.userLocation": {
-						"desc": "uniapp希望获取您的位置信息"
-					}
-				},
-				"plugins": {
-					// "live-player-plugin": {
-					// 	"version": "",
-					// 	"provider": ""
-					// }
-				}
+            "scope.userLocation" : {
+                "desc" : "uniapp希望获取您的位置信息"
+            }
+        },
+        "plugins" : {}
     },
-		/* uView需要开启了component2模式才支持支付宝小程序 */
-		"mp-alipay" : {
-    	"component2": true
+    // "live-player-plugin": {
+    // 	"version": "",
+    // 	"provider": ""
+    // }
+    /* uView需要开启了component2模式才支持支付宝小程序 */
+    "mp-alipay" : {
+        "component2" : true
     },
-		/* H5 特有配置 */
-		"h5" : {
+    /* H5 特有配置 */
+    "h5" : {
         "router" : {
             "mode" : "hash",
             "base" : "/"
@@ -104,7 +105,7 @@
         "devServer" : {
             "https" : false
         },
-				/* 三方SDK配置 */
-				"sdkConfigs" : {}
+        /* 三方SDK配置 */
+        "sdkConfigs" : {}
     }
 }

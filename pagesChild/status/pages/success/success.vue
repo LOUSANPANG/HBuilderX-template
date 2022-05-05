@@ -1,7 +1,7 @@
 <!-- 成功页 -->
 <template>
 	<view class="success">
-		<image class="success-logo" src="../../static/status/success.png" title="成功" />
+		<!-- <image class="success-logo" src="../../static/status/success.png" title="成功" /> -->
 
 		<view class="success-title">Success</view>
 	</view>
