@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import uView from 'uview-ui'
+import uView from '@/uni_modules/uview-ui'
 // import store from '@/store'
 import CONFIG from './config.js'
 
@@ -20,6 +20,16 @@ Vue.prototype.$SYSTEMINFO = systemInfo
 Vue.prototype.$ICON = process.env.HOST.ICON_URL
 Vue.prototype.$FSfURL = process.env.HOST.FSF_URL
 // #endif
+
+
+uni.$u.setConfig({
+	// 修改$u.config对象的属性
+	config: {
+		unit: 'rpx'
+	},
+	// 修改$u.props对象的属性
+	props: {}
+})
 
 
 App.mpType = 'app'

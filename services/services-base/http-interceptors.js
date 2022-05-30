@@ -1,6 +1,6 @@
 // 拦截器
 import uuidv1 from '@/js_sdk/uuid/dist/v1.js'
-import Request from '@/js-sdk/luch-request/luch-request/index.js'
+import Request from '@/uni_modules/luch-request/luch-request/luch-request/index.js';
 import md5WithSalt from './md5-signature.js'
 import silentLogin from './silent-login.js'
 import { toLogin } from './tologin'

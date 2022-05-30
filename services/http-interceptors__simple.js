@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import uuidv1 from '@/js_sdk/uuid/dist/v1.js';
-import Request from '@/js-sdk/luch-request/index.js';
+import Request from '@/uni_modules/luch-request/luch-request/luch-request/index.js';
 
 import { setStorageSync, getStorageSync } from '@/utils/custom_storage.js'
 import customShowToast from '@/utils/custom_toast.js'
