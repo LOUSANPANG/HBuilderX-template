@@ -61,9 +61,9 @@ $API.interceptors.response.use(async (response) => {
 
 	if (response.statusCode === 200) {
 		if (resCode === '02') {
+			const complete = () => $API.request(response.config)
 			// token 失效 静默登录
-			await silentLogin()
-			// 递归
+			await silentLogin(complete)
 			return await $API.post(response.config.url, response.config.data)
 		} else if (resCode === '00') {
 			return Promise.resolve(response.data)

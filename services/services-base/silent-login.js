@@ -1,8 +1,9 @@
 /**
- * 静默登录
+ * 静默登录 A服务失效 - 重新登录 - A服务执行
  * 1. 获取临时登录凭证code
  * 2. 将code发送给服务端
  * 3. 保存登录信息，如auth-token
+ * 4. 回调执行token失效的服务
  *
  * NOTE-session_key有效期
  * a wx.login 调用时，用户的 session_key 可能会被更新而致使旧 session_key 失效
@@ -20,7 +21,7 @@ import CONFIG from '@/config.js'
 import { toLogin } from './tologin'
 
 
-const silentLogin = async () => {
+const silentLogin = async (complete) => {
 	const loginRes = await customLogin()
 
 	if (!loginRes) {
@@ -30,6 +31,7 @@ const silentLogin = async () => {
 		// return Promise.reject(loginErr)
 	} else {
 		console.info('uni.login成功✅: ', loginRes)
+		// 重新调用登录接口
 		const [requestErr, requestRes] = await uni.request({
 			url: CONFIG.wxLogin + '/userLoginByCode',
 			method: 'POST',
@@ -51,6 +53,9 @@ const silentLogin = async () => {
 				setStorageSync('token', data.token)
 				setStorageSync('key', data.key)
 				setStorageSync('user', data)
+
+				// 回调执行token失效的服务
+				complete()
 			} else {
 				clearStorageSync()
 				uni.showModal({
